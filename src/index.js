@@ -9,13 +9,22 @@
 
 // Import functions from the firebase SDK
 import { initializeApp } from "firebase/app"; // 'https://gstatic.com/firebasejs/9.0.0/firebase-app.js'
-import { getAuth, onAuthStateChanged } from "firebase/auth"; // 'https://gstatic.com/firebasejs/9.0.0/firebase-auth.js'
-import { getFirestore, Timestamp, FieldValue, Filter} from "firebase/firestore"; // 'https://gstatic.com/firebasejs/9.0.0/firebase-firestore.js'
 import { getAnalytics } from "firebase/analytics"; // 'https://gstatic.com/firebasejs/9.0.0/firebase-analytics.js'
+import { 
+    getAuth, 
+    onAuthStateChanged} from "firebase/auth"; // 'https://gstatic.com/firebasejs/9.0.0/firebase-auth.js'
+import { 
+    getFirestore, 
+    doc,
+    Timestamp, 
+    FieldValue, 
+    Filter} from "firebase/firestore"; // 'https://gstatic.com/firebasejs/9.0.0/firebase-firestore.js'
 
 // Import other SDKs and functions needed
 
-// ------------------------------------------------------------ initialize app
+// ------------------------------------------------------------ 
+
+// In this section we initialize the the firebase app 
 
 // Our Firebase configuration
 // Note that measurementID is an optional parameter here
@@ -28,31 +37,39 @@ const firebaseConfig = {
   appId: "1:889714479210:web:c6719ae19008c2da0eba13",
   measurementId: "G-DWMWXEG7BY"
 };
+
+// initialize the app 
 const myApp = initializeApp(firebaseConfig);
-
-// ------------------------------------------------------------ initialize db
-
-// Initialize database
-// TODO: set up our db
-const myDB = getFirestore(firebaseConfig) 
-
-// ------------------------------------------------------------ analytics 
-
-// Get analytics for a given instance of the app
-// TODO: set this up!   
+// initialize the database                            TODO: set up DB
+const myDB = getFirestore(firebaseConfig);  
+// get analytics for a given instance of the app      TODO: set this up 
 const analytics = getAnalytics(myApp);
-
-// ------------------------------------------------------------ user auth
-
-// Get auth for the current instance of the app 
-// TODO: set up user authentification with mac emails! 
+// get auth for the current instance of the app       TODO: set this up
 const auth = getAuth(myApp); 
 
-// Check / recored user login 
-onAuthStateChanged(auth, user => { 
+// ------------------------------------------------------------ 
+
+/**
+ * In this section we handle the actual functionality of the app. We use 
+ * event handlers to respond to actions from the user within the site 
+ * 
+ * See more about event handlers and asynchronous actions in JS here: 
+ * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing
+ */
+
+// check if user is currently logged in
+onAuthStateChanged(auth, user => {
     if (user != null) { 
-        console.log("logged in!"); 
+        console.log("logged in!");  
     } else { 
-        console.log("no user!"); 
+        console.log("no user!");
     }
-})
+}); 
+
+// testing with event handlers
+const accountLink = document.querySelector("body > nav > ul > li:nth-child(2) > a"); 
+accountLink.addEventListener("click", () => { 
+    console.log("I have been clicked!"); 
+}); 
+
+

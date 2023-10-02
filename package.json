@@ -4,9 +4,9 @@
   "description": "Source code for the Virtual Mac Community Trade Center App.",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode=development",
+    "build": "webpack",
     "test": "",
-    "start": "webpack --mode=production"
+    "start": ""
   },
   "repository": {
     "type": "git",

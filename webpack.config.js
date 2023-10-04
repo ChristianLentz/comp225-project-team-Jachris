@@ -6,17 +6,15 @@
  * 
  * This bundle that we then use to build our website is put into dist/bundle.js
  * 
- * Use $ npm run build or $ serve dist/ in the terminal to perform all of this, as 
- * these are currently configured to do this! Check package.json or index.html
- * 
- * Note that $ npm run build will update bundle.js everytime we use it. This
- * puts our changes into production and tests them
+ * Use $ npm run build in the terminal to compile new code to bundle.js, and then 
+ * serve to see the changes locally. $ npm run build will update bundle.js everytime 
+ * we use it. This puts our changes into production and tests them
  * 
  * Note that, in general, the main.js and bundle.js that we get from webpack is 
- * typically unreadable
+ * typically unreadable, but we can use source maps to get readable code in dev console 
  */
 
-const path = require('path'); 
+const path = require('path');
 
 module.exports = {
     // pick a mode for webpack to run 
@@ -24,12 +22,13 @@ module.exports = {
     // makes code more readable (and thus easier to debug) in the dev console 
     devtool: 'eval-source-map',
     // entry point for webpack, this is where we start the build process 
-    entry: './src/JS/index.js',
+    entry: './src/index.js',
     // output file, this is where the bundled code is sent
     output: { 
         path: path.resolve(__dirname, 'dist'), 
-        filename: 'bundle.js'
+        filename: 'bundle.js',
     }
+
 };
 
 /**

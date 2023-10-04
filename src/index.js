@@ -8,11 +8,11 @@
  */
 
 // Import functions from the firebase SDK
-import { initializeApp } from "firebase/app"; // 'https://gstatic.com/firebasejs/9.0.0/firebase-app.js'
-import { getAnalytics } from "firebase/analytics"; // 'https://gstatic.com/firebasejs/9.0.0/firebase-analytics.js'
+import { initializeApp } from "firebase/app"; 
+import { getAnalytics } from "firebase/analytics"; 
 import { 
     getAuth, 
-    onAuthStateChanged} from "firebase/auth"; // 'https://gstatic.com/firebasejs/9.0.0/firebase-auth.js'
+    onAuthStateChanged} from "firebase/auth";
 import { 
     getFirestore, 
     doc,
@@ -41,11 +41,11 @@ const firebaseConfig = {
 // initialize the app 
 const myApp = initializeApp(firebaseConfig);
 // initialize the database                            TODO: set up DB
-const myDB = getFirestore(firebaseConfig);  
+const myDB = getFirestore();  
 // get analytics for a given instance of the app      TODO: set this up 
-const analytics = getAnalytics(myApp);
+const analytics = getAnalytics();
 // get auth for the current instance of the app       TODO: set this up
-const auth = getAuth(myApp); 
+const auth = getAuth(); 
 
 // ------------------------------------------------------------ 
 
@@ -60,16 +60,13 @@ const auth = getAuth(myApp);
 // check if user is currently logged in
 onAuthStateChanged(auth, user => {
     if (user != null) { 
-        console.log("logged in!");  
+        console.log("logged in!"); 
+        // run the app 
     } else { 
         console.log("no user!");
+        // direct user to login page and then run the app 
     }
 }); 
 
-// testing with event handlers
-const accountLink = document.querySelector("body > nav > ul > li:nth-child(2) > a"); 
-accountLink.addEventListener("click", () => { 
-    console.log("I have been clicked!"); 
-}); 
 
 

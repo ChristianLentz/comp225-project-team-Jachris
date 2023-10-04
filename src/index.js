@@ -67,6 +67,3 @@ onAuthStateChanged(auth, user => {
         // direct user to login page and then run the app 
     }
 }); 
-
-
-

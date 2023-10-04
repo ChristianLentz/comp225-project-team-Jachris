@@ -5,8 +5,8 @@
         <title>Mac Community Trade Center</title> <!-- set the title of the webpage -->
         <script src="dist/bundle.js"></script> <!-- define the script which builds the web page -->
         <link href="style.css" rel="stylesheet">
+        <link href="formstyle.css" rel="stylesheet">
     </head>
-
     
     <body>
 
@@ -22,8 +22,42 @@
                 <img src="images/macLogo.png" />
             </div>
           </nav>
-        <h1> Lets make a post </h1>
-        <a href = "index.html">lets go home</a>
+        <!-- <h1> Lets make a post </h1>
+        <a href = "index.html">lets go home</a> -->
+
+          <!-- This is what is used to send the form to a server to store info -->
+          <!-- <form action="/making your form page" method="post"> -->
+        <form>
+            <ul>
+              <li>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="user_name" />
+              </li>
+              <li>
+                <label for="mail">Email:</label>
+                <input type="email" id="mail" name="user_email" />
+              </li>
+              <li>
+                <label for="msg">Message:</label>
+                <textarea id="msg" name="user_message"></textarea>
+              </li>
+              <li>
+                <label for="file-input"> Image: </label>
+                <input type="file" id="file-input" accept="image/*">
+              </li>
+              <li class="button">
+                <button type="submit">Make your Post</button>
+              </li>
+<!--  add image element to form, not in css or a list -->
+              
+            </ul>
+          </form>
+
+        <!-- <form>
+            <label for="file-input"> Select an image: </label>
+            <input type="file" id="file-input" accept="image/*">
+        </form> -->
+
     </body>
 
 

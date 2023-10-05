@@ -11,7 +11,7 @@ If you want to get started with running this application on your local machine, 
 - Open the project and navigate to the root directory in your terminal of choice and make sure that you have nodeJS/npm installed.
 - Install the following packages by running the following in the terminal: 
   - **npm i --g serve** --> allows you to host locally, just use **npm serve [directory]** to do this 
-  - **npm i firebase** to install the Firbase SDK --> allows you to use the Firebase tools that run the project.
+  - **npm i firebase** and **npm -g install firebase-tools** --> allows you to use the Firebase tools that run the project.
   - **npm install webpack webpack-cli** --> allows you to use the Webpack moduler bundler which compiles our Java Script code.
   - **node_modules/.bin/webpack** --> this is how we tell our project to use Webpack.
  

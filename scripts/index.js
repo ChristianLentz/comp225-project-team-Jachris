@@ -9,16 +9,12 @@
 
 // Import functions from the firebase SDK
 import { initializeApp } from "firebase/app"; 
-import { getAnalytics } from "firebase/analytics"; 
+import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";  
 import { 
     getAuth, 
-    onAuthStateChanged} from "firebase/auth";
-import { 
-    getFirestore, 
-    doc,
-    Timestamp, 
-    FieldValue, 
-    Filter} from "firebase/firestore"; // 'https://gstatic.com/firebasejs/9.0.0/firebase-firestore.js'
+    onAuthStateChanged } from "firebase/auth";
+import {} from "/scripts/dbScripts"; 
 
 // Import other SDKs and functions needed
 

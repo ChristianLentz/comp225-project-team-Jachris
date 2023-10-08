@@ -22,10 +22,10 @@ module.exports = {
     // makes code more readable (and thus easier to debug) in the dev console 
     devtool: 'eval-source-map',
     // entry point for webpack, this is where we start the build process 
-    entry: './src/index.js',
+    entry: './scripts/index.js',
     // output file, this is where the bundled code is sent
     output: { 
-        path: path.resolve(__dirname, 'dist'), 
+        path: path.resolve(__dirname, '/scripts/dist'), 
         filename: 'bundle.js',
     }
 

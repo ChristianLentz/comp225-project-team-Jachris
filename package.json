@@ -2,7 +2,7 @@
   "name": "comp225-project-jachris",
   "version": "1.0.0",
   "description": "Source code for the Virtual Mac Community Trade Center App.",
-  "main": "src/index.js",
+  "main": "scripts/index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "test": "",

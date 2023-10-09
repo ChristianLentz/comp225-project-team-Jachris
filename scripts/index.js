@@ -62,4 +62,4 @@ onAuthStateChanged(auth, user => {
         console.log("no user!");
         // direct user to login page and then run the app 
     }
-}); 
+}); // user Auth

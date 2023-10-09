@@ -1,6 +1,7 @@
 form {
     /* Center the form on the page */
-    margin: 0 auto;
+   
+    margin: 20px auto;
     width: 400px;
     /* Form outline */
     padding: 1em;
@@ -15,7 +16,7 @@ form {
   }
   
   form li + li {
-    margin-top: 1em;
+    margin-top: .5em;
   }
   
   label {
@@ -55,7 +56,7 @@ form {
   
   .button {
     /* Align buttons with the text fields */
-    padding-left: 90px; /* same size as the label elements */
+    padding-left: 150px; /* same size as the label elements */
   }
   
   button {

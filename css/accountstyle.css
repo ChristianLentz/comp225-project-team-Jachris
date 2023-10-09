@@ -28,7 +28,7 @@
     font-size: 22px;
     color: black;
   }
-  
-  button:hover, a:hover {
+  /* This makes it so the contact button switches color, does same to nav bar tho */
+  /* button:hover, a:hover {
     opacity: 0.7;
-  }
+  } */

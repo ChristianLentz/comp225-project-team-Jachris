@@ -14,7 +14,7 @@ import { getFirestore } from "firebase/firestore";
 import { 
     getAuth, 
     onAuthStateChanged } from "firebase/auth";
-import { getAllUsers } from "/scripts/dbScripts"; 
+import { createUser } from "/scripts/dbScripts"; 
 
 // Import other SDKs and functions needed
 
@@ -56,10 +56,16 @@ const auth = getAuth();
 // check if user is currently logged in
 onAuthStateChanged(auth, user => {
     if (user != null) { 
-        console.log("logged in!"); 
+        console.log("logged in!");
         // run the app 
     } else { 
         console.log("no user!");
+        // testing adding data to DB
+        (async () => { 
+            console.log("adding user..."); 
+            await createUser(myDB); 
+            console.log("user added..."); 
+        }) ()
         // direct user to login page and then run the app 
-    }
-}); // user Auth
+    }   
+});

@@ -9,7 +9,7 @@
     color: grey;
     font-size: 18px;
   }
-  
+  /* create and adjust the submit button */
   button {
     border: none;
     outline: 0;
@@ -19,7 +19,7 @@
     background-color: #000;
     text-align: center;
     cursor: pointer;
-    width: 100%;
+    width: 30%;
     font-size: 18px;
   }
   

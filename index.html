@@ -13,6 +13,7 @@
     <title>Mac Community Trade Center</title> <!-- set the title of the webpage -->
     <script src="/scripts/dist/bundle.js"></script> <!-- define the script which builds the web page -->
     <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/searchbarstyle.css" rel="stylesheet">
   </head>
 
   <!-- this is a container to hold all of the content which we actually want the user to see -->
@@ -31,11 +32,17 @@
         </ul>
         
       </nav>
-    <!-- <div class= "logo">
-      <img src="images/jachris-logo.png" />
-    </div> -->
-    
-    <!-- <img src="images/jachris-logo.png" alt="My test image" /> -->
+      <!-- Create a search bar for items -->
+      <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for items..">
+        <ul id="myUL">
+          <!-- <li><a href="#">Clothing</a></li>
+          <li><a href="#">Furniture</a></li>
+  
+          <li><a href="#">Misc</a></li>
+          <li><a href="#">Decorations</a></li>
+  
+          <li><a href="#">Free</a></li> -->
+        </ul>
 </body>
 
 </html>

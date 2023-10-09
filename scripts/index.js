@@ -14,7 +14,7 @@ import { getFirestore } from "firebase/firestore";
 import { 
     getAuth, 
     onAuthStateChanged } from "firebase/auth";
-import {} from "/scripts/dbScripts"; 
+import { getAllUsers } from "/scripts/dbScripts"; 
 
 // Import other SDKs and functions needed
 

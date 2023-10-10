@@ -7,8 +7,7 @@
 ### Getting Started ###
 If you want to get started with running this application on your local machine, follow these step:
 
-- Clone the repository from remote. You can do this by opening with Github Desktop, downloading the repository directly to your machine, or using **git clone https://github.com/ChristianLentz/comp225-project-team-Jachris** in the directory that you want to store this project.
-- Clone the repository from remote. You can do this by opening with Github Desktop, downloading the repository directly to your machine, or using **git clone**.
+- Clone the repository from remote. You can do this by opening with Github Desktop, downloading the repository directly to your machine with Github Desktop, or using **git clone**.
 - Open the project and navigate to the root directory in your terminal of choice and make sure that you have nodeJS/npm installed.
 - Install the following packages by running the following in the terminal: 
 

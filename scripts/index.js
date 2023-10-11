@@ -14,9 +14,9 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth, 
   onAuthStateChanged, 
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword } from "firebase/auth";
-import { createUser } from "/scripts/dbScripts"; 
-import { GoogleAuthProvider } from "firebase/auth";
+  signInWithEmailAndPassword, 
+  GoogleAuthProvider } from "firebase/auth";
+import { createUser } from "/scripts/dbScripts";
 
 
 // ------------------------------------------------------------ 
@@ -54,7 +54,6 @@ const auth = getAuth();
  * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing
  */
 
-
 // This signs up new users to create a new password and username (Mac Email)
 
 createUserWithEmailAndPassword(auth, email, password)
@@ -66,7 +65,7 @@ createUserWithEmailAndPassword(auth, email, password)
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    // ..
+    // ...
   });
 // Allows users to sign in with their username and password. 
 
@@ -87,6 +86,7 @@ onAuthStateChanged(auth, user => {
     // if logged in, run the app 
     if (user != null) { 
         console.log("logged in!");
+
     // if not logged in, direct user to login page and then run the app 
     } else { 
         console.log("no user!");

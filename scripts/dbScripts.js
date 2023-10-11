@@ -39,10 +39,20 @@
  * actions.
  */
 
-
-
 // import firestore functions from firebase library 
 import { Firestore, doc } from "firebase/firestore"; 
+
+/**
+ * Some notes: 
+ * 
+ *  - We can use 'set' to add data to a document. If the document DNE, it will be created (we must 
+ *  provide an ID for the doc in this case), if the doc does exist, then we can overwrite the whole 
+ *  thing or use 'merge'
+ *  - We can store strings, booleans, numbers (as doubles), dates, null, and nested arrays
+ *  and objects in a collection in firestore
+ *  - If we want to create a document but don't have a meaningful ID to provide, then we can use 'add'
+ *  to create the doc and generate an ID
+ */
 
 /**
  * Get all users from the db according to the given query. 

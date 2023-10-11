@@ -49,7 +49,7 @@ import { Firestore, doc } from "firebase/firestore";
  * @param {Firestore} db - reference to cloud firestore
  * @param {query} query 
  */
-export async function getAllUsers (db) { 
+export async function getAllUsers (db, query) { 
 
 }
 

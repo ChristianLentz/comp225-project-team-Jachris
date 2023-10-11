@@ -11,10 +11,11 @@
 import { initializeApp } from "firebase/app"; 
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";  
-import { getAuth,  onAuthStateChanged } from "firebase/auth";
+import { getAuth, 
+  onAuthStateChanged, 
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword } from "firebase/auth";
 import { createUser } from "/scripts/dbScripts"; 
-
-// Import other SDKs and functions needed
 
 // ------------------------------------------------------------ 
 
@@ -53,9 +54,7 @@ const auth = getAuth();
 
 
 // This signs up new users to create a new password and username (Mac Email)
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
-const getAuthauth = getAuth();
 createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed up 
@@ -68,7 +67,6 @@ createUserWithEmailAndPassword(auth, email, password)
     // ..
   });
 // Allows users to sign in with their username and password. 
-  import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
   const getAuth = getAuth();
   signInWithEmailAndPassword(auth, email, password)
@@ -81,20 +79,22 @@ createUserWithEmailAndPassword(auth, email, password)
       const errorCode = error.code;
       const errorMessage = error.message;
     });
-// check if user is currently logged in
+
+// check if a user is currently logged in
 onAuthStateChanged(auth, user => {
+    // if logged in, run the app 
     if (user != null) { 
         console.log("logged in!");
-        // run the app 
+    // if not logged in, direct user to login page and then run the app 
     } else { 
         console.log("no user!");
+
         // testing adding data to DB
         (async () => { 
             console.log("adding user..."); 
             await createUser(myDB); 
             console.log("user added..."); 
         }) ()
-        // direct user to login page and then run the app 
     }   
 });
 

@@ -11,9 +11,7 @@
 import { initializeApp } from "firebase/app"; 
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";  
-import { 
-    getAuth, 
-    onAuthStateChanged } from "firebase/auth";
+import { getAuth,  onAuthStateChanged } from "firebase/auth";
 import { createUser } from "/scripts/dbScripts"; 
 
 // Import other SDKs and functions needed
@@ -53,6 +51,36 @@ const auth = getAuth();
  * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing
  */
 
+
+// This signs up new users to create a new password and username (Mac Email)
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+const getAuthauth = getAuth();
+createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+// Allows users to sign in with their username and password. 
+  import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+  const getAuth = getAuth();
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
 // check if user is currently logged in
 onAuthStateChanged(auth, user => {
     if (user != null) { 
@@ -69,3 +97,4 @@ onAuthStateChanged(auth, user => {
         // direct user to login page and then run the app 
     }   
 });
+

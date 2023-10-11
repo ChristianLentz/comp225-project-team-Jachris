@@ -16,6 +16,8 @@ import { getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword } from "firebase/auth";
 import { createUser } from "/scripts/dbScripts"; 
+import { GoogleAuthProvider } from "firebase/auth";
+
 
 // ------------------------------------------------------------ 
 

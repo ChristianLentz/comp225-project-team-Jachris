@@ -10,21 +10,14 @@
 // Import functions from the firebase SDK
 import { initializeApp } from "firebase/app"; 
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";  
-import { getAuth, 
-  onAuthStateChanged, 
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword, 
-  GoogleAuthProvider } from "firebase/auth";
-import { createUser } from "/scripts/dbScripts";
-
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";  
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
+import { createUser } from "./dbScripts";
 
 // ------------------------------------------------------------ 
 
-// In this section we initialize the the firebase app 
-
-// Our Firebase configuration
-// Note that measurementID is an optional parameter here
+// Firebase configuration
+// measurementID is an optional parameter
 const firebaseConfig = {
   apiKey: "AIzaSyDnuNDOz0v2w4M78YHk8mUupDKWT073MSE",
   authDomain: "mac-community-trade-center.firebaseapp.com",
@@ -35,68 +28,76 @@ const firebaseConfig = {
   measurementId: "G-DWMWXEG7BY"
 };
 
-// initialize the app 
-const myApp = initializeApp(firebaseConfig);
-// initialize the database                            TODO: set up DB
-const myDB = getFirestore();  
-// get analytics for a given instance of the app      TODO: set this up 
-const analytics = getAnalytics();
-// get auth for the current instance of the app       TODO: set this up
-const auth = getAuth(); 
+const myApp = initializeApp(firebaseConfig); // initialize app 
+const myDB = getFirestore();                 // get database
+const analytics = getAnalytics();            // analytics 
+const auth = getAuth();                      // user auth 
 
 // ------------------------------------------------------------ 
 
 /**
- * In this section we handle the actual functionality of the app. We use 
- * event handlers to respond to actions from the user within the site 
+ * Handle functionality of the app. 
  * 
- * See more about event handlers and asynchronous actions in JS here: 
+ * Event handlers and asynchronous actions in JS here: 
  * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing
  */
 
-// This signs up new users to create a new password and username (Mac Email)
+// commented these chunks since there are errors here
 
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ...
-  });
+//This signs up new users to create a new password and username (Mac Email)
+// createUserWithEmailAndPassword(auth, email, password)
+//   .then((userCredential) => {
+//     // Signed up 
+//     const user = userCredential.user;
+//     // ...
+//   })
+//   .catch((error) => {
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     // ...
+//   });
+
 // Allows users to sign in with their username and password. 
+// signInWithEmailAndPassword(auth, email, password)
+//   .then((userCredential) => {
+//     // Signed in 
+//     const user = userCredential.user;
+//     // ...
+//   })
+//   .catch((error) => {
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//   });
 
-  const getAuth = getAuth();
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
+// ---------------------------------
+
+// testing adding data to the db 
+
+const userData = {
+  firstName: 'First',
+  lastName: 'Last',
+  username: 'firstLastNames', 
+  password: 'superSupserSecretPassword', 
+  email: 'flast@macalester.edu', 
+};
+await createUser(myDB, userData); 
+
+// ---------------------------------
+
+// testing getting data from the db 
+
+// ---------------------------------
+
 
 // check if a user is currently logged in
 onAuthStateChanged(auth, user => {
     // if logged in, run the app 
     if (user != null) { 
-        console.log("logged in!");
-
+      console.log("logged in!");
     // if not logged in, direct user to login page and then run the app 
     } else { 
-        console.log("no user!");
-
-        // testing adding data to DB
-        (async () => { 
-            console.log("adding user..."); 
-            await createUser(myDB); 
-            console.log("user added..."); 
-        }) ()
-    }   
+      console.log("no user no user no user!");
+    } 
 });
+
 

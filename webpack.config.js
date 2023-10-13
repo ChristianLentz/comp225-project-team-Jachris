@@ -25,10 +25,9 @@ module.exports = {
     entry: './scripts/index.js',
     // output file, this is where the bundled code is sent
     output: { 
-        path: path.resolve(__dirname, '/scripts/dist'), 
+        path: path.resolve(__dirname, 'scripts/dist'), 
         filename: 'bundle.js',
     }
-
 };
 
 /**

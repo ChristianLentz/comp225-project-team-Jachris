@@ -40,12 +40,20 @@
  */
 
 // import firestore functions from firebase library 
-import { Firestore, doc } from "firebase/firestore"; 
+import { 
+    collection, 
+    doc, 
+    setDoc, 
+    getDoc, 
+    getDocs 
+} from "firebase/firestore";
 
 /**
  * Some notes: 
  * 
- *  - We can use 'set' to add data to a document. If the document DNE, it will be created (we must 
+ *  - The 'doc' function returns a refernce to a document, which we can then write to or 
+ *  use to get data!
+ *  - We can use 'setDoc' to add data to a document. If the document DNE, it will be created (we must 
  *  provide an ID for the doc in this case), if the doc does exist, then we can overwrite the whole 
  *  thing or use 'merge'
  *  - We can store strings, booleans, numbers (as doubles), dates, null, and nested arrays
@@ -84,6 +92,16 @@ export async function getUserData (db, userID) {
 }
 
 /**
+ * Get a data for a specific post from the DB. 
+ * @param {Firestore} db - a reference to firestore 
+ * @param {number} postID 
+ */
+export async function getPostData (postID) { 
+    const postDoc = doc(db, 'posts' + postID.toString()); 
+    return postDoc;
+}
+
+/**
  * Get all posts associated with a given user in ascending order sorted by postID
  * @param {Firestore} db - a reference to cloud firestore 
  * @param {number} userID 
@@ -93,33 +111,33 @@ export async function getAllPostsForUser (db, userID) {
 }
 
 /**
- * Get a specific post from the DB. 
- * @param {Firestore} db - a reference to firestore 
- * @param {number} postID 
- */
-export async function getPost (postID) { 
-    const postDoc = doc(db, 'posts' + postID.toString()); 
-    return postDoc;
-}
-
-/**
  * Add a newly created user and their data to the users collection 
  * @param {Firestore} db - a reference to firestore 
  * @param {Array} data 
  */
-export async function createUser (db) { 
-    const userRef = db.collection('users').doc('user2');
-    // we do not have to set these to null if they are not there (thanks NoSQL)
-    // once we get actual user data, edit these fields according the actual data in 
-    // the data array 
-    await userRef.set({
-        firstName: 'Testy',
-        lastName: 'McTesterton Jr.',
-        username: 'testUsername1', 
-        password: 'superSecretPassword', 
-        email: 'test@macalester.edu', 
-        userID: 2
-    });
+export async function createUser (db, userData) { 
+    // get the total number of users in the collection
+    let numUsers; 
+    const totalsRef = doc(db, 'metrics/totals'); 
+    const totalsSnapshot = getDoc(totalsRef); 
+    if ((await totalsSnapshot).exists) { 
+        numUsers = (await totalsSnapshot).get("totalPosts");
+        console.log("num users: " + numUsers.toString()); 
+    }
+    // create a refernece to the new user document  
+    const newUserID = numUsers + 1; 
+    const userRef = doc(db, 'users/user' + newUserID.toString());
+    // write to the document
+    setDoc(userRef, userData)
+        .then(() => { 
+            console.log(`user '${JSON.stringify(userRef)}' has been added to users collection`); 
+        })
+        .catch((error) => { 
+            console.log(`Error when adding user '${userRef}': '${error}'`);
+        });
+    // increment number of users 
+    
+    ///// finish this! 
 }
 
 /**

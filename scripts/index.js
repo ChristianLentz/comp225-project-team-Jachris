@@ -2,19 +2,16 @@
  * - The functionality of our app will be built using nodeJS
  * - The index.js file handles the startup of the app, this is the first thing 
  * that we run.
- * - All key functionality starts here. This is where we import the packages we 
- * need, initialize the app / db, and get auth state / analytics for a given 
- * instance of the app  
+ * - All key functionality starts here. 
+ * - This is the entry point for the webpack module bundler
  */
 
 // Import functions from the firebase SDK
 import { initializeApp } from "firebase/app"; 
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";  
+import { getFirestore } from "firebase/firestore";  
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
 import { createUser } from "./dbScripts";
-
-// ------------------------------------------------------------ 
 
 // Firebase configuration
 // measurementID is an optional parameter
@@ -28,15 +25,18 @@ const firebaseConfig = {
   measurementId: "G-DWMWXEG7BY"
 };
 
-const myApp = initializeApp(firebaseConfig); // initialize app 
-const myDB = getFirestore();                 // get database
-const analytics = getAnalytics();            // analytics 
-const auth = getAuth();                      // user auth 
+// initialize app, db, analytics and user auth 
+const myApp = initializeApp(firebaseConfig); 
+const myDB = getFirestore();                 
+const analytics = getAnalytics();            
+const auth = getAuth();                      
 
 // ------------------------------------------------------------ 
 
 /**
  * Handle functionality of the app. 
+ * 
+ * Determine if the user is currently logged in and run the app accordingly
  * 
  * Event handlers and asynchronous actions in JS here: 
  * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing
@@ -71,33 +71,31 @@ const auth = getAuth();                      // user auth
 
 // ---------------------------------
 
-// testing adding data to the db 
+// testing adding data to the db.. uncomment this and run then check firestore!
 
-const userData = {
-  firstName: 'First',
-  lastName: 'Last',
-  username: 'firstLastNames', 
-  password: 'superSupserSecretPassword', 
-  email: 'flast@macalester.edu', 
-};
-await createUser(myDB, userData); 
-
-// ---------------------------------
-
-// testing getting data from the db 
+// const userData = {
+//   firstName: 'First',
+//   lastName: 'Last',
+//   username: 'firstLastNames', 
+//   password: 'superSupserSecretPassword', 
+//   email: 'flast@macalester.edu', 
+// };
+// await createUser(myDB, userData); 
 
 // ---------------------------------
-
 
 // check if a user is currently logged in
 onAuthStateChanged(auth, user => {
-    // if logged in, run the app 
+    // if logged in 
     if (user != null) { 
-      console.log("logged in!");
-    // if not logged in, direct user to login page and then run the app 
+      console.log(`'${JSON.stringify(user)}' is logged in!`);
+    // if not logged in
     } else { 
-      console.log("no user no user no user!");
+      console.log("no user!");
+      // direct to login page (use login.js)
     } 
 });
+
+// run the app (use run.js)
 
 

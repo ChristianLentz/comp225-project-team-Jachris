@@ -14,6 +14,7 @@ import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWith
 import { createUser } from "./dbScripts";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
+// TODO: Import functions for express 
 
 // Firebase configuration
 // measurementID is an optional parameter
@@ -27,28 +28,61 @@ const firebaseConfig = {
   measurementId: "G-DWMWXEG7BY"
 };
 
-// initialize app, db, analytics and user auth 
-const myApp = initializeApp(firebaseConfig); 
+// Initialize firebase app, user auth, db, analytics
+const myApp = initializeApp(firebaseConfig);
+const auth = getAuth();  
 const myDB = getFirestore();                 
-const analytics = getAnalytics();            
-const auth = getAuth();                      
+const analytics = getAnalytics();                                 
 
-// ------------------------------------------------------------ 
+// ------------------------------------------------------------ User Auth 
 
-/**
- * Handle functionality of the app. 
- * 
- * Determine if the user is currently logged in and run the app accordingly
- * 
- * Event handlers and asynchronous actions in JS here: 
- * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing
- */
+// // This signs up new users to create a new password and username (Mac Email)
+// createUserWithEmailAndPassword(auth, email, password)
+//   .then((userCredential) => {
+//     // Signed up 
+//     const user = userCredential.user;
+//     // ...
+//   })
+//   .catch((error) => {
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     // ...
+//   });
 
+// // Allows users to sign in with their username and password. 
+// signInWithEmailAndPassword(auth, email, password)
+//   .then((userCredential) => {
+//     // Signed in 
+//     const user = userCredential.user;
+//     // ...
+//   })
+//   .catch((error) => {
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//   });
+  
+// // Authenticate with Firebase using the Google provider object. Opens up other tab to sign in with email. 
+//   signInWithPopup(auth, provider)
+//   .then((result) => {
+//     // This gives you a Google Access Token. You can use it to access the Google API.
+//     const credential = GoogleAuthProvider.credentialFromResult(result);
+//     const token = credential.accessToken;
+//     // The signed-in user info.
+//     const user = result.user;
+//     // IdP data available using getAdditionalUserInfo(result)
+//     // ...
+//   }).catch((error) => {
+//     // Handle Errors here.
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     // The email of the user's account used.
+//     const email = error.customData.email;
+//     // The AuthCredential type that was used.
+//     const credential = GoogleAuthProvider.credentialFromError(error);
+//     // ...
+//   });
 
-
-// ---------------------------------
-
-// testing adding data to the db.. uncomment this and run then check firestore!
+// ------------------------------------------------------------ testing db
 
 // const userData = {
 //   firstName: 'First',
@@ -59,7 +93,7 @@ const auth = getAuth();
 // };
 // await createUser(myDB, userData); 
 
-// ---------------------------------
+// ------------------------------------------------------------ Run app 
 
 // check if a user is currently logged in
 onAuthStateChanged(auth, user => {
@@ -69,10 +103,8 @@ onAuthStateChanged(auth, user => {
     // if not logged in
     } else { 
       console.log("no user!");
-      // direct to login page (use login.js)
+      // direct to login page 
     } 
 });
-
-// run the app (use run.js)
 
 

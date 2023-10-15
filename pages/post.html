@@ -1,4 +1,5 @@
 <html>
+    <!-- setup the page -->
     <head>
         <meta charset="UTF-8"> <!-- set the character set for the webpage -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
         <link href="/css/loginstyle.css" rel="stylesheet">
     </head>
     
+    <!-- body of the page -->
     <body>
       <nav>
         <ul>
@@ -24,8 +26,8 @@
           </div>   
         </ul>
       </nav>
-      <!-- Create a post Form -->
-        <form action="/index.html" method="POST">
+          <!-- create a form which allows user to make a post -->
+        <form>
             <ul>
               <li>
                 <label for="name">Name:</label>
@@ -36,17 +38,53 @@
                 <input type="email" id="mail" name="user_email" />
               </li>
               <li>
-                <label for="msg">Message:</label>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="post_title" />
+              </li>
+              <li>
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="post_price" />
+              </li>
+              <li>
+                <label for="msg">Description:</label>
                 <textarea id="msg" name="user_message"></textarea>
               </li>
+              <!--  add image element to form, not in css or a list -->
               <li>
                 <label for="file-input"> Image: </label>
                 <input type="file" id="file-input" accept="image/*">
               </li>
               <li class="button">
-                <button type="submit">Make your Post</button>
+                <button type="submit" id="post-btn" >Make your Post</button>
               </li>
             </ul>
           </form>
+
+          <!-- a script to get elements from post form and send them to db -->
+          <script>
+
+            // create the data array for the post 
+            const postData = { 
+              name: document.getElementById('name'), 
+              userPostEmail: document.getElementById('mail'), 
+              title: document.getElementById('title'),
+              price: document.getElementById('price'),
+              description: document.getElementById('msg'),
+              img: document.getElementById('file-input')
+            }
+
+            // get the data and send to db on button click 
+            const postButton = document.getElementById('post-btn'); 
+            postButton.addEventListener("click", createPost)
+
+            ///// finish this! 
+
+          </script>
+
+        <!-- <form>
+            <label for="file-input"> Select an image: </label>
+            <input type="file" id="file-input" accept="image/*">
+        </form> -->
+
     </body>
 </html>

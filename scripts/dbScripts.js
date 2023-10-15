@@ -25,7 +25,6 @@
  * Each post will have the following items within its document:
  * 
  *      - title -> string 
- *      - sell -> boolean
  *      - price -> real number > 0 (will default to zero if sell is false)
  *      - description -> string  
  *      - postID -> an integer > 0

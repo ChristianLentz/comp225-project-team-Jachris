@@ -12,6 +12,8 @@ import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";  
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
 import { createUser } from "./dbScripts";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
 
 // Firebase configuration
 // measurementID is an optional parameter
@@ -42,32 +44,7 @@ const auth = getAuth();
  * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing
  */
 
-// commented these chunks since there are errors here
 
-//This signs up new users to create a new password and username (Mac Email)
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ...
-  });
-
-//Allows users to sign in with their username and password. 
-signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
 
 // ---------------------------------
 

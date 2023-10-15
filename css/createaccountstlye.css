@@ -56,7 +56,7 @@ form {
   
   .button {
     /* Align buttons with the text fields */
-    padding-left: 300px; /* same size as the label elements */
+    padding-left: 150px; /* same size as the label elements */
 
   }
   
@@ -64,5 +64,7 @@ form {
     /* This extra margin represent roughly the same space as the space
        between the labels and their text fields */
     margin-left: .5em;
+    height: 250px;
+
   }
   

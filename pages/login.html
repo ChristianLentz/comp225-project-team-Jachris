@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+    <!-- setup the page -->
     <head>
-        <meta charset="UTF-8"> <!-- set the character set for the webpage -->
+        <meta charset="UTF-8"> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="pragma" content="no-cache" />
-        <title>Mac Community Trade Center</title> <!-- set the title of the webpage -->
-        <script src="/scripts/dist/bundle.js?v=1"></script> <!-- define the script which builds the web page -->
+        <!-- HTTP header, for security. See https://www.keycdn.com/support/what-is-mime-sniffing -->
+        <meta http-equiv="X-Content-Type-Options: nosniff" /> 
+        <title>Mac Community Trade Center</title> 
+        <script src="/scripts/dist/bundle.js?v=1"></script> 
         <link href="/css/style.css" rel="stylesheet">
         <link href="/css/formstyle.css" rel="stylesheet">
     </head>
@@ -15,7 +17,7 @@
         <ul>
           <!-- Creating our nav bar -->
           <div id="Mac-Logo">
-            <li><img src="/images/macLogo.png" id="Mac-Logo"/></li>
+            <li><img src="/images/macLogo.png" id="Mac-Logo" alt="mac logo"/></li>
           </div>
           <div id="navright">
             <li><a href = "/pages/login.html"> Login</a></li>
@@ -25,19 +27,19 @@
           </div>   
         </ul>
       </nav>
-      <!-- Creating our form  -->
-        <form action="/pages/account.html" method="POST">
+      <!-- Create our form for logging in  -->
+        <form name="login-form" action="/pages/account.html" method="POST">
             <ul>
               <li>
-                <label for="mail">Email:</label>
-                <input type="email" id="mail" name="user_email" />
+                <label for="user-mail">Email:</label>
+                <input type="email" id="user-mail" name="user_email" />
               </li>
               <li>
-                <label for="password">Password:</label>
-                <input type="text" id="password" name="user_password" />
+                <label for="user-password">Password:</label>
+                <input type="text" id="user-password" name="user_password" />
               </li>
               <li class="button">
-                <button type="submit">Login</button>
+                <button type="submit" id="create-user-btn">Login</button>
               </li>
             </ul>
         </form>

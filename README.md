@@ -28,3 +28,11 @@ We use the Webpack CLI to compile and bundle our Java Script code into an output
 ### How do I host locally? 
 
 This is the final (and simplest) step of the process. Open your terminal of choice and navigate to the root directory of this project. In the terminal run **serve** or **npm serve**. Using **serve** without specifying a directory to serve will sereve the root directory of the project. This is what we want, since *index.html* (the html file for the homepage of our website) is located in our root directory. Follow the link provided in the terminal, you are now looking at a local instance of the webiste!
+
+### Errors and bugs 
+
+- We are getting a number of html errors at the moment: 
+  - <ul> and <ol> containers can only directly contain <script>, <li> or <template> containers 
+  - each image must have alternative text attribute <alt>="some text"
+  - <li> elements must be contained within <ul> or <ol> container 
+  - id attributes on the same document must be unique 

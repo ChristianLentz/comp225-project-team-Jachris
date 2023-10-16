@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">  
+    <!-- setup the page -->  
     <head>
-      <meta charset="UTF-8"> <!-- set the character set for the webpage -->
+      <meta charset="UTF-8"> 
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="pragma" content="no-cache" />
-      <title> Account </title> <!-- set the title of the webpage -->
-      <script src="/scripts/dist/bundle.js?v=1"></script> <!-- define the script which builds the web page -->
+      <!-- HTTP header, for security. See https://www.keycdn.com/support/what-is-mime-sniffing -->
+      <meta http-equiv="X-Content-Type-Options: nosniff" /> 
+      <title> Account </title> 
+      <script src="/scripts/dist/bundle.js?v=1"></script>
       <link href="/css/style.css" rel="stylesheet">
       <link href="/css/accountstyle.css " rel="stylesheet">
     </head>
@@ -14,7 +16,7 @@
             <ul>
             <!-- Creating the Nav bar  -->
             <div id="Mac-Logo">
-              <li><img src="/images/macLogo.png" id="Mac-Logo"></li>
+              <li><img src="/images/macLogo.png" id="Mac-Logo" alt="mac logo"></li>
             </div>
             <div id="navright">
               <li><a href = "/pages/login.html"> Login</a></li>
@@ -26,7 +28,7 @@
         </nav>
         <!-- Create information to be on account page -->
           <div class="card">
-            <img src="/images/jachris-logo.png" style="width:30%">
+            <img src="/images/jachris-logo.png" alt="jachris logo" style="width:30%">
             <h1>John Doe</h1>
             <p class="title">CEO & Founder, Example</p>
             <p>Harvard University</p>

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <!-- setup the page -->
     <head>
-        <meta charset="UTF-8"> <!-- set the character set for the webpage -->
+        <meta charset="UTF-8"> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="pragma" content="no-cache" />
-        <title> Post </title> <!-- set the title of the webpage -->
-        <script src="/scripts/dist/bundle.js?v=1"></script> <!-- define the script which builds the web page -->
+        <!-- HTTP header, for security. See https://www.keycdn.com/support/what-is-mime-sniffing -->
+        <meta http-equiv="X-Content-Type-Options: nosniff" /> 
+        <title> Post </title> 
+        <script src="/scripts/dist/bundle.js?v=1"></script> 
         <link href="/css/style.css" rel="stylesheet">
         <link href="/css/loginstyle.css" rel="stylesheet">
     </head>
@@ -17,7 +18,7 @@
         <ul>
           <!-- Creating the Nav -->
           <div id="Mac-Logo">
-            <li><img src="/images/macLogo.png" id="Mac-Logo"/></li>
+            <li><img src="/images/macLogo.png" id="Mac-Logo" alt="mac logo"/></li>
           </div>
           <div id="navright">
             <li><a href = "/pages/login.html"> Login</a></li>
@@ -28,35 +29,35 @@
         </ul>
       </nav>
           <!-- create a form which allows user to make a post -->
-        <form name="post">
+        <form name="post-form">
             <ul>
               <li>
-                <label for="name">Name:</label>
+                <label for="post-name">Name:</label>
                 <input type="text" id="post-name" name="user_name" />
               </li>
               <li>
-                <label for="mail">Email:</label>
+                <label for="post-mail">Email:</label>
                 <input type="email" id="post-mail" name="user_email" />
               </li>
               <li>
-                <label for="title">Title:</label>
-                <input type="text" id="[post-title" name="post_title" />
+                <label for="post-title">Title:</label>
+                <input type="text" id="post-title" name="post_title" />
               </li>
               <li>
-                <label for="price">Price:</label>
+                <label for="post-price">Price:</label>
                 <input type="number" id="post-price" name="post_price" />
               </li>
               <li>
-                <label for="msg">Description:</label>
-                <textarea id="msg" name="post-user-message"></textarea>
+                <label for="post-msg">Description:</label>
+                <textarea id="post-msg" name="post_msg"></textarea>
               </li>
               <!--  add image element to form, not in css or a list -->
               <li>
-                <label for="file-input"> Image: </label>
+                <label for="post-file-input"> Image: </label>
                 <input type="file" id="post-file-input" accept="image/*">
               </li>
               <li class="button">
-                <button type="submit" id="post-btn" >Make your Post</button>
+                <button type="submit" id="create-post-btn" >Make your post!</button>
               </li>
             </ul>
           </form>

@@ -99,29 +99,30 @@ const FormData = require('form-data');
 // };
 // await createUser(myDB, userData); 
 
-// get data from an html form and add it to the db
-// check that we are on the post page
-if (document.title == "Post") { 
-  window.onload = function() { 
-    // get the post form as an HTML element
-    const newPostForm = document.forms[0];
-    const postFormData = new FormData(newPostForm);
-    // get the html button for adding post 
-    const postBtn = document.getElementById("create-post-btn");
-    // if button is not null
-    if (postBtn) { 
-      // add event listener for clikcing the button
-      // print data in console on click 
-      postBtn.addEventListener("click", function() { 
-        for (const [key, value] of postFormData) { 
-          console.log(`key-value pair: (${key}, ${value})`); 
-        } 
-      }); 
-    } else { 
-      console.log("post btn not found!"); 
-    }
-  }
-}
+// // get data from an html form and add it to the db
+// // check that we are on the post page
+// if (document.title == "Post") { 
+//   window.onload = function() { 
+//     // get the post form and its output 
+//     const newPostForm = document.forms.namedItem("post-form");
+//     // ensure form was found and continue 
+//     if (newPostForm) { 
+//       // add event listener to get the form data on submit 
+//       let postFormOutput; 
+//       let postFormData; 
+//       newPostForm.addEventListener("submit", (event) => {
+//         // prevent page from reloading and losing form data on submit 
+//         event.preventDefault();
+//         // create FormData object 
+//         postFormOutput = document.querySelector("#post-form-output");
+//         postFormData = new FormData(newPostForm); 
+//         for (const [key, value] of postFormData) { 
+//           console.log(`key-value pair: (${key}, ${value})`); 
+//         }
+//       });
+//     }
+//   }
+// }
 
 // ------------------------------------------------------------ Run app 
 

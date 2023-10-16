@@ -1,21 +1,34 @@
 /**
- * - The functionality of our app will be built using nodeJS.
- * - The index.js file handles the startup of the app, this is the first thing 
- * that we run. All key functionality starts here. 
- * - This is the entry point for the webpack module bundler.
+ * The functionality of our app will be built using nodeJS.
+ * 
+ * The index.js file handles the startup of the app, this is the first thing 
+ * that we run. All key functionality starts here.
+ *  
+ * This is the entry point for the webpack module bundler.
  */
 
 // Import functions from the firebase SDK
 import { initializeApp } from "firebase/app"; 
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";  
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, 
+  onAuthStateChanged, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  GoogleAuthProvider, 
+  signInWithPopup } from "firebase/auth";
 
 // Import db scripts 
 import { createUser, createPost } from "./dbScripts";
 
-// Firebase configuration
-// measurementID is an optional parameter
+// Import form-data scripts 
+import { getPostFormData } from "./formData"; 
+
+// initialize express JS app - there is a webpack error when we try to use this?
+// const express = require('express'); 
+// const expressApp = express(); 
+
+// Firebase configuration - measurementID is an optional parameter
 const firebaseConfig = {
   apiKey: "AIzaSyDnuNDOz0v2w4M78YHk8mUupDKWT073MSE",
   authDomain: "mac-community-trade-center.firebaseapp.com",
@@ -31,13 +44,6 @@ const firebaseAPP = initializeApp(firebaseConfig);
 const auth = getAuth();  
 const myDB = getFirestore();                 
 const analytics = getAnalytics(); 
-
-// initialize express JS app - there is an error when we try to use this?
-// const express = require('express'); 
-// const expressApp = express(); 
-
-// import the form-data node module for getting data from HTML forms 
-const FormData = require('form-data');
 
 // ------------------------------------------------------------ User Auth 
 
@@ -97,31 +103,12 @@ const FormData = require('form-data');
 //   password: 'superSupserSecretPassword', 
 //   email: 'flast@macalester.edu', 
 // };
-// await createUser(myDB, userData); 
+// await createUser(myDB, userData);
 
-// // get data from an html form and add it to the db
-// // check that we are on the post page
-// if (document.title == "Post") { 
-//   window.onload = function() { 
-//     // get the post form and its output 
-//     const newPostForm = document.forms.namedItem("post-form");
-//     // ensure form was found and continue 
-//     if (newPostForm) { 
-//       // add event listener to get the form data on submit 
-//       let postFormOutput; 
-//       let postFormData; 
-//       newPostForm.addEventListener("submit", (event) => {
-//         // prevent page from reloading and losing form data on submit 
-//         event.preventDefault();
-//         // create FormData object 
-//         postFormOutput = document.querySelector("#post-form-output");
-//         postFormData = new FormData(newPostForm); 
-//         for (const [key, value] of postFormData) { 
-//           console.log(`key-value pair: (${key}, ${value})`); 
-//         }
-//       });
-//     }
-//   }
+// // get data from the new post form and add it to the db 
+// if (document.title == "Post") {
+//   const newPostData = await getPostFormData(); 
+//   await createPost(myDB, newPostData);  
 // }
 
 // ------------------------------------------------------------ Run app 

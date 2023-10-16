@@ -17,7 +17,8 @@ If you want to get started with running this application on your local machine, 
   - **npm i firebase** and **npm -g install firebase-tools** --> allows you to use the Firebase tools that run the project.
   - **npm install webpack webpack-cli** --> allows you to use the Webpack moduler bundler which compiles our Java Script code.
   - **node_modules/.bin/webpack** --> this is how we tell our project to use Webpack.
-  - **npm i express --save** --> allows you to use express JS, which we use for routing. 
+  - **npm i express --save** --> allows you to use express JS, which we use for routing.
+  - **npm i form-data --save** --> allows you to use the form-data node module, which is useful for collectiong user data from an HTML from  
  
 If at anytime you get authentication errors in the terminal when trying to install these packages (which may happen with Mac iOS) you should remove node_modules from your local repository and redo the previous steps using **sudo npm ...** for each command line prompt. You are now ready to go! 
 

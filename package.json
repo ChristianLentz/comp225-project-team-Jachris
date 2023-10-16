@@ -22,8 +22,10 @@
     "url": "https://github.com/ChristianLentz/comp225-project-jachris/issues"
   },
   "dependencies": {
+    "express": "^4.18.2",
     "firebase": "^10.4.0",
     "firebase-admin": "^11.11.0",
+    "form-data": "^4.0.0",
     "webpack-dev-server": "^4.15.1"
   },
   "devDependencies": {

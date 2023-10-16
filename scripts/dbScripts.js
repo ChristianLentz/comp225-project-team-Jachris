@@ -92,7 +92,7 @@ export async function getAllPosts (db, query) {
  */
 export async function getUserData (db, userID) { 
     // a reference to the userID document 
-    const userDoc = doc(db, 'users' + userID.toString()); 
+    const userDoc = doc(db, 'users' + userID.toString());
     return userDoc; 
 }
 
@@ -102,7 +102,7 @@ export async function getUserData (db, userID) {
  * @param {Number} postID 
  */
 export async function getPostData (postID) { 
-    const postDoc = doc(db, 'posts' + postID.toString()); 
+    const postDoc = doc(db, 'posts' + postID.toString());
     return postDoc;
 }
 
@@ -153,18 +153,11 @@ export async function createUser (db, data) {
 }
 
 /**
- * Delete the user data asociated with the given userID
- * @param {Number} userID 
- */
-export async function deleteUser (userID) { 
-
-}
-
-/**
  * Add a newly created post and its data to the posts collection 
+ * @param {Firestore} db - a reference to firestore
  * @param {Array} data 
  */
-export async function createPost (data) { 
+export async function createPost (db, data) { 
     // get the total number of posts in the collection
     let numPosts; 
     const totalsRef = doc(db, 'metrics/totals'); 
@@ -172,8 +165,28 @@ export async function createPost (data) {
     if ((await totalsSnapshot).exists) { 
         numPosts = (await totalsSnapshot).get("totalPosts");
     } else { 
-        numUsers = 0; 
+        numPosts = 0; 
     } 
+    // generate a new postId and create a doc reference  
+    const newPostID = numPosts + 1; 
+    const postRef = doc(db, 'users/post' + newPostID.toString());
+    // write to the document 
+    setDoc(postRef, data)
+        .then(() => { 
+            setDoc(postRef, {postID: newPostID}, {merge : true}); 
+            console.log(`post '${postRef.id}' has been added to posts collection`); 
+        })
+        .catch((error) => { 
+            console.log(`Error when create post '${postRef.id}': '${error}'`);
+        }); 
+    // increment the number of posts 
+    setDoc(totalsRef, {totalPosts: newPostID}, {merge : true})
+        .then(() => { 
+            console.log(`total posts is now: '${newPostID}'`); 
+        })
+        .catch((error) => { 
+            console.log(`Error when incrementing post count: '${error}'`);
+        }); 
 }
 
 /**
@@ -181,6 +194,5 @@ export async function createPost (data) {
  * @param {Number} postID 
  */
 export async function deletePost (postID) { 
-
+    
 }
-

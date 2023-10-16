@@ -1,9 +1,8 @@
 /**
- * - The functionality of our app will be built using nodeJS
+ * - The functionality of our app will be built using nodeJS.
  * - The index.js file handles the startup of the app, this is the first thing 
- * that we run.
- * - All key functionality starts here. 
- * - This is the entry point for the webpack module bundler
+ * that we run. All key functionality starts here. 
+ * - This is the entry point for the webpack module bundler.
  */
 
 // Import functions from the firebase SDK
@@ -11,9 +10,9 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";  
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { createUser } from "./dbScripts";
 
-// TODO: Import functions for express 
+// Import db scripts 
+import { createUser, createPost } from "./dbScripts";
 
 // Firebase configuration
 // measurementID is an optional parameter
@@ -28,10 +27,17 @@ const firebaseConfig = {
 };
 
 // Initialize firebase app, user auth, db, analytics
-const myApp = initializeApp(firebaseConfig);
+const firebaseAPP = initializeApp(firebaseConfig);
 const auth = getAuth();  
 const myDB = getFirestore();                 
-const analytics = getAnalytics();                                 
+const analytics = getAnalytics(); 
+
+// initialize express JS app - there is an error when we try to use this?
+// const express = require('express'); 
+// const expressApp = express(); 
+
+// import the form-data node module for getting data from HTML forms 
+const FormData = require('form-data');
 
 // ------------------------------------------------------------ User Auth 
 
@@ -83,6 +89,7 @@ const analytics = getAnalytics();
 
 // ------------------------------------------------------------ testing db
 
+// // put hardcoded data into the db 
 // const userData = {
 //   firstName: 'First',
 //   lastName: 'Last',
@@ -91,6 +98,28 @@ const analytics = getAnalytics();
 //   email: 'flast@macalester.edu', 
 // };
 // await createUser(myDB, userData); 
+
+// // get data from an html form and add it to the db
+// // check that we are on the post page
+// if (document.title == "Post") { 
+//   // get the post form as an HTML element
+//   const newPostForm = document.forms[0];
+//   const postFormData = new FormData(newPostForm);
+//   // get the html button for adding post 
+//   const postBtn = document.getElementsByClassName("button")[0];
+//   // if button is not null
+//   if (postBtn) { 
+//     // add event listener for clikcing the button
+//     // print data in console on click 
+//     postBtn.addEventListener("click", function() { 
+//       for (const [key, value] of postFormData) { 
+//         console.log(`key-value pair: (${key}, ${value})`); 
+//       } 
+//     }); 
+//   } else { 
+//     console.log("post btn not found!"); 
+//   }
+// }
 
 // ------------------------------------------------------------ Run app 
 
@@ -105,5 +134,3 @@ onAuthStateChanged(auth, user => {
       // direct to login page 
     } 
 });
-
-

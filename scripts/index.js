@@ -9,7 +9,7 @@
 import { initializeApp } from "firebase/app"; 
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";  
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 
 // Import db scripts 
 import { createUser, createPost } from "./dbScripts";
@@ -28,9 +28,11 @@ const firebaseConfig = {
 
 // Initialize firebase app, user auth, db, analytics
 const firebaseAPP = initializeApp(firebaseConfig);
-const auth = getAuth();  
-const myDB = getFirestore();                 
+const auth = getAuth(firebaseAPP);  
+const myDB = getFirestore(); 
+const email = getEmail(firebaseAPP);                
 const analytics = getAnalytics(); 
+const provider = new GoogleAuthProvider(firebaseAPP);
 
 // initialize express JS app - there is an error when we try to use this?
 // const express = require('express'); 
@@ -41,51 +43,51 @@ const FormData = require('form-data');
 
 // ------------------------------------------------------------ User Auth 
 
-// // This signs up new users to create a new password and username (Mac Email)
-// createUserWithEmailAndPassword(auth, email, password)
-//   .then((userCredential) => {
+// This signs up new users to create a new password and username (Mac Email)
+  createUserWithEmailAndPassword(auth, email, password)
+   .then((userCredential) => {
 //     // Signed up 
-//     const user = userCredential.user;
+    const user = userCredential.user;
 //     // ...
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
+ })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
 //     // ...
-//   });
+ });
 
 // // Allows users to sign in with their username and password. 
-// signInWithEmailAndPassword(auth, email, password)
-//   .then((userCredential) => {
+signInWithEmailAndPassword()
+  .then((userCredential) => {
 //     // Signed in 
-//     const user = userCredential.user;
-//     // ...
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//   });
+   const user = userCredential.user;
+//    
+})
+    .catch((error) => {
+     const errorCode = error.code;
+     const errorMessage = error.message;
+});
   
 // // Authenticate with Firebase using the Google provider object. Opens up other tab to sign in with email. 
-//   signInWithPopup(auth, provider)
-//   .then((result) => {
+signInWithPopup(auth, provider)
+  .then((result) => {
 //     // This gives you a Google Access Token. You can use it to access the Google API.
-//     const credential = GoogleAuthProvider.credentialFromResult(result);
-//     const token = credential.accessToken;
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
 //     // The signed-in user info.
-//     const user = result.user;
+     const user = result.user;
 //     // IdP data available using getAdditionalUserInfo(result)
 //     // ...
-//   }).catch((error) => {
+     }).catch((error) => {
 //     // Handle Errors here.
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
+       const errorCode = error.code;
+       const errorMessage = error.message;
 //     // The email of the user's account used.
-//     const email = error.customData.email;
+       const email = error.customData.email;
 //     // The AuthCredential type that was used.
-//     const credential = GoogleAuthProvider.credentialFromError(error);
+       const credential = GoogleAuthProvider.credentialFromError(error);
 //     // ...
-//   });
+ });
 
 // ------------------------------------------------------------ testing db
 

@@ -4,7 +4,7 @@
  * We can have this run in development or production mode. Webpack will use a module 
  * bundler which removes unused code from node_modules upon building our website. 
  * 
- * This bundle that we then use to build our website is put into dist/bundle.js
+ * This bundle that we then use to build our website is put into scripts/dist/bundle.js
  * 
  * Use $ npm run build in the terminal to compile new code to bundle.js, and then 
  * serve to see the changes locally. $ npm run build will update bundle.js everytime 

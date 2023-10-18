@@ -9,26 +9,26 @@
         <title>Mac Community Trade Center</title> 
         <script src="/scripts/dist/bundle.js?v=1"></script> 
         <link href="/css/style.css" rel="stylesheet">
-        <link href="/css/formstyle.css" rel="stylesheet">
+        <link href="/pages/loginPage/style.css" rel="stylesheet">
     </head>
     
     <body>
-      <nav>
+      <nav id = "navBar">
         <ul>
           <!-- Creating our nav bar -->
           <div id="Mac-Logo">
             <li><img src="/images/macLogo.png" id="Mac-Logo" alt="mac logo"/></li>
           </div>
           <div id="navright">
-            <li><a href = "/pages/login.html"> Login</a></li>
+            <li><a href = "/pages/loginPage/login.html"> Login</a></li>
             <li><a href = "/index.html"> Home</a></li>
-            <li><a href = "/pages/account.html"> Account</a></li>
-            <li><a href = "/pages/post.html"> Posts</a></li>
+            <li><a href = "/pages/accountPage/account.html"> Account</a></li>
+            <li><a href = "/pages/postPage/post.html"> Posts</a></li>
           </div>   
         </ul>
       </nav>
       <!-- Create our form for logging in  -->
-        <form name="login-form" action="/pages/account.html" method="POST">
+        <form name="login-form" action="/pages/accountPage/account.html" method="POST">
             <ul>
               <li>
                 <label for="user-mail">Email:</label>
@@ -44,7 +44,7 @@
             </ul>
         </form>
         <!-- Hyper Referene to create account page -->
-        <p>Don't have an account?<a href = "/pages/createacount.html">
+        <p>Don't have an account?<a href = "/pages/createAccountPage/createacount.html">
           Create one here.</a></p>
     </body>
 </html>

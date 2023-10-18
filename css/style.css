@@ -7,16 +7,36 @@ body{
     background-color: white;
 }
 .header {
-    padding: 80px; /* some padding */
+    /* padding: 80px; some padding */
     text-align: center; /* center the text */
-    background: #0b4fc6; /* green background */
-    color: white; /* white text color */
+    /* background: #0b4fc6; green background */
+    color: rgb(22, 20, 20); /* white text color */
+    background-color: #ddd;
 }
 
-    /* Increase the font size of the <h1> element */
-.header h1 {
-    font-size: 40px;
+/* Bottom right text */
+.descrip {
+  background-color: #ddd;
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  font-size: 40px;
+  transform: translate(-50%, -50%);
 }
+
+/* Centered text */
+.homeTitle { 
+  background-color: #ddd;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 40px;
+  transform: translate(-50%, -50%);
+}
+
+
+
+    
 #navBar{
     width: 100%;
     height: 100px;

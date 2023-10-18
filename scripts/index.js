@@ -40,15 +40,15 @@ const auth = getAuth(firebaseAPP);
 const myDB = getFirestore();                
 const analytics = getAnalytics(); 
 const provider = new GoogleAuthProvider(firebaseAPP);
-var i = "email"
-var e = "password"
+var e = "email"
+var p = "password"
 
 // ------------------------------------------------------------ User Auth 
 
 
 // This signs up new users to create a new password and username (Mac Email)
 
-  createUserWithEmailAndPassword(auth, i, e)
+  createUserWithEmailAndPassword(auth, e, p)
    .then((userCredential) => {
 //     // Signed up 
     const user = userCredential.user;

@@ -37,15 +37,18 @@ const firebaseConfig = {
 // Initialize firebase app, user auth, db, analytics
 const firebaseAPP = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseAPP);  
-const myDB = getFirestore(); 
-const email = getEmail(firebaseAPP);                
+const myDB = getFirestore();                
 const analytics = getAnalytics(); 
 const provider = new GoogleAuthProvider(firebaseAPP);
+var i = "email"
+var e = "password"
 
 // ------------------------------------------------------------ User Auth 
 
+
 // This signs up new users to create a new password and username (Mac Email)
-  createUserWithEmailAndPassword(auth, email, password)
+
+  createUserWithEmailAndPassword(auth, i, e)
    .then((userCredential) => {
 //     // Signed up 
     const user = userCredential.user;

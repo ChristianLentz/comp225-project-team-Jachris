@@ -62,9 +62,30 @@ function carousel() {
     <!-- Search bar sections -->
     <div class="row">
       <div class="side" style="background-color:#c3c1c1;">
-        <h2>Filter</h2>
+        <h2>Search</h2>
         <input type="text" id="myInput"  placeholder="Search for items...">
-        <p></p>
+        <div id="myBtnContainer">
+          <h2>Filter</h2>
+          <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+          <button class="btn" onclick="filterSelection('cars')"> Price: Low-High</button>
+          <button class="btn" onclick="filterSelection('fruits')"> Clothing</button>
+          <button class="btn" onclick="filterSelection('animals')"> Price: High-low</button>
+          <button class="btn" onclick="filterSelection('colors')"> Dorm Items</button>
+          <button class="btn" onclick="filterSelection('colors')"> Misc</button>
+        </div>
+
+        <script> 
+          // Add active class to the current control button (highlight it)
+          var btnContainer = document.getElementById("myBtnContainer");
+          var btns = btnContainer.getElementsByClassName("btn");
+          for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function() {
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+            });
+          }
+        </script>
     </div>
 
       <!-- Post Section -->

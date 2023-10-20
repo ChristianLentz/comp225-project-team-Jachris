@@ -16,25 +16,23 @@ body{
 
 /* Bottom right text */
 .descrip {
-  background-color: #ddd;
+  background-color: #fffbfb;
   position: absolute;
-  top: 56%;
+  top: 34.5vw;  /* vw used here to make it so text size moves according to window size */
   left: 50%;
-  font-size: 40px;
+  font-size: 3vw;
   transform: translate(-50%, -50%);
 }
 
 /* Centered text */
 .homeTitle { 
-  background-color: #ddd;
+  background-color: #fffdfd;
   position: absolute;
-  top: 50%;
+  top: 30vw;
   left: 50%;
-  font-size: 40px;
+  font-size: 5vw;
   transform: translate(-50%, -50%);
 }
-
-
 
     
 #navBar{

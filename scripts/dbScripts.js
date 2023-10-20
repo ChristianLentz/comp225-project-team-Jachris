@@ -87,29 +87,6 @@ export async function getAllPosts (db, query) {
 }
 
 /**
- * Get data for a specific user from the DB. 
- * 
- * @param {Firestore} db a reference to cloud firestore
- * @param {Number} userID 
- */
-export async function getUserData (db, userID) { 
-    // a reference to the userID document 
-    const userDoc = doc(db, 'users' + userID.toString());
-    return userDoc; 
-}
-
-/**
- * Get a data for a specific post from the DB. 
- * 
- * @param {Firestore} db a reference to firestore 
- * @param {Number} postID 
- */
-export async function getPostData (postID) { 
-    const postDoc = doc(db, 'posts' + postID.toString());
-    return postDoc;
-}
-
-/**
  * Get all posts associated with a given user in ascending order sorted by postID
  * 
  * @param {Firestore} db a reference to cloud firestore 
@@ -120,13 +97,40 @@ export async function getAllPostsForUser (db, userID) {
 }
 
 /**
- * Add a newly created user and their data to the users collection 
+ * Get data for a specific user from the DB. 
+ * 
+ * THIS NEEDS TO BE TESTED!!!
+ * 
+ * @param {Firestore} db a reference to cloud firestore
+ * @param {Number} userID 
+ */
+export async function getUserData (db, userID) { 
+    return await getAllDocumentData(db, 'users/user' + userID.toString());
+}
+
+/**
+ * Get data for a specific post from the DB. 
+ * 
+ * THIS NEEDS TO BE TESTED!!!
+ * 
+ * @param {Firestore} db a reference to firestore 
+ * @param {Number} postID 
+ */
+export async function getPostData (postID) { 
+    return await getAllDocumentData(db, 'posts/post' + postID.toString());
+}
+
+/**
+ * Add a newly created user and their data to the users collection
+ * 
+ * THIS NEEDS TO RUN WITH USER AUTH! 
  * 
  * @param {Firestore} db a reference to firestore 
  * @param {Array} data 
  */
 export async function createUser (db, data) { 
-    // get total number of users in the collection
+    // get total number of users in the collection 
+    // FIX THIS, should not be based on totals, this will not guarantee that IDs are unique if we all deletion!!
     const numUsers = await getValueOfField(db, 'metrics/totals', "total_users", 0);
     // generate a new userID  
     const newUserID = numUsers + 1; 
@@ -153,13 +157,20 @@ export async function createUser (db, data) {
 }
 
 /**
- * Add a newly created post and its data to the posts collection 
+ * Add a newly created post and its data to the posts collection
+ * 
+ * THIS NEEDS MORE CHECKING BEFORE BEING CALLED!!
+ * - ensure that the post form has been entire filled out 
+ * - ensure that the email provided is: 
+ *      - a valid macalester email 
+ *      - associated with an authenticated user 
  * 
  * @param {Firestore} db a reference to firestore
  * @param {Array} data 
  */
 export async function createPost (db, data) { 
-    // generate and ID for the post
+    // generate an ID for the post
+    // FIX THIS, should not be based on totals, this will not guarantee that IDs are unique if we all deletion!!
     const numPosts = await getValueOfField(db, 'metrics/totals', "total_posts", 0); 
     const newPostID = numPosts + 1;
     data.push({key: "postID", value: newPostID});
@@ -202,21 +213,40 @@ export async function deletePost (postID) {
 // ============================ Helper Functions ============================
 
 /**
- * Get the value for a given field within a Firestore collection. Create the field 
+ * Get the value for a given field within a Firestore document. Create the field 
  * with a default value if that field does not yes exist. 
  * 
  * @param {Firestore} db a reference to Firestore
- * @param {String} pathToCol path to a collection in firestore
+ * @param {String} pathToDoc path to a collection in firestore
  * @param {String} field the field whose value we want to get 
  * @param {*} default default value for that field 
  */
-async function getValueOfField(db, pathToCol, field, defaultVal) { 
-    const docRef = doc(db, pathToCol); 
+async function getValueOfField(db, pathToDoc, field, defaultVal) { 
+    const docRef = doc(db, pathToDoc); 
     const docSnapshot = getDoc(docRef); 
     if ((await docSnapshot).exists) {  
         return (await docSnapshot).get(field);
     } else { 
         return await defaultVal; 
+    }
+}
+
+/**
+ * Get all data stored for within a given document in Firestore. 
+ * 
+ * Firestore will return document data as 'undefined' if the document DNE, 
+ * in which case we throw an error. 
+ * 
+ * @param {Firestore} db 
+ * @param {String} pathToDoc 
+ */
+async function getAllDocumentData(db, pathToDoc) { 
+    const docRef = doc(db, pathToDoc);
+    const docData = getDoc(docRef);
+    if ( (await docData).data == undefined) { 
+        throw new Error(`Error when getting document data: document ${docRef.id} does not exist` ); 
+    } else { 
+        return (await docData).data(); 
     }
 }
 

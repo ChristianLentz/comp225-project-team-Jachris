@@ -28,9 +28,9 @@ body{
 .homeTitle { 
   background-color: #fffdfd;
   position: absolute;
-  top: 30vw;
+  top: 30.5vw;
   left: 50%;
-  font-size: 5vw;
+  font-size: 4vw;
   transform: translate(-50%, -50%);
 }
 
@@ -54,7 +54,6 @@ body{
     width: 90px;
     padding-top: 5px;
     padding-left: 0px;
-
 }
 #navright{
     float:right;
@@ -79,7 +78,7 @@ ul li a:hover{
 }
 
 /* Ensure proper sizing */
-* {
+ *{
     box-sizing: border-box;
   }
   

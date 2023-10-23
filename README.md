@@ -36,5 +36,5 @@ This is the final (and simplest) step of the process. Open your terminal of choi
 
   - ul and ol containers can only directly contain script, li or template containers 
   - each image must have alternative text attribute alt ="some text"
-  - li elements must be contained within <ul> or <ol> container 
+  - li elements must be contained within ul or ol container 
   - id attributes on the same document must be unique 

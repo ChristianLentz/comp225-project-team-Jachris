@@ -3,7 +3,6 @@
  * 
  * The index.js file handles the startup of the app, this is the first thing 
  * that we run, and is the entry point for the webpack module bundler. 
- *  
  */
 
 // Import functions from the firebase SDK
@@ -114,8 +113,11 @@ if (document.title == "Post") {
       event.preventDefault();
       // collect data 
       const newPostData = await getFormData("post-form");
+      // get user email 
+      let email = "clentz@macalester.edu"
+      // newPostData.at
       // send data to the db 
-      await createPost(myDB, newPostData); 
+      await createPost(myDB, newPostData, email); 
     }); 
   },1000); 
 }

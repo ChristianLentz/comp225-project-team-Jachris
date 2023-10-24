@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/scripts/dist/bundle.js?v=1"></script> <!-- define the script -->
     <link href="/css/style.css" rel="stylesheet">
+    <script src="/pages/testFolder/testScript.js"></script>
   </head>
   <!-- this is a container to hold all of the content which we actually want the user to see -->
   <body>
@@ -30,7 +31,7 @@
           <li><img src="/images/macLogo.png" id="Mac-Logo0" alt="mac logo 0"/></li>
         </div>
         <div id="navright">
-          <li><a href = "/pages/testpost.html"> Test</a></li>
+          <li><a href = "/pages/testFolder/testpost.html"> Test</a></li>
           <li><a href = "/pages/loginPage/login.html"> Login</a></li>
           <li><a href = "/index.html"> Home</a></li>
           <li><a href = "/pages/accountPage/account.html"> Account</a></li>
@@ -90,6 +91,44 @@ function carousel() {
       <!-- Post Section -->
       <div class="postArea" style = "overflow-y:scroll; background-color:#ffffff;">
         <h2>Posts</h2>
+        <div class="flipdiv v">
+          <div class="front">
+            <div class="frontImage">
+              <!-- <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 1"/> -->
+              <div class="text">
+                <a> Here is my image $10</a>
+              </div>
+          </div>
+          <div class="back">
+            
+            <div class="backImage">
+              <!-- <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 2"/> -->
+              <div class="backtext">
+                Here is my image $10
+                <div class="backdes">
+                  Here is the description of the back of my photo it is a very cool photo that 
+                    i like very much and it is awesome. 
+                </div>
+              </div>
+          </div>
+          </div>
+        </div>
+
+        <script>
+          // onload = function(){
+          // document.querySelector(".flipdiv.v").onclick = flipdivClicked;
+          // };
+          // function flipdivClicked(e) {
+          //   if (/\bshowBack\b/.test(this.className)) {
+          //     this.className = this.className.replace(/ ?\bshowBack\b/g, "");
+          //   }
+          //   else {
+          //     this.className += " showBack";
+          //   }
+          // }
+        </script>
+
+<!-- 
           <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 1"/>
           <img src="/images/macLogo.png" id="Mac-Logo2" alt="mac logo 2"/>
           <img src="/images/macLogo.png" id="Mac-Logo3" alt="mac logo 3"/>
@@ -101,7 +140,7 @@ function carousel() {
           <img src="/images/macLogo.png" id="Mac-Logo9" alt="mac logo 9"/>
           <img src="/images/macLogo.png" id="Mac-Logo10" alt="mac logo 10"/>
           <img src="/images/macLogo.png" id="Mac-Logo11" alt="mac logo 11"/>
-          <img src="/images/macLogo.png" id="Mac-Logo12" alt="mac logo 12"/>
+          <img src="/images/macLogo.png" id="Mac-Logo12" alt="mac logo 12"/> -->
       </div>
     </div>
     <!-- Make the footer for the homepage -->

@@ -37,7 +37,8 @@ const firebaseConfig = {
 
 // Initialize firebase app, user auth, db, analytics
 const firebaseAPP = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseAPP);  
+const auth = getAuth(firebaseAPP);
+auth.languageCode = 'en'  
 const myDB = getFirestore();                
 const analytics = getAnalytics(); 
 
@@ -46,6 +47,7 @@ const analytics = getAnalytics();
 const provider = new GoogleAuthProvider(firebaseAPP);
 var e = "email"
 var p = "password"
+
 
 
 // This signs up new users to create a new password and username (Mac Email)
@@ -74,6 +76,8 @@ signInWithEmailAndPassword()
 });
   
 // Authenticate with Firebase using the Google provider object. Opens up other tab to sign in with email. 
+const googleLogin = document.getElementByID("google-login-btn");
+googleLogin.addEventListener("click", function(){
 signInWithPopup(auth, provider)
   .then((result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
@@ -92,7 +96,7 @@ signInWithPopup(auth, provider)
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
       // ... 
- });
+    });
 
 // ------------------------------------------------------------ testing db
  
@@ -132,4 +136,5 @@ onAuthStateChanged(auth, user => {
       console.log("no user!");
       // direct to login page 
     } 
-});
+  });
+})

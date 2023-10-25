@@ -43,13 +43,15 @@
  */
 
 // import firestore functions from firebase library 
-import { 
-    collection, 
+import {
+    collection,
     doc, 
     setDoc, 
     getDoc, 
+    where,
+    limit,
     getDocs, 
-    updateDoc
+    query,
 } from "firebase/firestore";
 
 /**
@@ -67,32 +69,15 @@ import {
  */
 
 /**
- * Get all users from the db according to the given query. 
+ * Query all users/posts from the db given a collection, field, value and limit. 
  * 
  * @param {Firestore} db a reference to cloud firestore
- * @param {query} query 
+ * @param {String} colPath a path to a collection (users or posts)
+ * @param {FieldPath} fieldPath a path to a field in a collection
+ * @param {*} value the value of a field corresponding to field path 
+ * @param {Number} limit a number to limit results returned by the query 
  */
-export async function getAllUsers (db, query) { 
-
-}
-
-/**
- * Get all posts from the db according to the given query. 
- * 
- * @param {Firestore} db a reference to cloud firestore
- * @param {query} query  
- */
-export async function getAllPosts (db, query) { 
-
-}
-
-/**
- * Get all posts associated with a given user in ascending order sorted by postID
- * 
- * @param {Firestore} db a reference to cloud firestore 
- * @param {Number} userID 
- */
-export async function getAllPostsForUser (db, userID) { 
+export async function customQuery (db, colPath, fieldPath, value, limit) { 
 
 }
 
@@ -102,10 +87,10 @@ export async function getAllPostsForUser (db, userID) {
  * THIS NEEDS TO BE TESTED!!!
  * 
  * @param {Firestore} db a reference to cloud firestore
- * @param {Number} userID 
+ * @param {Number} userID an ID corresponding to the user whose data we are getting 
  */
 export async function getUserData (db, userID) { 
-    return await getAllDocumentData(db, 'users/user' + userID.toString());
+    return await getAllDocumentDataByPath(db, 'users/user' + userID.toString());
 }
 
 /**
@@ -114,10 +99,10 @@ export async function getUserData (db, userID) {
  * THIS NEEDS TO BE TESTED!!!
  * 
  * @param {Firestore} db a reference to firestore 
- * @param {Number} postID 
+ * @param {Number} postID an ID corresponding to the post data we are getting 
  */
 export async function getPostData (postID) { 
-    return await getAllDocumentData(db, 'posts/post' + postID.toString());
+    return await getAllDocumentDataByPath(db, 'posts/post' + postID.toString());
 }
 
 /**
@@ -126,19 +111,24 @@ export async function getPostData (postID) {
  * THIS NEEDS TO RUN WITH USER AUTH! 
  * 
  * @param {Firestore} db a reference to firestore 
- * @param {Array} data 
+ * @param {Array} data user data to be added to the database
  */
 export async function createUser (db, data) { 
-    // get total number of users in the collection 
-    // FIX THIS, should not be based on totals, this will not guarantee that IDs are unique if we all deletion!!
-    const numUsers = await getValueOfField(db, 'metrics/totals', "total_users", 0);
-    // generate a new userID  
+
+
+
+    // generate a new userID 
+    // FIX THIS, should not be based on totals, this will not guarantee that IDs are unique if we allow deletion!! 
+    const numUsers = await getValueOfFieldByPath(db, 'metrics/totals', "total_users", 0);
     const newUserID = numUsers + 1; 
     data.push({key: "userID", value: newUserID});
+
+
+
     // cast data array to object, generate refernce to user doc, write to doc
     const dataObj = Object.assign({}, data);
     const userRef = doc(db, 'users/user' + newUserID.toString());
-    setDoc(userRef, dataObj)
+    await setDoc(userRef, dataObj)
         .then(() => { 
             console.log(`user '${userRef.id}' has been added to users collection`); 
         })
@@ -147,13 +137,21 @@ export async function createUser (db, data) {
         }); 
     // increment the number of users 
     const totalsRef = doc(db, 'metrics/totals');
-    setDoc(totalsRef, {total_users: newUserID}, {merge : true})
+    await setDoc(totalsRef, {total_users: newUserID}, {merge : true})
         .then(() => { 
             console.log(`total users is now: '${newUserID}'`); 
         })
         .catch((error) => { 
             console.log(`Error when incrementing user count: '${error}'`);
         }); 
+}
+
+/**
+ * Delte the user data associated with the provided userID 
+ * @param {Number} userID 
+ */
+export async function deleteUser (userID) { 
+    
 }
 
 /**
@@ -166,25 +164,49 @@ export async function createUser (db, data) {
  *      - associated with an authenticated user 
  * 
  * @param {Firestore} db a reference to firestore
- * @param {Array} data 
+ * @param {Array} data post data to be added to the db 
+ * @param {String} email the email for the user who posted 
  */
-export async function createPost (db, data) { 
+export async function createPost (db, data, email) { 
+
+
     // generate an ID for the post
-    // FIX THIS, should not be based on totals, this will not guarantee that IDs are unique if we all deletion!!
-    const numPosts = await getValueOfField(db, 'metrics/totals', "total_posts", 0); 
+    // FIX THIS, should not be based on totals, this will not guarantee that IDs are unique if we allow deletion!!
+    const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0); 
     const newPostID = numPosts + 1;
     data.push({key: "postID", value: newPostID});
-    // generate a userID associated with the post - FINISH THIS !!!
-    const userPostRef = null; 
-    const newPostUserID = null;
-    data.push({key: "post_userID", value: newPostUserID}); 
+
+
+
+
+    // ============================================= working on this 
+
+    // get userID associated with the post
+    // const userQuery = query( 
+    //     collection(db, "users"), 
+    //     where('user_email', '==', email), 
+    // ); 
+    // const userQuerySnap = await getDocs(userQuery); 
+    // if (userQuerySnap.empty) { 
+    //     console.log("I am empty!"); 
+    // }
+    // let userRef = userQuerySnap.docs.at(0).ref;
+    // let user = await getDoc(userRef);
+    // let userData = user.data();  
+    // console.log(`there user data we found is ${JSON.stringify(userData)}`); 
+    // let userID = user.data
+    // console.log(`the user id we found is ${userID}`); 
+    // data.push({key: "post_userID", value: userID}); 
+
+    // =============================================
+
     // generate date posted 
     const datePosted = getTodayDate(); 
     data.push({key: "date_posted", value: datePosted}); 
     // cast data array to object, generate refernce to user doc, write to doc 
     const dataObj = Object.assign({}, data);
     const postRef = doc(db, 'posts/post' + newPostID.toString()); 
-    setDoc(postRef, dataObj)
+    await setDoc(postRef, dataObj)
         .then(() => { 
             console.log(`post '${postRef.id}' has been added to posts collection`); 
         })
@@ -193,7 +215,7 @@ export async function createPost (db, data) {
         }); 
     // increment the number of posts 
     const totalsRef = doc(db, 'metrics/totals');
-    setDoc(totalsRef, {total_posts: newPostID}, {merge : true})
+    await setDoc(totalsRef, {total_posts: newPostID}, {merge : true})
         .then(() => { 
             console.log(`total posts is now: '${newPostID}'`); 
         })
@@ -217,11 +239,11 @@ export async function deletePost (postID) {
  * with a default value if that field does not yes exist. 
  * 
  * @param {Firestore} db a reference to Firestore
- * @param {String} pathToDoc path to a collection in firestore
+ * @param {String} pathToDoc path to a document in firestore
  * @param {String} field the field whose value we want to get 
  * @param {*} default default value for that field 
  */
-async function getValueOfField(db, pathToDoc, field, defaultVal) { 
+async function getValueOfFieldByPath(db, pathToDoc, field, defaultVal) { 
     const docRef = doc(db, pathToDoc); 
     const docSnapshot = getDoc(docRef); 
     if ((await docSnapshot).exists) {  
@@ -232,15 +254,15 @@ async function getValueOfField(db, pathToDoc, field, defaultVal) {
 }
 
 /**
- * Get all data stored for within a given document in Firestore. 
+ * Get all data stored within a given document in Firestore. 
  * 
  * Firestore will return document data as 'undefined' if the document DNE, 
  * in which case we throw an error. 
  * 
- * @param {Firestore} db 
- * @param {String} pathToDoc 
+ * @param {Firestore} db a reference to firestore 
+ * @param {String} pathToDoc path to a document in firestore
  */
-async function getAllDocumentData(db, pathToDoc) { 
+async function getAllDocumentDataByPath(db, pathToDoc) { 
     const docRef = doc(db, pathToDoc);
     const docData = getDoc(docRef);
     if ( (await docData).data == undefined) { 
@@ -274,6 +296,20 @@ export async function getFormData(formName) {
         }
     }
     return formDataArr;
+}
+
+/**
+ * Log new user created in the metrics collection. 
+ */
+function incrementUsers() { 
+
+}
+
+/**
+ * Log new pose created in the metrics collection. 
+ */
+function incrementPosts() { 
+
 }
 
 /**

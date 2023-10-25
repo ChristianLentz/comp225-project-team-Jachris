@@ -43,59 +43,59 @@ const analytics = getAnalytics();
 
 // ------------------------------------------------------------ User Auth
 
-const provider = new GoogleAuthProvider(firebaseAPP);
-var e = "email"
-var p = "password"
+// const provider = new GoogleAuthProvider(firebaseAPP);
+// var e = "email"
+// var p = "password"
 
 
 
-// This signs up new users to create a new password and username (Mac Email)
+// // This signs up new users to create a new password and username (Mac Email)
 
-  createUserWithEmailAndPassword(auth, e, p)
-   .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    // ...
- })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
+//   createUserWithEmailAndPassword(auth, e, p)
+//    .then((userCredential) => {
+//     // Signed up 
+//     const user = userCredential.user;
 //     // ...
- });
+//  })
+//     .catch((error) => {
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+// //     // ...
+//  });
 
-// Allows users to sign in with their username and password. 
-signInWithEmailAndPassword()
-  .then((userCredential) => {
-  // Signed in 
-   const user = userCredential.user;    
-})
-  .catch((error) => {
-  const errorCode = error.code;
-  const errorMessage = error.message;
-});
+// // Allows users to sign in with their username and password. 
+// signInWithEmailAndPassword()
+//   .then((userCredential) => {
+//   // Signed in 
+//    const user = userCredential.user;    
+// })
+//   .catch((error) => {
+//   const errorCode = error.code;
+//   const errorMessage = error.message;
+// });
   
 // Authenticate with Firebase using the Google provider object. Opens up other tab to sign in with email. 
-const googleLogin = document.getElementByID("google-login-btn");
-googleLogin.addEventListener("click", function(){
-signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-    }).catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ... 
-    });
+// const googleLogin = document.getElementByID("google-login-btn");
+// googleLogin.addEventListener("click", function(){
+// signInWithPopup(auth, provider)
+//   .then((result) => {
+//     // This gives you a Google Access Token. You can use it to access the Google API.
+//     const credential = GoogleAuthProvider.credentialFromResult(result);
+//     const token = credential.accessToken;
+//     // The signed-in user info.
+//     const user = result.user;
+//     // IdP data available using getAdditionalUserInfo(result)
+//     // ...
+//     }).catch((error) => {
+//       // Handle Errors here.
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       // The email of the user's account used.
+//       const email = error.customData.email;
+//       // The AuthCredential type that was used.
+//       const credential = GoogleAuthProvider.credentialFromError(error);
+//       // ... 
+//     });
 
 // ------------------------------------------------------------ testing db
  
@@ -139,4 +139,5 @@ onAuthStateChanged(auth, user => {
       // direct to login page 
     } 
   });
-})
+
+// }); 

@@ -3,10 +3,10 @@
  * 
  * Our database is built using the Firebase feature Cloud Firestore, using NoSQL.
  * 
- * Our database will contain two collections: users and posts. 
+ * Our database will contain thre collections: metricss, users and posts. 
  * 
- * Each document within the users collection will represent one user or one post. The 
- * naming convention for each document will be userX or postX, where X is a positive 
+ * Each document within the users/posts collections will represent one user or one post. 
+ * The naming convention for each document will be userX or postX, where X is a positive 
  * integer representing the order in which the post/user was added to the site. For
  * example, user137 created their account and was added to the DB before user138. 
  * 
@@ -69,7 +69,8 @@ import {
  */
 
 /**
- * Query all users/posts from the db given a collection, field, value and limit. 
+ * Query all users/posts from the db given a collection, field, value and limit.
+ * Return the docs collected from the query.  
  * 
  * @param {Firestore} db a reference to cloud firestore
  * @param {String} colPath a path to a collection (users or posts)
@@ -115,15 +116,11 @@ export async function getPostData (postID) {
  */
 export async function createUser (db, data) { 
 
-
-
     // generate a new userID 
     // FIX THIS, should not be based on totals, this will not guarantee that IDs are unique if we allow deletion!! 
     const numUsers = await getValueOfFieldByPath(db, 'metrics/totals', "total_users", 0);
     const newUserID = numUsers + 1; 
     data.push({key: "userID", value: newUserID});
-
-
 
     // cast data array to object, generate refernce to user doc, write to doc
     const dataObj = Object.assign({}, data);
@@ -135,15 +132,9 @@ export async function createUser (db, data) {
         .catch((error) => { 
             console.log(`Error when create user '${userRef.id}': '${error}'`);
         }); 
+
     // increment the number of users 
-    const totalsRef = doc(db, 'metrics/totals');
-    await setDoc(totalsRef, {total_users: newUserID}, {merge : true})
-        .then(() => { 
-            console.log(`total users is now: '${newUserID}'`); 
-        })
-        .catch((error) => { 
-            console.log(`Error when incrementing user count: '${error}'`);
-        }); 
+    await changeUserTotal(newUserID); 
 }
 
 /**
@@ -169,37 +160,15 @@ export async function deleteUser (userID) {
  */
 export async function createPost (db, data, email) { 
 
-
     // generate an ID for the post
     // FIX THIS, should not be based on totals, this will not guarantee that IDs are unique if we allow deletion!!
     const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0); 
     const newPostID = numPosts + 1;
     data.push({key: "postID", value: newPostID});
 
-
-
-
-    // ============================================= working on this 
-
-    // get userID associated with the post
-    // const userQuery = query( 
-    //     collection(db, "users"), 
-    //     where('user_email', '==', email), 
-    // ); 
-    // const userQuerySnap = await getDocs(userQuery); 
-    // if (userQuerySnap.empty) { 
-    //     console.log("I am empty!"); 
-    // }
-    // let userRef = userQuerySnap.docs.at(0).ref;
-    // let user = await getDoc(userRef);
-    // let userData = user.data();  
-    // console.log(`there user data we found is ${JSON.stringify(userData)}`); 
-    // let userID = user.data
-    // console.log(`the user id we found is ${userID}`); 
-    // data.push({key: "post_userID", value: userID}); 
-
-    // =============================================
-
+    // add a user ID associated with the post
+    let userID = await getUserIDByEmail(db, email); 
+    data.push({key: "post_userID", value: userID}); 
     // generate date posted 
     const datePosted = getTodayDate(); 
     data.push({key: "date_posted", value: datePosted}); 
@@ -214,14 +183,7 @@ export async function createPost (db, data, email) {
             console.log(`Error when create post '${postRef.id}': '${error}'`);
         }); 
     // increment the number of posts 
-    const totalsRef = doc(db, 'metrics/totals');
-    await setDoc(totalsRef, {total_posts: newPostID}, {merge : true})
-        .then(() => { 
-            console.log(`total posts is now: '${newPostID}'`); 
-        })
-        .catch((error) => { 
-            console.log(`Error when incrementing post count: '${error}'`);
-        }); 
+    await changePostTotal(db, newPostID); 
 }
 
 /**
@@ -273,6 +235,24 @@ async function getAllDocumentDataByPath(db, pathToDoc) {
 }
 
 /**
+ * Get a userID by their provided email. A helper for the create post function. 
+ * 
+ * @param {Firestore} db a reference to Firestore
+ * @param {String} email an email provided by the user 
+ */
+async function getUserIDByEmail(db, email) { 
+    // query for user with the provided email (this should be unique!)
+    const userQuery = query( 
+        collection(db, "users"), 
+        where('user_email', '==', email), 
+    ); 
+    // get the user's userID 
+    const userQuerySnap = await getDocs(userQuery);
+    let user = await getDoc(userQuerySnap.docs.at(0).ref);
+    return user.data()['userID'];  
+}
+
+/**
  * Get data from an HTMLFormElement and construct a dictionary to hold the data.
  * 
  * Helpful links for using form-data node module: 
@@ -300,16 +280,36 @@ export async function getFormData(formName) {
 
 /**
  * Log new user created in the metrics collection. 
+ * 
+ * @param {firestore} db a reference to Firestore
+ * @param {Number} count the new number of users to set
  */
-function incrementUsers() { 
-
+async function changeUserTotal(db, count) { 
+    const totalsRef = doc(db, 'metrics/totals');
+    await setDoc(totalsRef, {total_users: count}, {merge : true})
+        .then(() => { 
+            console.log(`total users is now: '${count}'`); 
+        })
+        .catch((error) => { 
+            console.log(`Error when incrementing user count: '${error}'`);
+        }); 
 }
 
 /**
  * Log new pose created in the metrics collection. 
+ * 
+ * @param {firestore} db a reference to Firestore
+ * @param {Number} count the new number of posts to set
  */
-function incrementPosts() { 
-
+async function changePostTotal(db, count) { 
+    const totalsRef = doc(db, 'metrics/totals');
+    await setDoc(totalsRef, {total_posts: count}, {merge : true})
+        .then(() => { 
+            console.log(`total posts is now: '${count}'`); 
+        })
+        .catch((error) => { 
+            console.log(`Error when incrementing post count: '${error}'`);
+        });
 }
 
 /**

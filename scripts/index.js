@@ -3,7 +3,6 @@
  * 
  * The index.js file handles the startup of the app, this is the first thing 
  * that we run, and is the entry point for the webpack module bundler. 
- *  
  */
 
 // Import functions from the firebase SDK
@@ -37,62 +36,66 @@ const firebaseConfig = {
 
 // Initialize firebase app, user auth, db, analytics
 const firebaseAPP = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseAPP);  
+const auth = getAuth(firebaseAPP);
+auth.languageCode = 'en'  
 const myDB = getFirestore();                
 const analytics = getAnalytics(); 
 
 // ------------------------------------------------------------ User Auth
 
-const provider = new GoogleAuthProvider(firebaseAPP);
-var e = "email"
-var p = "password"
+// const provider = new GoogleAuthProvider(firebaseAPP);
+// var e = "email"
+// var p = "password"
 
 
-// This signs up new users to create a new password and username (Mac Email)
 
-  createUserWithEmailAndPassword(auth, e, p)
-   .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    // ...
- })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
+// // This signs up new users to create a new password and username (Mac Email)
+
+//   createUserWithEmailAndPassword(auth, e, p)
+//    .then((userCredential) => {
+//     // Signed up 
+//     const user = userCredential.user;
 //     // ...
- });
+//  })
+//     .catch((error) => {
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+// //     // ...
+//  });
 
-// Allows users to sign in with their username and password. 
-signInWithEmailAndPassword()
-  .then((userCredential) => {
-  // Signed in 
-   const user = userCredential.user;    
-})
-  .catch((error) => {
-  const errorCode = error.code;
-  const errorMessage = error.message;
-});
+// // Allows users to sign in with their username and password. 
+// signInWithEmailAndPassword()
+//   .then((userCredential) => {
+//   // Signed in 
+//    const user = userCredential.user;    
+// })
+//   .catch((error) => {
+//   const errorCode = error.code;
+//   const errorMessage = error.message;
+// });
   
 // Authenticate with Firebase using the Google provider object. Opens up other tab to sign in with email. 
-signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-    }).catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ... 
- });
+// const googleLogin = document.getElementByID("google-login-btn");
+// googleLogin.addEventListener("click", function(){
+// signInWithPopup(auth, provider)
+//   .then((result) => {
+//     // This gives you a Google Access Token. You can use it to access the Google API.
+//     const credential = GoogleAuthProvider.credentialFromResult(result);
+//     const token = credential.accessToken;
+//     // The signed-in user info.
+//     const user = result.user;
+//     // IdP data available using getAdditionalUserInfo(result)
+//     // ...
+//     }).catch((error) => {
+//       // Handle Errors here.
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       // The email of the user's account used.
+//       const email = error.customData.email;
+//       // The AuthCredential type that was used.
+//       const credential = GoogleAuthProvider.credentialFromError(error);
+//       // ... 
+//     });
 
 // ------------------------------------------------------------ testing db
  
@@ -114,8 +117,11 @@ if (document.title == "Post") {
       event.preventDefault();
       // collect data 
       const newPostData = await getFormData("post-form");
+      // get user email 
+      let email = "clentz@macalester.edu"
+      // newPostData.at
       // send data to the db 
-      await createPost(myDB, newPostData); 
+      await createPost(myDB, newPostData, email); 
     }); 
   },1000); 
 }
@@ -132,4 +138,6 @@ onAuthStateChanged(auth, user => {
       console.log("no user!");
       // direct to login page 
     } 
-});
+  });
+
+// }); 

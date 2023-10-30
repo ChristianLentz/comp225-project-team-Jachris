@@ -58,17 +58,17 @@ const signInWithGoogle= () => {
 
 // ------------------------------------------------------------ testing d
 
-function firebaseApp() {
-  return (
-    <div className="firebaseApp">
-      <button class="login-with-google-btn" onClick={signInWithGoogle}>
-      </button>
-      <h1>{localStorage.getItem("name")}</h1>
-      <h1>{localStorage.getItem("email")}</h1>
-      <img src={localStorage.getItem("profilePic")} />
-    </div>
-  );
-}
+//function firebaseApp() {
+  //return (
+    //<div className="firebaseApp">
+      //<button class="login-with-google-btn" onClick={signInWithGoogle}>
+      //</button>
+      //<h1>{localStorage.getItem("name")}</h1>
+      //<h1>{localStorage.getItem("email")}</h1>
+     // <img src={localStorage.getItem("profilePic")} />
+    //</div>
+  //);
+//}
 
 /**
  * things to add here: 

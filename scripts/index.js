@@ -86,13 +86,13 @@ if (document.title == "Post") {
     const postBtn = document.getElementById("create-post-btn"); 
     postBtn.addEventListener("click", async function(event) { 
       event.preventDefault();
-      // collect data 
+      // get the email from the user
+      const emailText = document.getElementById("post-mail").value; 
+      console.log("here is the email I got: ", emailText); 
+      // collect form data
       const newPostData = await getFormData("post-form");
-      // get user email 
-      let email = "clentz@macalester.edu"
-      // newPostData.at
       // send data to the db 
-      await createPost(myDB, newPostData, email); 
+      await createPost(myDB, newPostData, emailText); 
     }); 
   },1000); 
 }
@@ -101,13 +101,22 @@ if (document.title == "Post") {
 
 // check if a user is currently logged in
 onAuthStateChanged(auth, user => {
-    // if logged in 
+    // if there is a user logged in 
     if (user != null) { 
       console.log(`'${JSON.stringify(user)}' is logged in!`);
-    // if not logged in
+
+      // 1) direct user to home page (index.html)
+      // 2) run the app
+
+    // if there is no user logged in 
     } else { 
       console.log("no user!");
-      // direct to login page 
+
+      // 1) direct to login page 
+      // 2) allow user to login/create account 
+      // 3) direct user to home page (index.html)
+      // 4) run the app 
+
     } 
   });
 

@@ -201,7 +201,8 @@ ul li a:hover{
 
   
 /* Front and back of a card  */
-/* Work in progress code dont freak out */
+
+/* create inital size of front box */
 .flipdiv {
   position: relative;
   width: 220px;
@@ -209,6 +210,7 @@ ul li a:hover{
   perspective: 500px;
 }
 
+/* flipping the card to the back */
 .flipdiv.v.showBack .front, .flipdiv.v.flip .front {
   transform: rotateX(180deg);
 }
@@ -221,29 +223,88 @@ ul li a:hover{
   transform: rotateX(-180deg);
 }
 
-
+/* creating the front box */
 .flipdiv .front, .flipdiv .back {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  /* transition: all 0.5s ease-in; */
-  transition: none;
-  color: white;
-  background-color: #d50a0a;
-  padding: 10px;
-  backface-visibility: hidden;
-}
-
-.flipdiv .back {
-  position: absolute;
-  width: 400px;
+  width: 180%;
   height: 200%;
   box-sizing: border-box;
   /* transition: all 0.5s ease-in; */
   transition: none;
   color: white;
-  background-color: #000;
+  background-color: #3278da;
   padding: 10px;
   backface-visibility: hidden;
+}
+
+/* creating the back box */
+.flipdiv .back {
+  position: absolute;
+  width: 470%;
+  height: 470%;
+  box-sizing: border-box;
+  /* transition: all 0.5s ease-in; */
+  transition: none;
+  color: rgb(255, 255, 255);
+  background-color: #3278da;
+  padding: 10px;
+  backface-visibility: hidden;
+}
+
+/* alliging the description on front */
+.flipdiv .frontText {
+  font-size: 20;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.flipdiv .frontPrice{
+  font-size: 20;
+  text-align: center;
+  margin-top: 17px;
+}
+
+/* Aligning the information on the front */
+.flipdiv .frontImage img{
+  display: block;
+  height: 200px;
+  width: 200px;
+  margin-left: 95px;
+  margin-top: 10px;
+}
+
+.flipdiv .backImage img {
+  display: block;
+  height: 500px;
+  width: 500px;
+  margin-left: 200px;
+  margin-top: 10px;
+}
+
+/* aligning the information on the back */
+.flipdiv .backTitle{
+  position: absolute;
+  left: 10px;
+  top: 500px;
+  font-size: 40px;
+}
+
+.flipdiv .backDescription {
+  position: absolute;
+  left: 40px;
+  top: 620px;
+  font-size: 20px;
+}
+.flipdiv .price {
+  position: absolute;
+  left: 30px;
+  top: 550px;
+  font-size: 30px;
+
+}
+.flipdiv .sellerInfo {
+  position: absolute;
+  left: 900px;
+  top: 150px;
+  font-size: 30px;
 }

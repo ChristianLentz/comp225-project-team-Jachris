@@ -2,7 +2,7 @@
 <!-- <html> element wraps the content of the whole web page, this is the root element -->
 <!DOCTYPE html>
 <html lang="en"> 
-  <!-- <heqd> is a container to hold the content the page needs but the user will not see -->
+  <!-- <head> is a container to hold the content the page needs but the user will not see -->
   <head> 
     <meta charset="UTF-8"> <!-- set the character set for the webpage -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,26 +10,25 @@
     <link href="/css/style.css" rel="stylesheet">
     <script src="/pages/testFolder/testScript.js"></script>
   </head>
+
   <!-- this is a container to hold all of the content which we actually want the user to see -->
   <body>
-    <!-- <div class="header"> -->
-
-    <!-- Slide Show -->
-<section class="header">
-  
-  <img class="mySlides" src="/images/machome1.png" style="width:100%">
-  <img class="mySlides" src="/images/machome2.png" style="width:100%">
-  <img class="mySlides" src="/images/machome3.png" style="width:100%">
-  <div class="homeTitle">Mac Community Trade Center</div>
-  <div class="descrip">A way to Increase Sustainability</div>
-</section>
-
-    <!-- Creating our Nav -->
+    <!-- This creates the picture slide show on the home page -->
+    <section class="header">
+      <img class="mySlides" src="/images/machome1.png" style="width:100%">
+      <img class="mySlides" src="/images/machome2.png" style="width:100%">
+      <img class="mySlides" src="/images/machome3.png" style="width:100%">
+      <div class="homeTitle">Mac Community Trade Center</div>
+      <div class="descrip">A way to Increase Sustainability</div>
+    </section>
+    <!-- Creating the nav bar to be on the page -->
     <nav id = "navBar">
       <ul id = "nav-items">
+        <!-- seperating the logo -->
         <div id="Mac-Logo">
           <li><img src="/images/macLogo.png" id="Mac-Logo0" alt="mac logo 0"/></li>
         </div>
+        <!-- seperating the tabs -->
         <div id="navright">
           <li><a href = "/pages/testFolder/testpost.html"> Test</a></li>
           <li><a href = "/pages/loginPage/login.html"> Login</a></li>
@@ -40,24 +39,24 @@
       </ul>
     </nav>
 
-<script>
-// Automatic Slideshow - change image every 3 seconds
-var myIndex = 0;
-carousel();
+    <!-- Java script timer to change the image on the homepage -->
+    <script>
+      var myIndex = 0;
+      carousel();
+      function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+          x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) {myIndex = 1}
+        x[myIndex-1].style.display = "block";
+        setTimeout(carousel, 5000);
+    }
+    </script>
 
-function carousel() {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  myIndex++;
-  if (myIndex > x.length) {myIndex = 1}
-  x[myIndex-1].style.display = "block";
-  setTimeout(carousel, 5000);
-}
-</script>
-    <!-- Splitting our page into 2 sections -->
+    <!-- Splitting the bottom half of the home page into search and posts -->
 
     <!-- Search bar sections -->
     <div class="row">
@@ -91,6 +90,7 @@ function carousel() {
       <!-- Post Section -->
       <div class="postArea" style = "overflow-y:scroll; background-color:#ffffff;">
         <h2>Posts</h2>
+        <!-- creating one post -->
         <div class="flipdiv v">
           <div class="front">
             <div class="frontImage">
@@ -121,43 +121,13 @@ function carousel() {
               Seller: Jacob
             </div>
           </div>
-
-          
         </div>
-
-        <script>
-          // onload = function(){
-          // document.querySelector(".flipdiv.v").onclick = flipdivClicked;
-          // };
-          // function flipdivClicked(e) {
-          //   if (/\bshowBack\b/.test(this.className)) {
-          //     this.className = this.className.replace(/ ?\bshowBack\b/g, "");
-          //   }
-          //   else {
-          //     this.className += " showBack";
-          //   }
-          // }
-        </script>
-
-<!-- 
-          <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 1"/>
-          <img src="/images/macLogo.png" id="Mac-Logo2" alt="mac logo 2"/>
-          <img src="/images/macLogo.png" id="Mac-Logo3" alt="mac logo 3"/>
-          <img src="/images/macLogo.png" id="Mac-Logo4" alt="mac logo 4"/>
-          <img src="/images/macLogo.png" id="Mac-Logo5" alt="mac logo 5"/>
-          <img src="/images/macLogo.png" id="Mac-Logo6" alt="mac logo 6"/>
-          <img src="/images/macLogo.png" id="Mac-Logo7" alt="mac logo 7"/>
-          <img src="/images/macLogo.png" id="Mac-Logo8" alt="mac logo 8"/>
-          <img src="/images/macLogo.png" id="Mac-Logo9" alt="mac logo 9"/>
-          <img src="/images/macLogo.png" id="Mac-Logo10" alt="mac logo 10"/>
-          <img src="/images/macLogo.png" id="Mac-Logo11" alt="mac logo 11"/>
-          <img src="/images/macLogo.png" id="Mac-Logo12" alt="mac logo 12"/> -->
       </div>
     </div>
+
     <!-- Make the footer for the homepage -->
     <div class="footer">
       <p>Issues? Contact me <a href="mailto:jhellenb@macalester.edu">here</a>.</p>
     </div>
   </body>
-
 </html>

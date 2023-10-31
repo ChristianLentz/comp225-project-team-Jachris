@@ -49,9 +49,9 @@ import {
     setDoc, 
     getDoc, 
     where,
-    limit,
     getDocs, 
     query,
+    deleteDoc
 } from "firebase/firestore";
 
 /**
@@ -80,6 +80,8 @@ import {
  */
 export async function customQuery (db, colPath, fieldPath, value, limit) { 
 
+    // THIS MAY NOT BE NECESSARY? 
+    
 }
 
 /**
@@ -138,18 +140,44 @@ export async function createUser (db, data) {
 }
 
 /**
- * Delte the user data associated with the provided userID 
- * @param {Number} userID 
+ * Delte the user data associated with the provided userID
+ * 
+ * THIS NEEDS TO BE TESTED
+ * 
+ * @param {Firestore} db a reference to firestore
+ * @param {Number} userID the ID associated with the user to delete 
  */
-export async function deleteUser (userID) { 
-    
+export async function deleteUser (db, userID) { 
+    // get number of users
+    const numUsers = await getValueOfFieldByPath(db, 'metrics/totals', "total_users", 0);
+    if (numUsers > 0) { 
+        // query for the user to delete
+        const userQuery = query( 
+            collection(db, "users"), 
+            where('userID', '==', userID), 
+        ); 
+        const userQuerySnap = await getDocs(userQuery);
+        let userDocRef = await getDoc(userQuerySnap.docs.at(0).ref);
+        // delete the user 
+        deleteDoc(userDocRef)
+            .then(() => { 
+                console.log(`user '${userDocRef.id}' has been deleted from users collection`);
+            })
+            .catch((error) => { 
+                console.log(`Error when delete user '${userDocRef.id}': '${error}'`);
+            }); 
+        // decrement user total 
+        await changeUserTotal(db, numUsers-1);
+    } else { 
+        throw new Error(`cannot delete user '${userDocRef.id}', there are no users in the database.`); 
+    }
 }
 
 /**
  * Add a newly created post and its data to the posts collection
  * 
  * THIS NEEDS MORE CHECKING BEFORE BEING CALLED!!
- * - ensure that the post form has been entire filled out 
+ * - ensure that the post form has been entirely filled out 
  * - ensure that the email provided is: 
  *      - a valid macalester email 
  *      - associated with an authenticated user 
@@ -187,11 +215,37 @@ export async function createPost (db, data, email) {
 }
 
 /**
- * Delte the post data associated with the provided postID 
- * @param {Number} postID 
+ * Delte the post data associated with the provided postID
+ * 
+ * THIS NEEDS TO BE TESTED
+ * 
+ * @param {Firestore} db a reference to firestore
+ * @param {Number} postID the ID associated with the post to delete
  */
-export async function deletePost (postID) { 
-    
+export async function deletePost (db, postID) { 
+    // get number of posts
+    const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
+    if (numPosts > 0) { 
+        // query for the post to delete
+        const postQuery = query( 
+            collection(db, "posts"), 
+            where('postID', '==', postID), 
+        ); 
+        const postQuerySnap = await getDocs(postQuery);
+        let postDocRef = await getDoc(postQuerySnap.docs.at(0).ref);
+        // delete the post 
+        deleteDoc(postDocRef)
+            .then(() => { 
+                console.log(`post '${postDocRef.id}' has been deleted from posts collection`);
+            })
+            .catch((error) => { 
+                console.log(`Error when delete post '${postDocRef.id}': '${error}'`);
+            }); 
+        // decrement user total 
+        await changePostTotal(db, numPosts-1);
+    } else { 
+        throw new Error(`cannot delete post '${postDocRef.id}', there are no posts in the database.`); 
+    }
 }
 
 // ============================ Helper Functions ============================

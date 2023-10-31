@@ -11,10 +11,10 @@ import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";  
 import { getAuth, 
   onAuthStateChanged, 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword,  
   GoogleAuthProvider, 
-  signInWithPopup} from "firebase/auth"; 
+  signInWithPopup,
+  ProviderId} from "firebase/auth"; 
 
 // Import db scripts 
 import { createUser, createPost, getFormData } from "./dbScripts";
@@ -40,65 +40,36 @@ const auth = getAuth(firebaseAPP);
 auth.languageCode = 'en'  
 const myDB = getFirestore();                
 const analytics = getAnalytics(); 
+const provider = new GoogleAuthProvider();
 
 // ------------------------------------------------------------ User Auth
 
-// const provider = new GoogleAuthProvider(firebaseAPP);
-// var e = "email"
-// var p = "password"
+const signInWithGoogle= () => {
+    signInWithPopup(auth, ProviderId)
+    .then((result) => {
+      const name = result.user.displayName;
+      const email = result.user.email;
+      const profilePic = result.user.photoURL;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
+// ------------------------------------------------------------ testing d
 
+//function firebaseApp() {
+  //return (
+    //<div className="firebaseApp">
+      //<button class="login-with-google-btn" onClick={signInWithGoogle}>
+      //</button>
+      //<h1>{localStorage.getItem("name")}</h1>
+      //<h1>{localStorage.getItem("email")}</h1>
+     // <img src={localStorage.getItem("profilePic")} />
+    //</div>
+  //);
+//}
 
-// // This signs up new users to create a new password and username (Mac Email)
-
-//   createUserWithEmailAndPassword(auth, e, p)
-//    .then((userCredential) => {
-//     // Signed up 
-//     const user = userCredential.user;
-//     // ...
-//  })
-//     .catch((error) => {
-//       const errorCode = error.code;
-//       const errorMessage = error.message;
-// //     // ...
-//  });
-
-// // Allows users to sign in with their username and password. 
-// signInWithEmailAndPassword()
-//   .then((userCredential) => {
-//   // Signed in 
-//    const user = userCredential.user;    
-// })
-//   .catch((error) => {
-//   const errorCode = error.code;
-//   const errorMessage = error.message;
-// });
-  
-// Authenticate with Firebase using the Google provider object. Opens up other tab to sign in with email. 
-// const googleLogin = document.getElementByID("google-login-btn");
-// googleLogin.addEventListener("click", function(){
-// signInWithPopup(auth, provider)
-//   .then((result) => {
-//     // This gives you a Google Access Token. You can use it to access the Google API.
-//     const credential = GoogleAuthProvider.credentialFromResult(result);
-//     const token = credential.accessToken;
-//     // The signed-in user info.
-//     const user = result.user;
-//     // IdP data available using getAdditionalUserInfo(result)
-//     // ...
-//     }).catch((error) => {
-//       // Handle Errors here.
-//       const errorCode = error.code;
-//       const errorMessage = error.message;
-//       // The email of the user's account used.
-//       const email = error.customData.email;
-//       // The AuthCredential type that was used.
-//       const credential = GoogleAuthProvider.credentialFromError(error);
-//       // ... 
-//     });
-
-// ------------------------------------------------------------ testing db
- 
 /**
  * things to add here: 
  *    - move this to new file which runs upon user login? 
@@ -115,13 +86,13 @@ if (document.title == "Post") {
     const postBtn = document.getElementById("create-post-btn"); 
     postBtn.addEventListener("click", async function(event) { 
       event.preventDefault();
-      // collect data 
+      // get the email from the user
+      const emailText = document.getElementById("post-mail").value; 
+      console.log("here is the email I got: ", emailText); 
+      // collect form data
       const newPostData = await getFormData("post-form");
-      // get user email 
-      let email = "clentz@macalester.edu"
-      // newPostData.at
       // send data to the db 
-      await createPost(myDB, newPostData, email); 
+      await createPost(myDB, newPostData, emailText); 
     }); 
   },1000); 
 }
@@ -130,13 +101,22 @@ if (document.title == "Post") {
 
 // check if a user is currently logged in
 onAuthStateChanged(auth, user => {
-    // if logged in 
+    // if there is a user logged in 
     if (user != null) { 
       console.log(`'${JSON.stringify(user)}' is logged in!`);
-    // if not logged in
+
+      // 1) direct user to home page (index.html)
+      // 2) run the app
+
+    // if there is no user logged in 
     } else { 
       console.log("no user!");
-      // direct to login page 
+
+      // 1) direct to login page 
+      // 2) allow user to login/create account 
+      // 3) direct user to home page (index.html)
+      // 4) run the app 
+
     } 
   });
 

@@ -3,54 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Firebase Form</title>
+    <title>Posts</title>
     <link href="/pages/testFolder/style.css" rel="stylesheet">
     <script src="/pages/testFolder/testScript.js"></script>
     <script src="/pages/testFolder/testFetch.js"></script>
 
-   
   </head>
-  <body>
-
-    <h1> Score Table</h1>
-    <div id="score_table"></div>
-
-    <!-- <div class="flip"> 
-      <div class="card"> 
-        <div class="face front"> 
-          Front
-        </div> 
-        <div class="face back"> 
-          Back
-        </div> 
-      </div> 
-    </div>  -->
-
-    <!-- <div class="flipdiv v">
-      <div class="front">
-        Front Content
-      </div>
-      <div class="back">
-        Back Content
-        <div class ="back2">
-            this is like a text box 
-            <div class ="back3">
-              this is like a text box  also
-          </div>
-        </div>
-
-      </div>
+<body>
+  <div id = "main">
+    <div class="plus">+</div>
+    <button onclick="newPerson()" class="plus">
+        <div class="item">
+        <p>title</p>
     </div>
+    </button>
+   <div class="item">
+        <p>Title</p>
+    </div>
+   <div class="item">
+        <p>Title</p>
+    </div>
+   <div class="item">
+        <p>Title</p>
+    </div>
+   <div class="item">
+        <p>Title</p>
+    </div>
+   <div class="item">
+        <p>Title</p>
+    </div>
+   <div class="item">
+        <p>Title</p>
+    </div>
+   <div class="item">
+        <p>Title</p>
+    </div>
+   
+    </div>
+   
+    <!-- this is script that creates a new div and word to be added to the page on the button click -->
+    <!-- could be used similarly to make form button click upload to server, then fetch and put into form -->
+    <script>
+   function newPerson() {
+   var newdiv  = document.createElement('div');
+   newdiv.className+='item';
+   
+   var newp = document.createElement('h1');
+   newp.innerHTML = "help";
+   
+   newdiv.appendChild(newp);
+   document.getElementById('main').appendChild(newdiv);
 
-    <div class="flipdiv2 v">
-      <div class="front1">
-        Front2 Content
-      </div>
-      <div class="bac1">
-        Back2 Content
-      </div>
-    </div> -->
-
+   }
+    </script>
 </body>
 </html>
+
 

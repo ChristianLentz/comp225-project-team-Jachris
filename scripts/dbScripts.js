@@ -374,3 +374,4 @@ function getTodayDate() {
     const today = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
     return today; 
 }
+

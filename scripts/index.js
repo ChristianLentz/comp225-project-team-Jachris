@@ -12,8 +12,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";  
 import { getAuth, 
-  onAuthStateChanged, 
-  createUserWithEmailAndPassword,  
+  onAuthStateChanged,   
   GoogleAuthProvider, 
   signInWithPopup,
   ProviderId} from "firebase/auth"; 
@@ -46,29 +45,36 @@ const provider = new GoogleAuthProvider();
 
 // ------------------------------------------------------------ User Auth
 
-const signInWithGoogle= () => {
-    signInWithPopup(auth, ProviderId)
-    .then((result) => {
-      const name = result.user.displayName;
-      const email = result.user.email;
-      const profilePic = result.user.photoURL;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
 
-// function firebaseApp() {
-  //   return (
-  //     <div className="firebaseApp">
-  //       <button class="login-with-google-btn" onClick={signInWithGoogle}>
-  //       </button>
-  //       <h1>{localStorage.getItem("name")}</h1>
-  //       <h1>{localStorage.getItem("email")}</h1>
-  //      <img src={localStorage.getItem("profilePic")} />
-  //     </div>
-  //   );
-  // }
+//function firebaseApp() {
+  //return (
+  //<div index="firebaseApp">
+       //<button class="login-with-google-btn" onClick={signInWithGoogle}>
+       //</button>
+       //<h1>{localStorage.getItem("name")}</h1>
+       //<h1>{localStorage.getItem("email")}</h1>
+       //</div>
+    //);
+  //n}
 
 // ------------------------------------------------------------ Run app 
 

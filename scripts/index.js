@@ -1,19 +1,17 @@
 /**
- * The functionality of our app will be built using nodeJS.
- * 
- * The index.js file handles the startup of the app, this is the first thing 
- * that we run, and is the entry point for the webpack module bundler. 
+ * The index.js file handles the startup and initialization of the app. This is the 
+ * first thing that we run, and is the entry point for the webpack module bundler. This 
+ * file also handles user authentication, and calls a script to execute backend functions. 
  */
 
-// ------------------------------------------------------------ Imports, Initialize App
+// ============================ Initialize App ============================
 
 // Import functions from the firebase SDK
 import { initializeApp } from "firebase/app"; 
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";  
 import { getAuth, 
-  onAuthStateChanged, 
-  createUserWithEmailAndPassword,  
+  onAuthStateChanged,   
   GoogleAuthProvider, 
   signInWithPopup,
   ProviderId} from "firebase/auth"; 
@@ -44,36 +42,43 @@ const myDB = getFirestore();
 const analytics = getAnalytics(); 
 const provider = new GoogleAuthProvider();
 
-// ------------------------------------------------------------ User Auth
+// ============================ User Auth ============================
 
-const signInWithGoogle= () => {
-    signInWithPopup(auth, ProviderId)
-    .then((result) => {
-      const name = result.user.displayName;
-      const email = result.user.email;
-      const profilePic = result.user.photoURL;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
 
-// function firebaseApp() {
-  //   return (
-  //     <div className="firebaseApp">
-  //       <button class="login-with-google-btn" onClick={signInWithGoogle}>
-  //       </button>
-  //       <h1>{localStorage.getItem("name")}</h1>
-  //       <h1>{localStorage.getItem("email")}</h1>
-  //      <img src={localStorage.getItem("profilePic")} />
-  //     </div>
-  //   );
-  // }
+//function firebaseApp() {
+  //return (
+  //<div index="firebaseApp">
+       //<button class="login-with-google-btn" onClick={signInWithGoogle}>
+       //</button>
+       //<h1>{localStorage.getItem("name")}</h1>
+       //<h1>{localStorage.getItem("email")}</h1>
+       //</div>
+    //);
+  //n}
 
-// ------------------------------------------------------------ Run app 
+// ============================ Run App ============================
 
 // check if a user is currently logged in
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, user => async function() {
     // if there is a user logged in 
     if (user != null) { 
       console.log(`'${JSON.stringify(user)}' is logged in!`);
@@ -86,10 +91,9 @@ onAuthStateChanged(auth, user => {
 
       // 1) direct to login page 
       // 2) allow user to login/create account 
-      // 3) direct user to home page (index.html) 
+      // 3) direct user to home page (index.html)
 
     } 
   });
 
-// run the app once user is authenticated
-await runBackend(myDB); 
+await runBackend(myDB);

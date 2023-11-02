@@ -87,7 +87,7 @@ export async function customQuery (db, colPath, fieldPath, value, limit) {
 /**
  * Get data for a specific user from the DB. 
  * 
- * THIS NEEDS TO BE TESTED!!!
+ * THIS NEEDS TO BE TESTED!
  * 
  * @param {Firestore} db a reference to cloud firestore
  * @param {Number} userID an ID corresponding to the user whose data we are getting 
@@ -99,7 +99,7 @@ export async function getUserData (db, userID) {
 /**
  * Get data for a specific post from the DB. 
  * 
- * THIS NEEDS TO BE TESTED!!!
+ * THIS NEEDS TO BE TESTED!
  * 
  * @param {Firestore} db a reference to firestore 
  * @param {Number} postID an ID corresponding to the post data we are getting 
@@ -142,7 +142,7 @@ export async function createUser (db, data) {
 /**
  * Delte the user data associated with the provided userID
  * 
- * THIS NEEDS TO BE TESTED
+ * THIS NEEDS TO BE TESTED!
  * 
  * @param {Firestore} db a reference to firestore
  * @param {Number} userID the ID associated with the user to delete 
@@ -176,27 +176,17 @@ export async function deleteUser (db, userID) {
 /**
  * Add a newly created post and its data to the posts collection
  * 
- * THIS NEEDS MORE CHECKING BEFORE BEING CALLED!!
- * - ensure that the post form has been entirely filled out 
- * - ensure that the email provided is: 
- *      - a valid macalester email 
- *      - associated with an authenticated user 
- * 
  * @param {Firestore} db a reference to firestore
  * @param {Array} data post data to be added to the db 
- * @param {String} email the email for the user who posted 
  */
-export async function createPost (db, data, email) { 
+export async function createPost (db, data) { 
 
     // generate an ID for the post
     // FIX THIS, should not be based on totals, this will not guarantee that IDs are unique if we allow deletion!!
     const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0); 
     const newPostID = numPosts + 1;
     data.push({key: "postID", value: newPostID});
-
-    // add a user ID associated with the post
-    let userID = await getUserIDByEmail(db, email); 
-    data.push({key: "post_userID", value: userID}); 
+ 
     // generate date posted 
     const datePosted = getTodayDate(); 
     data.push({key: "date_posted", value: datePosted}); 
@@ -217,7 +207,7 @@ export async function createPost (db, data, email) {
 /**
  * Delte the post data associated with the provided postID
  * 
- * THIS NEEDS TO BE TESTED
+ * THIS NEEDS TO BE TESTED!
  * 
  * @param {Firestore} db a reference to firestore
  * @param {Number} postID the ID associated with the post to delete
@@ -294,16 +284,21 @@ async function getAllDocumentDataByPath(db, pathToDoc) {
  * @param {Firestore} db a reference to Firestore
  * @param {String} email an email provided by the user 
  */
-async function getUserIDByEmail(db, email) { 
+export async function getUserIDByEmail(db, email) { 
     // query for user with the provided email (this should be unique!)
     const userQuery = query( 
         collection(db, "users"), 
-        where('user_email', '==', email), 
-    ); 
+        where('user_email', '==', email))
     // get the user's userID 
     const userQuerySnap = await getDocs(userQuery);
-    let user = await getDoc(userQuerySnap.docs.at(0).ref);
-    return user.data()['userID'];  
+    if (userQuerySnap.empty) { 
+        // no user with that email is found 
+        return null 
+    }
+    else { 
+        let user = await getDoc(userQuerySnap.docs.at(0).ref);
+        return user.data()['userID']; 
+    } 
 }
 
 /**

@@ -5,6 +5,8 @@
  * that we run, and is the entry point for the webpack module bundler. 
  */
 
+// ------------------------------------------------------------ Imports, Initialize App
+
 // Import functions from the firebase SDK
 import { initializeApp } from "firebase/app"; 
 import { getAnalytics } from "firebase/analytics";
@@ -16,8 +18,8 @@ import { getAuth,
   signInWithPopup,
   ProviderId} from "firebase/auth"; 
 
-// Import db scripts 
-import { createUser, createPost, getFormData } from "./dbScripts";
+// Import backend scripts
+import { runBackend } from "./backendScripts";
 
 // initialize express JS app - there is a webpack error when we try to use this?
 // const express = require('express'); 
@@ -56,46 +58,17 @@ const signInWithGoogle= () => {
     });
 };
 
-// ------------------------------------------------------------ testing d
-
-//function firebaseApp() {
-  //return (
-    //<div className="firebaseApp">
-      //<button class="login-with-google-btn" onClick={signInWithGoogle}>
-      //</button>
-      //<h1>{localStorage.getItem("name")}</h1>
-      //<h1>{localStorage.getItem("email")}</h1>
-     // <img src={localStorage.getItem("profilePic")} />
-    //</div>
-  //);
-//}
-
-/**
- * things to add here: 
- *    - move this to new file which runs upon user login? 
- *    - need to do the same thing for the create user form
- *    - only allow form submit if all fields are present (throw error if not)
- *    - only add to db if email is associated with autenticated user (throw error if not)
- *        - need user auth done for this? 
- *    - when checking current doc title, we shold only execute if user is authenticated
- */
-if (document.title == "Post") {
-  // pause and let window load 
-  window.setTimeout( async function() { 
-    // wait for add post button to be clicked
-    const postBtn = document.getElementById("create-post-btn"); 
-    postBtn.addEventListener("click", async function(event) { 
-      event.preventDefault();
-      // get the email from the user
-      const emailText = document.getElementById("post-mail").value; 
-      console.log("here is the email I got: ", emailText); 
-      // collect form data
-      const newPostData = await getFormData("post-form");
-      // send data to the db 
-      await createPost(myDB, newPostData, emailText); 
-    }); 
-  },1000); 
-}
+// function firebaseApp() {
+  //   return (
+  //     <div className="firebaseApp">
+  //       <button class="login-with-google-btn" onClick={signInWithGoogle}>
+  //       </button>
+  //       <h1>{localStorage.getItem("name")}</h1>
+  //       <h1>{localStorage.getItem("email")}</h1>
+  //      <img src={localStorage.getItem("profilePic")} />
+  //     </div>
+  //   );
+  // }
 
 // ------------------------------------------------------------ Run app 
 
@@ -106,7 +79,6 @@ onAuthStateChanged(auth, user => {
       console.log(`'${JSON.stringify(user)}' is logged in!`);
 
       // 1) direct user to home page (index.html)
-      // 2) run the app
 
     // if there is no user logged in 
     } else { 
@@ -114,10 +86,10 @@ onAuthStateChanged(auth, user => {
 
       // 1) direct to login page 
       // 2) allow user to login/create account 
-      // 3) direct user to home page (index.html)
-      // 4) run the app 
+      // 3) direct user to home page (index.html) 
 
     } 
   });
 
-// }); 
+// run the app once user is authenticated
+await runBackend(myDB); 

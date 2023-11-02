@@ -28,40 +28,45 @@
           </div>    
         </ul>
       </nav>
-          <!-- create a form which allows user to make a post -->
+        <!-- create a form which allows user to make a post -->
         <form name="post-form" action="/index.html" method="POST">
             <ul>
               <li>
                 <label for="post-name">Name:</label>
-                <input type="text" id="post-name" name="user_name" />
+                <input type="text" id="post-name" name="user_name" required />
               </li>
               <li>
                 <label for="post-mail">Email:</label>
-                <input type="email" id="post-mail" name="user_email" />
+                <input type="email" id="post-mail" name="user_email" required />
               </li>
               <li>
                 <label for="post-title">Title:</label>
-                <input type="text" id="post-title" name="post_title" />
+                <input type="text" id="post-title" name="post_title" required />
               </li>
               <li>
                 <label for="post-price">Price:</label>
-                <input type="number" id="post-price" name="post_price" />
+                <input type="number" id="post-price" name="post_price" required />
               </li>
               <li>
                 <label for="post-msg">Description:</label>
-                <textarea id="post-msg" name="post_msg"></textarea>
+                <textarea id="post-msg" name="post_msg" required ></textarea>
               </li>
               <!-- add image element to form, not in css or a list -->
               <!-- add a name attribute for the image to collect it for the db-->
               <li>
-                <label for="post-file-input"> Image: </label>
+                <label for="post-file-input">Image:</label>
                 <input type="file" id="post-file-input" accept="image/*"> 
               </li>
-              <li class="button">
-                <button type="submit" id="create-post-btn" >Make your post!</button>
+              <li>
+                <input type = "submit" /> <!-- NEED TO CENTER THIS! -->
               </li>
+              <!-- <li class="button">
+                <button type="submit" id="create-post-btn" >Make your post!</button>
+                <input type = "submit" >
+              </li> -->
             </ul>
-          </form>
-          <div id="post-form-output"></div>
+        </form>
+      <div class="formOutput"></div>
+       
     </body>
 </html>

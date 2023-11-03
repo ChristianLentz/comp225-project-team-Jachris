@@ -108,9 +108,14 @@ console.log("New URL for index.html:", newURL.href);
 });
 
 console.log("before checking url param");
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams.get('createCard'));
+    console.log("checked url param");
+
+console.log("before checking url param");
 console.log(urlParams.get('createCard'));
-      const urlParams = new URLSearchParams(window.location.search);
-      console.log("checked url param");
+      // const urlParams = new URLSearchParams(window.location.search);
+      // console.log("checked url param");
       if (urlParams.get('createCard') === 'true') {
       // Call the createCard function when the parameter is present
       console.log("true");

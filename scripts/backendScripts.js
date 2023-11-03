@@ -4,7 +4,8 @@
  */
 
 // Import db scripts 
-import { createUser,
+import { queryForPostsByFilter,
+    createUser,
     getUserIDByEmail, 
     createPost, 
     getFormData } from "./dbScripts";
@@ -46,9 +47,11 @@ export async function runBackend(db) {
  * Eventually we may query posts based on filters. 
  * 
  * @param {Firestore} db a reference to firestore
+ * @param {Array} filters the filters currently selected for filtering posts 
  */
-async function homePageBackend(db) { 
-
+async function homePageBackend(db, filters) {
+    const posts = queryForPostsByFilter(db, filters, 50);
+    return posts; 
 }
 
 /**
@@ -101,6 +104,7 @@ async function postPageBackend(db) {
         await sendPostToDB(db, newPostData); 
       }); 
     },1000); 
+
 }
 
 /**

@@ -1,11 +1,10 @@
 /**
- * The functionality of our app will be built using nodeJS.
- * 
- * The index.js file handles the startup of the app, this is the first thing 
- * that we run, and is the entry point for the webpack module bundler. 
+ * The index.js file handles the startup and initialization of the app. This is the 
+ * first thing that we run, and is the entry point for the webpack module bundler. This 
+ * file also handles user authentication, and calls a script to execute backend functions. 
  */
 
-// ------------------------------------------------------------ Imports, Initialize App
+// ============================ Initialize App ============================
 
 // Import functions from the firebase SDK
 import { initializeApp } from "firebase/app"; 
@@ -43,7 +42,7 @@ const myDB = getFirestore();
 const analytics = getAnalytics(); 
 const provider = new GoogleAuthProvider();
 
-// ------------------------------------------------------------ User Auth
+// ============================ User Auth ============================
 
 signInWithPopup(auth, provider)
   .then((result) => {
@@ -67,7 +66,7 @@ signInWithPopup(auth, provider)
 // ------------------------------------------------------------ Run app 
 
 // check if a user is currently logged in
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, user => async function() {
     // if there is a user logged in 
     if (user != null) { 
       console.log(`'${JSON.stringify(user)}' is logged in!`);
@@ -80,10 +79,9 @@ onAuthStateChanged(auth, user => {
 
       // 1) direct to login page 
       // 2) allow user to login/create account 
-      // 3) direct user to home page (index.html) 
+      // 3) direct user to home page (index.html)
 
     } 
   });
 
-// run the app once user is authenticated
-await runBackend(myDB); 
+await runBackend(myDB);

@@ -5,58 +5,253 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Posts</title>
     <link href="/pages/testFolder/style.css" rel="stylesheet">
-    <script src="/pages/testFolder/testScript.js"></script>
-    <script src="/pages/testFolder/testFetch.js"></script>
-
+     <script src="/pages/testFolder/testScript.js"></script>
+    <!-- <script src="/pages/testFolder/testFetch.js"></script> -->
+    <!-- <script src="/pages/testFolder/test.js"></script> -->
   </head>
-<body>
-  <div id = "main">
-    <div class="plus">+</div>
-    <button onclick="newPerson()" class="plus">
-        <div class="item">
-        <p>title</p>
-    </div>
-    </button>
-   <div class="item">
-        <p>Title</p>
-    </div>
-   <div class="item">
-        <p>Title</p>
-    </div>
-   <div class="item">
-        <p>Title</p>
-    </div>
-   <div class="item">
-        <p>Title</p>
-    </div>
-   <div class="item">
-        <p>Title</p>
-    </div>
-   <div class="item">
-        <p>Title</p>
-    </div>
-   <div class="item">
-        <p>Title</p>
-    </div>
+  <body>
+      <div id = "main">
+        <button id="createCardButton">Create Card from URL</button>
+      </div>
+      <!-- <button id="createCardButton" onclick="createCard()">Create Card On this page</button> -->
+      <button id="createCardButton" onclick="createCard()">Create Card On this page</button>
+
+
+  <script>
+  //   let currentURL = "http://localhost:3000"; // Replace this with an actual URL or use a placeholder
+
+  //   // Event listener example (e.g., a button click)
+  //   document.getElementById("createCardButton").addEventListener("click", function() {
+  //   // Update the URL when the button is clicked
+  //   currentURL = "http://index.html?createCard=true"; // Replace this with your desired URL
+
+  //   // You can perform actions with the updated URL here
+  //   console.log("URL updated to: " + currentURL);
+  // });
+
+
+
+  //   function createCardOnIndex() {
+  //   let baseURL = window.location.origin;
+  //   let indexPath = "/"; // If your index page is the root of the application
+  //   let queryParameter = "?createCard=true";
+  //   let finalURL = baseURL + indexPath + queryParameter;
+
+  //   // For navigation, you can use something like this
+  //   window.location.href = finalURL;
+  // }  
+
+
+
+
+
+ const createCardButton = document.getElementById('createCardButton');
+
+// createCardButton.addEventListener('click', function () {
+//     let url = new URL(window.location.href);
+
+//     if (url.pathname.endsWith('/pages/testFolder/testpost.html')) {
+//         url.searchParams.set('createCard', 'true');
+
+//         // Update the URL without reloading the page
+//         window.history.pushState({}, '', url);
+
+//         // Create a new URL for index.html with the modified query parameter
+//         let newIndexURL = new URL('/index.html', window.location.origin);
+//         newIndexURL.searchParams.set('createCard', 'true');
+
+//         // Redirect to the modified URL (index.html with the query parameter)
+//         window.location.href = newIndexURL.href;
+//     } else {
+//         console.log("URL doesn't match the condition");
+//     }
+// });
+
+
+
+
+// const createCardButton = document.getElementById('createCardButton');
+document.addEventListener("DOMContentLoaded", function() {
+
+console.log("Button:", createCardButton);
+
+createCardButton.addEventListener('click', function () {
+    console.log("Button clicked");
+
+    // Create a new URL object for index.html
+let newURL = new URL( window.location.href);
+
+// Add a 'createCard' parameter with the value 'true'
+newURL.searchParams.set('createCard', 'true');
+
+// Update the URL to index.html with the new query parameter
+window.history.pushState({}, '', newURL);
+
+// Redirect to the modified URL (index.html with the query parameter)
+window.location.href = newURL.href;
+// Log messages to verify script execution
+console.log("Script is running");
+console.log("New URL for index.html:", newURL.href);
+
+    let url = new URL(window.location.href);
+    console.log("Current URL:", url);
+
+    if (url.pathname.endsWith('/pages/testFolder/testpost.html')) {
+        console.log("URL matches condition");
+        url.searchParams.set('createCard', 'true');
+        console.log("Updated URL:", url);
+        window.history.pushState({}, '', url);
+        console.log("URL updated");
+    } else {
+        console.log("URL doesn't match the condition");
+    }
+});
+
+console.log("before checking url param");
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams.get('createCard'));
+    console.log("checked url param");
+
+console.log("before checking url param");
+console.log(urlParams.get('createCard'));
+      // const urlParams = new URLSearchParams(window.location.search);
+      // console.log("checked url param");
+      if (urlParams.get('createCard') === 'true') {
+      // Call the createCard function when the parameter is present
+      console.log("true");
+      createCard();
+    }
+  });
+// document.addEventListener("DOMContentLoaded", function() {
+//     const createCardButton = document.getElementById('createCardButton');
+
+//     createCardButton.addEventListener('click', function() {
+//         let url = new URL(window.location.href);
+        
+//         console.log('Current URL:', window.location.href);
+//         console.log('Pathname:', url.pathname);
+
+//         if (url.pathname.endsWith('/pages/testFolder/testpost.html')) {
+//             url.searchParams.set('createCard', 'true');
+
+//             // Update the URL without redirecting
+//             window.history.pushState({}, '', url);
+            
+//             console.log('URL updated without redirection:', window.location.href);
+//         } else {
+//             console.log("URL doesn't match the condition");
+//         }
+//     });
+
+//     const urlParams = new URLSearchParams(window.location.search);
+//     if (urlParams.get('createCard') === 'true') {
+//         console.log("true");
+//         createCard();
+//         // Your logic to create a card here
+//     }
+// });
+
+  
+
+
+    // const createCardButton = document.getElementById('createCardButton');
+    // createCardButton.addEventListener('click', function () {
+    //   window.location.href = '/pages/accountPage/account.html?createCard=true';
+    // });
+
+
    
-    </div>
-   
-    <!-- this is script that creates a new div and word to be added to the page on the button click -->
-    <!-- could be used similarly to make form button click upload to server, then fetch and put into form -->
-    <script>
-   function newPerson() {
-   var newdiv  = document.createElement('div');
-   newdiv.className+='item';
-   
-   var newp = document.createElement('h1');
-   newp.innerHTML = "help";
-   
-   newdiv.appendChild(newp);
-   document.getElementById('main').appendChild(newdiv);
+    // this is script that creates a new div and word to be added to the page on the button click 
+    // could be used similarly to make form button click upload to server, then fetch and put into form 
+
+
+function createCard() {
+  // Create the card container element
+
+ 
+
+  const card = document.createElement('div');
+  card.classList.add('flipdiv', 'v'); // Add the 'flipdiv' and 'v' classes
+
+  card.addEventListener('click', flipdivClicked);
+
+  // ...
+
+  // Create the front side of the card
+  const front = document.createElement('div');
+  front.classList.add('front', 'card-side'); // Add the 'front' and 'card-side' classes
+
+  // ...
+
+  // Create the back side of the card
+  const back = document.createElement('div');
+  back.classList.add('back', 'card-side'); // Add the 'back' and 'card-side' classes
+
+  // Apply your CSS classes to specific elements
+  const frontText = document.createElement('div');
+  frontText.classList.add('frontText'); // Add the 'frontText' class
+  frontText.textContent = 'Here is my image';
+
+  const frontPrice = document.createElement('div');
+  frontPrice.classList.add('frontPrice'); // Add the 'frontPrice' class
+  frontPrice.textContent = '$10';
+
+  const frontImage = document.createElement('div');
+  frontImage.classList.add('frontImage'); // Add the 'frontImage' class
+  const frontImageImg = document.createElement('img');
+  frontImageImg.src = '/images/macLogo.png';
+  frontImageImg.alt = 'mac logo 1';
+  frontImage.appendChild(frontImageImg);
+
+  const backImage = document.createElement('div');
+  backImage.classList.add('backImage'); // Add the 'backImage' class
+  const backImageImg = document.createElement('img');
+  backImageImg.src = '/images/macLogo.png';
+  backImageImg.alt = 'mac logo 2';
+  backImage.appendChild(backImageImg);
+
+  const backTitle = document.createElement('div');
+  backTitle.classList.add('backTitle'); // Add the 'backTitle' class
+  backTitle.textContent = 'Here is my image';
+
+  const backDescription = document.createElement('div');
+  backDescription.classList.add('backDescription'); // Add the 'backDescription' class
+  backDescription.textContent = 'Here is the description of the back of my photo it is a very cool photo that I like very much and it is awesome.';
+
+  const price = document.createElement('div');
+  price.classList.add('price'); // Add the 'price' class
+  price.textContent = '$10';
+
+  const sellerInfo = document.createElement('div');
+  sellerInfo.classList.add('sellerInfo'); // Add the 'sellerInfo' class
+  sellerInfo.textContent = 'Seller: Jacob';
+
+  // Append elements to the front and back sides
+  front.appendChild(frontImage);
+  front.appendChild(frontText);
+  front.appendChild(frontPrice);
+
+  back.appendChild(backImage);
+  back.appendChild(backTitle);
+  back.appendChild(backDescription);
+  back.appendChild(price);
+  back.appendChild(sellerInfo);
+
+  // Append front and back sides to the card
+  card.appendChild(front);
+  card.appendChild(back);
+
+  card.style.marginBottom = '200px';
+
+  // Append the card to the document (or a specific container)
+  document.body.appendChild(card);
+
+ 
 
    }
     </script>
-</body>
-</html>
 
+
+  </body>
+</html>
 

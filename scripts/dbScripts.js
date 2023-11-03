@@ -1,9 +1,9 @@
 /**
- * This file contains backend functionality for linking our site to our databse.
+ * This file contains our database scripts. 
  * 
  * Our database is built using the Firebase feature Cloud Firestore, using NoSQL.
  * 
- * Our database will contain thre collections: metricss, users and posts. 
+ * Our database will contain three collections: metricss, users and posts. 
  * 
  * Each document within the users/posts collections will represent one user or one post. 
  * The naming convention for each document will be userX or postX, where X is a positive 
@@ -16,7 +16,7 @@
  *      - user_password: string 
  *      - userID: an integer > 0
  * 
- * Note that the user will provide everything excepth for a userID, this we provide to 
+ * Note that the user will provide everything except for a userID, this we provide to 
  * each user upon creation of their account. 
  * 
  * Each post will have the following items within its document:
@@ -51,7 +51,8 @@ import {
     where,
     getDocs, 
     query,
-    deleteDoc
+    deleteDoc, 
+    limit
 } from "firebase/firestore";
 
 /**
@@ -69,19 +70,33 @@ import {
  */
 
 /**
- * Query all users/posts from the db given a collection, field, value and limit.
- * Return the docs collected from the query.  
+ * Query for a set of posts according to the filters which the user selects on the 
+ * home page. 
  * 
  * @param {Firestore} db a reference to cloud firestore
- * @param {String} colPath a path to a collection (users or posts)
- * @param {FieldPath} fieldPath a path to a field in a collection
- * @param {*} value the value of a field corresponding to field path 
- * @param {Number} limit a number to limit results returned by the query 
+ * @param {Array} filters the filters selected by the user
+ * @param {Number} lim a number to limit results returned by the query 
  */
-export async function customQuery (db, colPath, fieldPath, value, limit) { 
+export async function queryForPostsByFilter (db, filters, lim) { 
+    posts = {}; 
+    date = getTodayDate(); 
+    // if no filters selected, query by date 
+    if (filters.length == 0) { 
+        const postQuery = query( 
+            collection(db, "users"), 
+            where('date_posted', '==', date),
+            limit(lim));
+        postSnapshot = await getDocs(postQuery); 
+        
+        // FINSIH THIS! 
+    } 
+    // query by filters 
+    else { 
 
-    // THIS MAY NOT BE NECESSARY? 
-    
+        // THIS IS AFTER MVP PHASE!
+        
+    }
+    return posts; 
 }
 
 /**
@@ -104,7 +119,7 @@ export async function getUserData (db, userID) {
  * @param {Firestore} db a reference to firestore 
  * @param {Number} postID an ID corresponding to the post data we are getting 
  */
-export async function getPostData (postID) { 
+export async function getPostData (db, postID) { 
     return await getAllDocumentDataByPath(db, 'posts/post' + postID.toString());
 }
 
@@ -369,4 +384,3 @@ function getTodayDate() {
     const today = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
     return today; 
 }
-

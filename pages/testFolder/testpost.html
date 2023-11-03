@@ -14,10 +14,37 @@
     <button id="createCardButton">Create Card on different page</button>
   </div>
 
+  <!-- <script>
+    let currentURL = "http://localhost:3000"; // Replace this with an actual URL or use a placeholder
+
+    // Event listener example (e.g., a button click)
+    document.getElementById("createCardButton").addEventListener("click", function() {
+    // Update the URL when the button is clicked
+    currentURL = "http://index.html?createCard=true"; // Replace this with your desired URL
+
+    // You can perform actions with the updated URL here
+    console.log("URL updated to: " + currentURL);
+  });
+  </script> -->
+
+  <!-- <script>
+    function createCardOnIndex() {
+    let baseURL = window.location.origin;
+    let indexPath = "/"; // If your index page is the root of the application
+    let queryParameter = "?createCard=true";
+    let finalURL = baseURL + indexPath + queryParameter;
+
+    // For navigation, you can use something like this
+    window.location.href = finalURL;
+  } 
+
+
+  </script> -->
+
   <script>
     const createCardButton = document.getElementById('createCardButton');
     createCardButton.addEventListener('click', function () {
-      window.location.href = '/index.html?createCard=true';
+      window.location.href = '/pages/accountPage/account.html?createCard=true';
     });
   </script>
 

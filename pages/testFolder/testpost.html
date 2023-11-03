@@ -6,8 +6,6 @@
     <title>Posts</title>
     <link href="/pages/testFolder/style.css" rel="stylesheet">
      <script src="/pages/testFolder/testScript.js"></script>
-    <!-- <script src="/pages/testFolder/testFetch.js"></script> -->
-    <!-- <script src="/pages/testFolder/test.js"></script> -->
   </head>
   <body>
       <div id = "main">
@@ -18,57 +16,7 @@
 
 
   <script>
-  //   let currentURL = "http://localhost:3000"; // Replace this with an actual URL or use a placeholder
-
-  //   // Event listener example (e.g., a button click)
-  //   document.getElementById("createCardButton").addEventListener("click", function() {
-  //   // Update the URL when the button is clicked
-  //   currentURL = "http://index.html?createCard=true"; // Replace this with your desired URL
-
-  //   // You can perform actions with the updated URL here
-  //   console.log("URL updated to: " + currentURL);
-  // });
-
-
-
-  //   function createCardOnIndex() {
-  //   let baseURL = window.location.origin;
-  //   let indexPath = "/"; // If your index page is the root of the application
-  //   let queryParameter = "?createCard=true";
-  //   let finalURL = baseURL + indexPath + queryParameter;
-
-  //   // For navigation, you can use something like this
-  //   window.location.href = finalURL;
-  // }  
-
-
-
-
-
  const createCardButton = document.getElementById('createCardButton');
-
-// createCardButton.addEventListener('click', function () {
-//     let url = new URL(window.location.href);
-
-//     if (url.pathname.endsWith('/pages/testFolder/testpost.html')) {
-//         url.searchParams.set('createCard', 'true');
-
-//         // Update the URL without reloading the page
-//         window.history.pushState({}, '', url);
-
-//         // Create a new URL for index.html with the modified query parameter
-//         let newIndexURL = new URL('/index.html', window.location.origin);
-//         newIndexURL.searchParams.set('createCard', 'true');
-
-//         // Redirect to the modified URL (index.html with the query parameter)
-//         window.location.href = newIndexURL.href;
-//     } else {
-//         console.log("URL doesn't match the condition");
-//     }
-// });
-
-
-
 
 // const createCardButton = document.getElementById('createCardButton');
 document.addEventListener("DOMContentLoaded", function() {
@@ -84,8 +32,14 @@ let newURL = new URL( window.location.href);
 // Add a 'createCard' parameter with the value 'true'
 newURL.searchParams.set('createCard', 'true');
 
+try {
+        window.history.pushState({}, '', url);
+    } catch (e) {
+        console.error(e);
+    }
+
 // Update the URL to index.html with the new query parameter
-window.history.pushState({}, '', newURL);
+// window.history.pushState({}, '', newURL);
 
 // Redirect to the modified URL (index.html with the query parameter)
 window.location.href = newURL.href;
@@ -93,18 +47,18 @@ window.location.href = newURL.href;
 console.log("Script is running");
 console.log("New URL for index.html:", newURL.href);
 
-    let url = new URL(window.location.href);
-    console.log("Current URL:", url);
+    // let url = new URL(window.location.href);
+    // console.log("Current URL:", url);
 
-    if (url.pathname.endsWith('/pages/testFolder/testpost.html')) {
-        console.log("URL matches condition");
-        url.searchParams.set('createCard', 'true');
-        console.log("Updated URL:", url);
-        window.history.pushState({}, '', url);
-        console.log("URL updated");
-    } else {
-        console.log("URL doesn't match the condition");
-    }
+    // if (url.pathname.endsWith('/pages/testFolder/testpost.html')) {
+    //     console.log("URL matches condition");
+    //     url.searchParams.set('createCard', 'true');
+    //     console.log("Updated URL:", url);
+    //     window.history.pushState({}, '', url);
+    //     console.log("URL updated");
+    // } else {
+    //     console.log("URL doesn't match the condition");
+    // }
 });
 
 console.log("before checking url param");
@@ -113,68 +67,35 @@ console.log("before checking url param");
     console.log("checked url param");
 
 console.log("before checking url param");
-console.log(urlParams.get('createCard'));
+// console.log(urlParams.get('createCard'));
       // const urlParams = new URLSearchParams(window.location.search);
       // console.log("checked url param");
       if (urlParams.get('createCard') === 'true') {
       // Call the createCard function when the parameter is present
       console.log("true");
       createCard();
+      console.log("new card here");
+      resetURL();
     }
   });
-// document.addEventListener("DOMContentLoaded", function() {
-//     const createCardButton = document.getElementById('createCardButton');
+  console.log("maybe new card?");
 
-//     createCardButton.addEventListener('click', function() {
-//         let url = new URL(window.location.href);
-        
-//         console.log('Current URL:', window.location.href);
-//         console.log('Pathname:', url.pathname);
-
-//         if (url.pathname.endsWith('/pages/testFolder/testpost.html')) {
-//             url.searchParams.set('createCard', 'true');
-
-//             // Update the URL without redirecting
-//             window.history.pushState({}, '', url);
-            
-//             console.log('URL updated without redirection:', window.location.href);
-//         } else {
-//             console.log("URL doesn't match the condition");
-//         }
-//     });
-
-//     const urlParams = new URLSearchParams(window.location.search);
-//     if (urlParams.get('createCard') === 'true') {
-//         console.log("true");
-//         createCard();
-//         // Your logic to create a card here
-//     }
-// });
-
-  
-
-
-    // const createCardButton = document.getElementById('createCardButton');
-    // createCardButton.addEventListener('click', function () {
-    //   window.location.href = '/pages/accountPage/account.html?createCard=true';
-    // });
-
-
-   
-    // this is script that creates a new div and word to be added to the page on the button click 
-    // could be used similarly to make form button click upload to server, then fetch and put into form 
-
+  function resetURL() {
+      let newURL = new URL(window.location.href);
+      newURL.searchParams.delete('createCard');
+      window.history.replaceState({}, '', newURL);
+  }
 
 function createCard() {
   // Create the card container element
 
- 
-
   const card = document.createElement('div');
   card.classList.add('flipdiv', 'v'); // Add the 'flipdiv' and 'v' classes
 
-  card.addEventListener('click', flipdivClicked);
-
+  // card.addEventListener('click', flipdivClicked);
+  card.addEventListener('click', function () {
+                card.classList.toggle('flip'); // Toggle the 'flip' class for the flip effect
+            });
   // ...
 
   // Create the front side of the card
@@ -242,6 +163,7 @@ function createCard() {
   card.appendChild(back);
 
   card.style.marginBottom = '200px';
+  card.style.marginLeft= '200px';
 
   // Append the card to the document (or a specific container)
   document.body.appendChild(card);

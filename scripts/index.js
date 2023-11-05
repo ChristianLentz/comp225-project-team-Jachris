@@ -63,19 +63,7 @@ signInWithPopup(auth, provider)
     const credential = GoogleAuthProvider.credentialFromError(error);
     // ...
   });
-
-//function firebaseApp() {
-  //return (
-  //<div index="firebaseApp">
-       //<button class="login-with-google-btn" onClick={signInWithGoogle}>
-       //</button>
-       //<h1>{localStorage.getItem("name")}</h1>
-       //<h1>{localStorage.getItem("email")}</h1>
-       //</div>
-    //);
-  //n}
-
-// ============================ Run App ============================
+// ------------------------------------------------------------ Run app 
 
 // check if a user is currently logged in
 onAuthStateChanged(auth, user => async function() {

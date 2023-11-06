@@ -5,7 +5,7 @@
 
 // Import db scripts 
 import { queryForPostsByFilter,
-    createUser,
+    getValueOfFieldByPath,
     getUserIDByEmail, 
     createPost, 
     getFormData } from "./dbScripts";
@@ -20,17 +20,15 @@ export async function runBackend(db) {
 
     // run scripts for the Home page
     if (document.title == "Home") {
-        await homePageBackend(db); 
+
+        // GET FILTERS - this is after MVP phase 
+ 
+        await homePageBackend(db, []);  
     }
 
     // run scripts for the Account page
     if (document.title == "Account") {
         await accountPageBackend(db); 
-    }
-
-    // run scripts for the Create Account page
-    if (document.title == "Create Account") {
-        await createAccountPageBackend(db); 
     }
 
     // run scripts for the Post page
@@ -50,8 +48,17 @@ export async function runBackend(db) {
  * @param {Array} filters the filters currently selected for filtering posts 
  */
 async function homePageBackend(db, filters) {
-    const posts = queryForPostsByFilter(db, filters, 50);
-    return posts; 
+    // get data for posts to add to the home page  
+    const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
+    if (numPosts > 0) { 
+        const posts = await queryForPostsByFilter(db, filters, 50);
+        for (let i = 0; i < posts.length; i++) { 
+            console.log(posts[i])
+        }
+    }
+    
+    // add the posts as html element 
+    // update as needed 
 }
 
 /**
@@ -66,17 +73,6 @@ async function homePageBackend(db, filters) {
  * @param {Firestore} db a reference to firestore
  */
 async function accountPageBackend(db) { 
-
-}
-
-/**
- * Run the backend scripts associated with the Create Account page. This includes:
- * 
- * - Storing the new user's information in the database 
- * 
- * @param {Firestore} db a reference to firestore
- */
-async function createAccountPageBackend(db) { 
 
 }
 
@@ -124,7 +120,7 @@ async function sendPostToDB(db, newPostData) {
         await createPost(db, newPostData);
     } 
     // throw error if email is not valid
-    // ALSO NEED TO THROW THIS ERROR ON THE FRONT END
+    // ALSO NEED TO THROW THIS ERROR ON THE FRONT END!
     else { 
         throw new Error("There is no user associated with email provided for post."); 
     }

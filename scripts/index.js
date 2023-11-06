@@ -16,6 +16,10 @@ import { getAuth,
   signInWithPopup,
   ProviderId} from "firebase/auth"; 
 
+// Import DB scripts 
+import { getUserIDByEmail, 
+  createUser} from "./dbScripts"; 
+
 // Import backend scripts
 import { runBackend } from "./backendScripts";
 
@@ -34,54 +38,68 @@ const firebaseConfig = {
   measurementId: "G-DWMWXEG7BY"
 };
 
-// Initialize firebase app, user auth, db, analytics
-const firebaseAPP = initializeApp(firebaseConfig);
+// Initialize firebase app 
+const firebaseAPP = initializeApp(firebaseConfig); 
+
+// Initialize user auth 
 const auth = getAuth(firebaseAPP);
-auth.languageCode = 'en'  
+const provider = new GoogleAuthProvider();
+auth.languageCode = 'en';  
+let email = null; 
+let user = null; 
+
+// Initialize database and analytics
 const myDB = getFirestore();                
 const analytics = getAnalytics(); 
-const provider = new GoogleAuthProvider();
 
 // ============================ User Auth ============================
 
 signInWithPopup(auth, provider)
-  .then((result) => {
+  .then((result) => async function() {
     // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
     // The signed-in user info.
-    const user = result.user;
+    user = result.user;
+    email = user.email; 
+    // Add a new user to the DB if email not yet associated with user - THIS IS NOT WORKING ??
+    if (getUserIDByEmail(email) == null) { 
+      let userData = []; 
+      userData.push({key: "user_email", value: email});
+      await createUser(userData);
+    }
     // IdP data available using getAdditionalUserInfo(result)
-    // ...
   }).catch((error) => {
-    // Handle Errors here.
+    // Handle errors here.
     const errorCode = error.code;
     const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
     const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  });
-// ------------------------------------------------------------ Run app 
-
-// check if a user is currently logged in
-onAuthStateChanged(auth, user => async function() {
-    // if there is a user logged in 
-    if (user != null) { 
-      console.log(`'${JSON.stringify(user)}' is logged in!`);
-
-      // 1) direct user to home page (index.html)
-
-    // if there is no user logged in 
-    } else { 
-      console.log("no user!");
-
-      // 1) direct to login page 
-      // 2) allow user to login/create account 
-      // 3) direct user to home page (index.html)
-
-    } 
+    // Log the errors in the console.
+    console.log("Error when authenticating user. Error code: ", errorCode);
+    console.log("Error when authenticating user. Error message: ", errorMessage);
+    console.log("Error when authenticating user. AuthCredential type used: ", credential); 
   });
 
+// ============================ Run App ============================
+
+// run the app
 await runBackend(myDB);
+
+// // check if a user is currently logged in
+// onAuthStateChanged(auth, user => async function() {
+//     // if there is a user logged in 
+//     if (user != null) { 
+//       console.log(`'${JSON.stringify(user)}' is logged in!`);
+
+//       // 1) direct user to home page (index.html)
+
+//     // if there is no user logged in 
+//     } else { 
+//       console.log("no user!");
+
+//       // 1) direct to login page 
+//       // 2) allow user to login/create account 
+//       // 3) direct user to home page (index.html)
+
+//     } 
+//   });

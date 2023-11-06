@@ -106,6 +106,7 @@ ul li a:hover{
     background-color: white; /* White background color */
     padding: 20px; /* Some padding */
     height: 800px;
+    overflow-x: hidden;
   }
 
 .footer {
@@ -205,23 +206,38 @@ ul li a:hover{
 /* create inital size of front box */
 .flipdiv {
   position: relative;
-  width: 220px;
+  width: 180px;
   height: 160px;
   perspective: 500px;
+  margin-bottom: 170px;
+}
+
+.postGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust column width as needed */
+  gap: 20px; /* Adjust the gap between grid items */
+  max-height: 800px; /* Set the maximum height for vertical scrolling */
+  /* overflow-y: auto; Enable vertical scrolling */
 }
 
 /* flipping the card to the back */
 .flipdiv.v.showBack .front, .flipdiv.v.flip .front {
   transform: rotateX(180deg);
+  z-index: 1;
+  
+ 
 }
 
 .flipdiv.v.showBack .back, .flipdiv.v.flip .back {
   transform: rotateX(0deg);
+  z-index: 2;
 }
 
 .flipdiv.v .back {
   transform: rotateX(-180deg);
+  
 }
+
 
 /* creating the front box */
 .flipdiv .front, .flipdiv .back {

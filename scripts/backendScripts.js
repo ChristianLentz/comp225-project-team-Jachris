@@ -56,7 +56,23 @@ async function homePageBackend(db, filters) {
             console.log(posts[i])
         }
     }
-    
+
+    const posts = await queryForPostsByFilter(db, filters, 50);
+    const postGrid = document.querySelector('.postGrid'); // Select the grid container
+
+    for (const post of posts) {
+    // Create a new card element based on the template
+    const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
+
+    // Update the card content with the retrieved data
+    cardTemplate.querySelector('.frontText').textContent = "post.post_title"; // Access 'post_title'
+    cardTemplate.querySelector('.frontPrice').textContent = "post.post_price"; // Access 'post_price'
+
+    // Append the card to the "postGrid" container
+    postGrid.appendChild(cardTemplate);
+}
+
+
     // add the posts as html element 
     // update as needed 
 }

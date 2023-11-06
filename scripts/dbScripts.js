@@ -13,7 +13,6 @@
  * Each user will have the following items within its document: 
  * 
  *      - user_email: string
- *      - user_password: string (maybe don't need this?) 
  *      - userID: an integer > 0
  *      - profile picture
  * 
@@ -88,9 +87,11 @@ export async function queryForPostsByFilter (db, filters, lim) {
     } else { 
         const len = postSnapshot.docs.length;
         for (let i = 0; i < len; i++) { 
+            // get the object stored in Firestore
             const docRef = postSnapshot.docs.at(i).ref;
-            const newData = await getAllDocumentDataByRef(docRef); 
-            posts.push(newData);  
+            const newDataOb = await getAllDocumentDataByRef(docRef);
+            // add to the array to return
+            posts.push(newDataOb);  
         }
     }
     return posts; 
@@ -283,7 +284,7 @@ export async function getValueOfFieldByPath(db, pathToDoc, field, defaultVal) {
  */
 async function getAllDocumentDataByRef(docRef) { 
     const docData = getDoc(docRef);
-    if ( (await docData).data == undefined) { 
+    if ( (await docData).data() == undefined) { 
         throw new Error(`Error when getting document data: document ${docRef.id} does not exist` ); 
     } else { 
         return (await docData).data(); 
@@ -372,6 +373,28 @@ async function changePostTotal(db, count) {
         .catch((error) => { 
             console.log(`Error when incrementing post count: '${error}'`);
         });
+}
+
+/**
+ * Firebase will only allow us to insert data wrapped in an Object. 
+ * 
+ * For example, in createPost and createUser, before we send anything to the database, 
+ * we call Object.assign({}, data) to wrap the data in an array object. 
+ * 
+ * This helper function 'unwraps' that object, and converts and object with underlying 
+ * to an just an array, which is easier to work with. 
+ * 
+ * To do this, we need to know the length of the underlying array! 
+ * 
+ * @param {any[]} object an object with underlying array
+ * @param {Number} len length of the array which is wrapped in the object 
+ */
+export function convertDataFromObjToArray(object, len) { 
+    const objAsArr = []; 
+    for (let j = 0; j < len; j++) { 
+        objAsArr.push({key: object[j].key, value: object[j].value})
+    }
+    return objAsArr; 
 }
 
 /**

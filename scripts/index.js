@@ -55,15 +55,16 @@ const analytics = getAnalytics();
 // ============================ User Auth ============================
 
 signInWithPopup(auth, provider)
-  .then((result) => async function() {
+  .then( () => async function(result) {
     // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
     // The signed-in user info.
     user = result.user;
     email = user.email; 
+    console.log("made it here"); 
     // Add a new user to the DB if email not yet associated with user - THIS IS NOT WORKING ??
-    if (getUserIDByEmail(email) == null) { 
+    if (await getUserIDByEmail(email) == null) { 
       let userData = []; 
       userData.push({key: "user_email", value: email});
       await createUser(userData);
@@ -82,24 +83,4 @@ signInWithPopup(auth, provider)
 
 // ============================ Run App ============================
 
-// run the app
-await runBackend(myDB);
-
-// // check if a user is currently logged in
-// onAuthStateChanged(auth, user => async function() {
-//     // if there is a user logged in 
-//     if (user != null) { 
-//       console.log(`'${JSON.stringify(user)}' is logged in!`);
-
-//       // 1) direct user to home page (index.html)
-
-//     // if there is no user logged in 
-//     } else { 
-//       console.log("no user!");
-
-//       // 1) direct to login page 
-//       // 2) allow user to login/create account 
-//       // 3) direct user to home page (index.html)
-
-//     } 
-//   });
+await runBackend(myDB, email);

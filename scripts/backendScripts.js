@@ -6,29 +6,35 @@
 // Import db scripts 
 import { queryForPostsByFilter,
     getValueOfFieldByPath,
+    convertDataFromObjToArray,
     getUserIDByEmail, 
     createPost, 
     getFormData } from "./dbScripts";
+
+// define constants - number of items per post/user document (these will change)
+const numPostItems = 8; 
+const numUserItems = null; 
 
 /**
  * Run the backend of the app. Execute certain scripts given user auth state and 
  * the current html document where they are located.
  * 
  * @param {Firestore} db a reference to firestore 
+ * @param {String} currUserEmail the email for the current authenticated user
  */
-export async function runBackend(db) { 
+export async function runBackend(db, currUserEmail) { 
 
     // run scripts for the Home page
     if (document.title == "Home") {
 
-        // GET FILTERS - this is after MVP phase 
+        // GET FILTERS currently selected (after MVP phase)
  
         await homePageBackend(db, []);  
     }
 
     // run scripts for the Account page
-    if (document.title == "Account") {
-        await accountPageBackend(db); 
+    if (document.title == "Account") { 
+        await accountPageBackend(db, currUserEmail); 
     }
 
     // run scripts for the Post page
@@ -48,33 +54,30 @@ export async function runBackend(db) {
  * @param {Array} filters the filters currently selected for filtering posts 
  */
 async function homePageBackend(db, filters) {
-    // get data for posts to add to the home page  
+    // empty array to hold posts 
+    let postsToAdd = []; 
+    // get the data for the posts 
     const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
     if (numPosts > 0) { 
         const posts = await queryForPostsByFilter(db, filters, 50);
-        for (let i = 0; i < posts.length; i++) { 
-            console.log(posts[i])
+        // for each post we fetched, convert to array
+        for (let i = 0; i < posts.length; i++) {  
+            const post = convertDataFromObjToArray(posts[i], numPostItems); 
+            postsToAdd.push(post);   
         }
+
+        // // add posts to home page as html elements
+        // const postGrid = document.querySelector('.postGrid'); // Select the grid container
+        // for (const post of postsToAdd) {
+        //     // Create a new card element based on the template
+        //     const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
+        //     // Update the card content with the retrieved data
+        //     cardTemplate.querySelector('.frontText').textContent = "post.post_title"; // Access 'post_title'
+        //     cardTemplate.querySelector('.frontPrice').textContent = "post.post_price"; // Access 'post_price'
+        //     // Append the card to the "postGrid" container
+        //     postGrid.appendChild(cardTemplate);
+        // }
     }
-
-    const posts = await queryForPostsByFilter(db, filters, 50);
-    const postGrid = document.querySelector('.postGrid'); // Select the grid container
-
-    for (const post of posts) {
-    // Create a new card element based on the template
-    const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
-
-    // Update the card content with the retrieved data
-    cardTemplate.querySelector('.frontText').textContent = "post.post_title"; // Access 'post_title'
-    cardTemplate.querySelector('.frontPrice').textContent = "post.post_price"; // Access 'post_price'
-
-    // Append the card to the "postGrid" container
-    postGrid.appendChild(cardTemplate);
-}
-
-
-    // add the posts as html element 
-    // update as needed 
 }
 
 /**
@@ -82,13 +85,17 @@ async function homePageBackend(db, filters) {
  * 
  * - Fetching the current user's data to display on the page
  * - Fetching the current user's posts to display on the page
+ * - Deleting or adding data to the db according to user's edits
  * 
  * Eventually we will allow the user to delete their posts using a button on the 
  * account page.  
  * 
  * @param {Firestore} db a reference to firestore
+ * @param {String} userEmail email associated with the current authenticated user
  */
-async function accountPageBackend(db) { 
+async function accountPageBackend(db, userEmail) { 
+
+    
 
 }
 

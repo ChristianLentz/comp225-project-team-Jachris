@@ -220,6 +220,11 @@ ul li a:hover{
   /* overflow-y: auto; Enable vertical scrolling */
 }
 
+.enlarged-card {
+  grid-column-start: span 3; /* Adjust as needed to move the card to the left */
+  z-index: 1;
+}
+
 /* flipping the card to the back */
 .flipdiv.v.showBack .front, .flipdiv.v.flip .front {
   transform: rotateX(180deg);

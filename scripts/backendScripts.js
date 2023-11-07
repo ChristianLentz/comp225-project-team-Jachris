@@ -9,7 +9,8 @@ import { queryForPostsByFilter,
     convertDataFromObjToArray,
     getUserIDByEmail, 
     createPost, 
-    getFormData } from "./dbScripts";
+    getFormData, 
+    createUser} from "./dbScripts";
 
 // define constants - number of items per post/user document (these will change)
 const numPostItems = 8; 
@@ -23,6 +24,14 @@ const numUserItems = null;
  * @param {String} currUserEmail the email for the current authenticated user
  */
 export async function runBackend(db, currUserEmail) { 
+
+    // Add a new user to the DB if email not yet associated with user
+    let userID = await getUserIDByEmail(db, currUserEmail); 
+    if (userID == null) { 
+      let userData = []; 
+      userData.push({key: "user_email", value: currUserEmail});
+      await createUser(db, userData);
+    }
 
     // run scripts for the Home page
     if (document.title == "Home") {
@@ -95,8 +104,6 @@ async function homePageBackend(db, filters) {
  */
 async function accountPageBackend(db, userEmail) { 
 
-    
-
 }
 
 /**
@@ -120,10 +127,9 @@ async function postPageBackend(db) {
       postForm.addEventListener("submit", async function(event) {
         event.preventDefault();
         const newPostData = await getFormData("post-form"); 
-        await sendPostToDB(db, newPostData); 
+        await sendPostToDB(db, newPostData);  
       }); 
     },1000); 
-
 }
 
 /**

@@ -45,8 +45,8 @@ const firebaseAPP = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseAPP);
 const provider = new GoogleAuthProvider();
 auth.languageCode = 'en';  
-let email = null; 
-let user = null; 
+let email = null;  
+let isAuthenticated = null; 
 
 // Initialize database and analytics
 const myDB = getFirestore();                
@@ -54,21 +54,16 @@ const analytics = getAnalytics();
 
 // ============================ User Auth ============================
 
-signInWithPopup(auth, provider)
-  .then( () => async function(result) {
+await signInWithPopup(auth, provider)
+  .then( (result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
     // The signed-in user info.
-    user = result.user;
-    email = user.email; 
-    console.log("made it here"); 
-    // Add a new user to the DB if email not yet associated with user - THIS IS NOT WORKING ??
-    if (await getUserIDByEmail(email) == null) { 
-      let userData = []; 
-      userData.push({key: "user_email", value: email});
-      await createUser(userData);
-    }
+    const user = result.user;
+    email = user.email;   
+    // Set authenticated flag to true
+    isAuthenticated = true; 
     // IdP data available using getAdditionalUserInfo(result)
   }).catch((error) => {
     // Handle errors here.
@@ -79,8 +74,14 @@ signInWithPopup(auth, provider)
     console.log("Error when authenticating user. Error code: ", errorCode);
     console.log("Error when authenticating user. Error message: ", errorMessage);
     console.log("Error when authenticating user. AuthCredential type used: ", credential); 
+    // Don't allow user to proceed if not authenticated 
+    isAuthenticated = false; 
   });
 
 // ============================ Run App ============================
 
-await runBackend(myDB, email);
+// run the back end!
+if (isAuthenticated) { 
+  console.log(`user '${email}' has been authenticated`);
+  await runBackend(myDB, email);
+}

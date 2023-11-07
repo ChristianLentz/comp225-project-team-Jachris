@@ -297,21 +297,20 @@ async function getAllDocumentDataByRef(docRef) {
  * @param {Firestore} db a reference to Firestore
  * @param {String} email an email provided by the user 
  */
-export async function getUserIDByEmail(db, email) { 
+export async function getUserIDByEmail(db, email) {  
     // query for user with the provided email (this should be unique!)
     const userQuery = query( 
         collection(db, "users"), 
         where('user_email', '==', email))
-    // get the user's userID 
-    const userQuerySnap = await getDocs(userQuery);
-    console.log(userQuerySnap.size);
+    // get the user's ID 
+    const userQuerySnap = await getDocs(userQuery); 
     if (userQuerySnap.empty) { 
         // no user with that email is found 
         return null; 
     }
     else { 
         let user = await getDoc(userQuerySnap.docs.at(0).ref);
-        return user.data()['userID']; // ERROR IN THIS LINE ?? 
+        return user.data()['userID'];  
     } 
 }
 

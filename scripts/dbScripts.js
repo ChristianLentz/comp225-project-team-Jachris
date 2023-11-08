@@ -96,18 +96,6 @@ export async function queryForPostsByFilter (db, filters, lim) {
     return posts; 
 }
 
-// /**
-//  * Get data for a specific user from the DB. 
-//  * 
-//  * @param {Firestore} db a reference to cloud firestore
-//  * @param {Number} userID an ID corresponding to the user whose data we are getting 
-//  */
-// export async function getUserData (db, userID) { 
-//     pathToDoc = 'users/user' + userID.toString(); 
-//     const docRef = doc(db, pathToDoc);
-//     return await getAllDocumentDataByRef(docRef);
-// }
-
 /**
  * Add a newly created user and their data to the users collection
  * 
@@ -314,15 +302,17 @@ export async function getUserIDByEmail(db, email) {
     // query for user with the provided email (this should be unique!)
     const userQuery = query( 
         collection(db, "users"), 
-        where('user_email', '==', email))
+        where('user_email', '==', email),
+        limit(1),); 
     // get the user's ID 
     const userQuerySnap = await getDocs(userQuery); 
     if (userQuerySnap.empty) { 
-        // no user with that email is found 
+        // no user with that email was found  
         return null; 
     }
     else { 
-        let user = await getDoc(userQuerySnap.docs.at(0).ref);
+        // existing user with that email was found 
+        let user = await getDoc(userQuerySnap.docs.at(0).ref); 
         return user.data()['userID'];  
     } 
 }

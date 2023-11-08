@@ -10,14 +10,16 @@
 import { initializeApp } from "firebase/app"; 
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";  
-import { getAuth, 
-  onAuthStateChanged,   
+import { getAuth,    
   GoogleAuthProvider, 
   signInWithPopup,
   ProviderId} from "firebase/auth";  
 
 // Import backend scripts
 import { runBackend } from "./backendScripts";
+
+// Import database scripts
+import { getUserIDByEmail } from "./dbScripts"; 
 
 // initialize express JS app - there is a webpack error when we try to use this?
 // const express = require('express'); 
@@ -79,5 +81,14 @@ await signInWithPopup(auth, provider)
 // run the back end!
 if (isAuthenticated) { 
   console.log(`user '${email}' has been authenticated`);
-  await runBackend(myDB, email);
+  const userID = await getUserIDByEmail(myDB, email); 
+  // boolean passed to runBackend will determine if we add the user to the db 
+  if (userID == null) { 
+    // current authenticated user is new, userAdded = false  
+    await runBackend(myDB, email, false);
+  } 
+  else { 
+    // current authenticated user is not new, userAdded = true
+    await runBackend(myDB, email, true);
+  }
 }

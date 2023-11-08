@@ -3,7 +3,7 @@
  * the app. 
  */
 
-// ============================ Imports ============================
+// ============================ Imports, variables, constants ============================
 
 // Import db scripts 
 import { queryForPostsByFilter,
@@ -14,12 +14,11 @@ import { queryForPostsByFilter,
     getFormData, 
     createUser} from "./dbScripts";
 
-// define constants 
 // number of items per post/user document (WILL CHANGE AS MORE FEATURES ADDED)
 const numPostItems = 8; 
 const numUserItems = 2; 
 // limit for querying for posts
-const queryLim = 50; 
+const queryLim = 48; 
 
 // ============================ Scripts ============================
 
@@ -29,16 +28,16 @@ const queryLim = 50;
  * 
  * @param {Firestore} db a reference to firestore 
  * @param {String} currUserEmail the email for the current authenticated user
+ * @param {Boolean} userAdded determines if we add the current user to the db as a new user
  */
-export async function runBackend(db, currUserEmail) { 
+export async function runBackend(db, currUserEmail, userAdded) { 
 
     // Add new user to DB
-    // only if authenticated user's email not yet associated with user in DB
-    let userID = await getUserIDByEmail(db, currUserEmail); 
-    if (userID == null) { 
-      let userData = []; 
-      userData.push({key: "user_email", value: currUserEmail});
-    //   await createUser(db, userData);
+    // only if authenticated user's email not yet associated with user in DB  
+    if (!userAdded) { 
+        let userData = []; 
+        userData.push({key: "user_email", value: currUserEmail});
+        await createUser(db, userData);
     }
 
     // run scripts for the Home page
@@ -76,18 +75,15 @@ async function homePageBackend(db, filters) {
     const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
     if (numPosts > 0) { 
         let postsToAdd = await getPosts(db, filters); 
-        console.log(postsToAdd);
-        // TODO:
-        // postsToAdd has an array of posts, where each post has an array of data
-        // these are ready to be added to the front end! 
 
-        // // add posts to home page as html elements
+        // TODO: 
+        // add posts to home page as html elements
         const postGrid = document.querySelector('.postGrid'); // Select the grid container
         for (const post of postsToAdd) {
             // Create a new card element based on the template
             const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
             // Update the card content with the retrieved data
-           // console.log("title" ,post.post_title.value);
+            // console.log("title" ,post.post_title.value);
             // console.log("price", post.post_price);
             // console.log("trying to get price", post[4].value);
             // Front of card
@@ -171,7 +167,7 @@ async function postPageBackend(db) {
  */
 async function sendPostToDB(db, newPostData) { 
     // get the user's email and userID 
-    const emailText = document.getElementById("post-mail").value; 
+    const emailText = document.getElementById("post-mail").value;
     const userID = await getUserIDByEmail(db, emailText); 
     if (userID != null) {
         // add the user ID to the form data 

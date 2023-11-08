@@ -3,6 +3,8 @@
  * the app. 
  */
 
+// ============================ Imports ============================
+
 // Import db scripts 
 import { queryForPostsByFilter,
     getValueOfFieldByPath,
@@ -12,9 +14,14 @@ import { queryForPostsByFilter,
     getFormData, 
     createUser} from "./dbScripts";
 
-// define constants - number of items per post/user document (these will change)
+// define constants 
+// number of items per post/user document (WILL CHANGE AS MORE FEATURES ADDED)
 const numPostItems = 8; 
-const numUserItems = null; 
+const numUserItems = 2; 
+// limit for querying for posts
+const queryLim = 50; 
+
+// ============================ Scripts ============================
 
 /**
  * Run the backend of the app. Execute certain scripts given user auth state and 
@@ -25,7 +32,8 @@ const numUserItems = null;
  */
 export async function runBackend(db, currUserEmail) { 
 
-    // Add a new user to the DB if email not yet associated with user
+    // Add new user to DB
+    // only if authenticated user's email not yet associated with user in DB
     let userID = await getUserIDByEmail(db, currUserEmail); 
     if (userID == null) { 
       let userData = []; 
@@ -36,7 +44,8 @@ export async function runBackend(db, currUserEmail) {
     // run scripts for the Home page
     if (document.title == "Home") {
 
-        // GET FILTERS currently selected (after MVP phase)
+        // TODO: AFTER MVP PHASE
+        // get filters currently selected 
  
         await homePageBackend(db, []);  
     }
@@ -62,18 +71,15 @@ export async function runBackend(db, currUserEmail) {
  * @param {Firestore} db a reference to firestore
  * @param {Array} filters the filters currently selected for filtering posts 
  */
-async function homePageBackend(db, filters) {
-    // empty array to hold posts 
-    let postsToAdd = []; 
+async function homePageBackend(db, filters) { 
     // get the data for the posts 
     const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
     if (numPosts > 0) { 
-        const posts = await queryForPostsByFilter(db, filters, 50);
-        // for each post we fetched, convert to array
-        for (let i = 0; i < posts.length; i++) {  
-            const post = convertDataFromObjToArray(posts[i], numPostItems); 
-            postsToAdd.push(post);   
-        }
+        let postsToAdd = await getPosts(db, filters); 
+
+        // TODO:
+        // postsToAdd has an array of posts, where each post has an array of data
+        // these are ready to be added to the front end! 
 
         // // add posts to home page as html elements
         // const postGrid = document.querySelector('.postGrid'); // Select the grid container
@@ -86,6 +92,12 @@ async function homePageBackend(db, filters) {
         //     // Append the card to the "postGrid" container
         //     postGrid.appendChild(cardTemplate);
         // }
+
+    } else { 
+
+        // TODO: AFTER MVP PHASE
+        // show on the front end that the selected filter do not return anything
+
     }
 }
 
@@ -103,6 +115,13 @@ async function homePageBackend(db, filters) {
  * @param {String} userEmail email associated with the current authenticated user
  */
 async function accountPageBackend(db, userEmail) { 
+    const userData = null; 
+    const userPosts = null; 
+
+    // TODO:
+    // get user's data to display on account page 
+    // get all posts associated with the user
+    // add button on front end to edit account, send to/update db on submit 
 
 }
 
@@ -132,6 +151,8 @@ async function postPageBackend(db) {
     },1000); 
 }
 
+// ============================ Helper Functions ============================
+
 /**
  * Collect a new post and send to the the database. 
  * 
@@ -149,8 +170,35 @@ async function sendPostToDB(db, newPostData) {
         await createPost(db, newPostData);
     } 
     // throw error if email is not valid
-    // ALSO NEED TO THROW THIS ERROR ON THE FRONT END!
     else { 
+
+        // TODO: 
+        // also need to throw this error on the front end
+
         throw new Error("There is no user associated with email provided for post."); 
     }
+}
+
+/**
+ * Uses the queryForPostsByFilter function in dbScripts.js to get a set of posts
+ * according to given filters to query by. 
+ * 
+ * Will return queryLim posts at most. 
+ * 
+ * Used in homePageBackend and accountPageBackend
+ * 
+ * @param {Firestore} db a reference to firestore
+ * @param {Array} filters items to query by, an array of strings
+ */
+async function getPosts(db, filters) { 
+    let postArr = []; 
+    const posts = await queryForPostsByFilter(db, filters, queryLim);
+        // for each post we fetched, convert to array
+        if (posts != null) { 
+            for (let i = 0; i < posts.length; i++) {  
+                const post = convertDataFromObjToArray(posts[i], numPostItems); 
+                postArr.push(post);   
+            }
+        }
+    return postArr; 
 }

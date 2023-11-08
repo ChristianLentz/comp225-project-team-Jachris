@@ -14,11 +14,7 @@ import { getAuth,
   onAuthStateChanged,   
   GoogleAuthProvider, 
   signInWithPopup,
-  ProviderId} from "firebase/auth"; 
-
-// Import DB scripts 
-import { getUserIDByEmail, 
-  createUser} from "./dbScripts"; 
+  ProviderId} from "firebase/auth";  
 
 // Import backend scripts
 import { runBackend } from "./backendScripts";
@@ -74,7 +70,7 @@ await signInWithPopup(auth, provider)
     console.log("Error when authenticating user. Error code: ", errorCode);
     console.log("Error when authenticating user. Error message: ", errorMessage);
     console.log("Error when authenticating user. AuthCredential type used: ", credential); 
-    // Don't allow user to proceed if not authenticated 
+    // Set authenticated flag to false 
     isAuthenticated = false; 
   });
 

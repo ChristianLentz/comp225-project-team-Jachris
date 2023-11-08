@@ -20,18 +20,24 @@ body{
   position: absolute;
   top: 34.5vw;  /* vw used here to make it so text size moves according to window size */
   left: 50%;
-  font-size: 3vw;
+  font-size: 2.949vw;
   transform: translate(-50%, -50%);
+  /* border-radius: 10px; */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 /* Centered text */
 .homeTitle { 
   background-color: #fffdfd;
   position: absolute;
-  top: 30.5vw;
+  top: 30.6vw;
   left: 50%;
   font-size: 4vw;
   transform: translate(-50%, -50%);
+  border-top: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
     
@@ -75,6 +81,7 @@ ul li a{
 ul li a:hover{
     color: rgb(235, 236, 236);
     background-color: rgb(208, 109, 9);
+    height:  100px;
 }
 
 /* Ensure proper sizing */

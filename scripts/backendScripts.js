@@ -38,7 +38,7 @@ export async function runBackend(db, currUserEmail) {
     if (userID == null) { 
       let userData = []; 
       userData.push({key: "user_email", value: currUserEmail});
-      await createUser(db, userData);
+    //   await createUser(db, userData);
     }
 
     // run scripts for the Home page

@@ -209,7 +209,8 @@ ul li a:hover{
   width: 180px;
   height: 160px;
   perspective: 500px;
-  margin-bottom: 170px;
+  margin-bottom: 160px;
+  
 }
 
 .postGrid {
@@ -254,6 +255,7 @@ ul li a:hover{
   transition: none;
   color: white;
   background-color: #3278da;
+  border-radius: 20px; /*round the corners */
   padding: 10px;
   backface-visibility: hidden;
 }
@@ -268,6 +270,7 @@ ul li a:hover{
   transition: none;
   color: rgb(255, 255, 255);
   background-color: #3278da;
+  border-radius: 20px; /*round the corners */
   padding: 10px;
   backface-visibility: hidden;
 }
@@ -290,7 +293,7 @@ ul li a:hover{
   display: block;
   height: 200px;
   width: 200px;
-  margin-left: 95px;
+  margin-left: 55px;
   margin-top: 10px;
 }
 

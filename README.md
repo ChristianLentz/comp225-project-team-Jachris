@@ -30,16 +30,22 @@ We use the Webpack CLI to compile and bundle our Java Script code into an output
 
 This is the final (and simplest) step of the process. Open your terminal of choice and navigate to the root directory of this project. In the terminal run **serve** or **npm serve**. Using **serve** without specifying a directory to serve will sereve the root directory of the project. This is what we want, since *index.html* (the html file for the homepage of our website) is located in our root directory. Follow the link provided in the terminal, you are now looking at a local instance of the webiste!
 
-### Errors and bugs 
+### Current Issues/Bugs
 
-- We are getting a number of html errors at the moment:
+- Accessibility Issues with html elements
 
-  - ul and ol containers can only directly contain script, li or template containers 
-  - each image must have alternative text attribute alt ="some text"
-  - li elements must be contained within ul or ol container 
-  - id attributes on the same document must be unique
+### TODOs for MVP
 
-### TODOs
+- Beutify/comment code
+- Login page is deprecated now that user auth is in place
+- Routing
+- Storing images in Firestore
+- Backend for user account page
+- Displaying images on the front end (home page and user account)
 
-- Add a license
-- Beutify/comment our code
+### Features after MVP 
+
+- Add tags to user posts
+- Filter for posts on the home page according to tags
+- Allow users to search for other users
+- Allow users to delete their posts (this will require us to update the ID assignment for posts) 

@@ -146,3 +146,16 @@ button {
   background-color: #ddd;
 }
 
+
+select.icon-menu option {
+  background-repeat:no-repeat;
+  background-position:bottom left;
+  padding-left:30px;
+  }
+  select#profilePhoto option[value="image1"] {
+  background-image:url(/images/jachris-logo.png);
+  }
+
+  select#profilePhoto option[value="image2"] {
+    background-image:url(/images/userimage.png);
+    }

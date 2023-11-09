@@ -76,6 +76,7 @@ export async function runBackend(db, currUserEmail, userAdded) {
  */
 async function homePageBackend(db, filters) { 
     // get the data for the posts 
+    // this will be an arrary of arrays, where each post array has key-value pairs
     const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
     if (numPosts > 0) { 
         let postsToAdd = await getPosts(db, filters); 

@@ -44,7 +44,7 @@ const auth = getAuth(firebaseAPP);
 const provider = new GoogleAuthProvider();
 auth.languageCode = 'en';  
 let email = null;  
-let isAuthenticated = null; 
+let isAuthenticated = false; 
 
 // Initialize database and analytics
 const myDB = getFirestore();                
@@ -52,44 +52,31 @@ const analytics = getAnalytics();
 
 // ============================ User Auth ============================
 
-await signInWithPopup(auth, provider)
-  .then( (result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    email = user.email;   
-    // Set authenticated flag to true
-    isAuthenticated = true; 
-    // IdP data available using getAdditionalUserInfo(result)
-  }).catch((error) => {
-    // Handle errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // Log the errors in the console.
-    console.log("Error when authenticating user. Error code: ", errorCode);
-    console.log("Error when authenticating user. Error message: ", errorMessage);
-    console.log("Error when authenticating user. AuthCredential type used: ", credential); 
-    // Set authenticated flag to false 
-    isAuthenticated = false; 
-  });
-// ============================ Sets token for user auth ============================
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-  .then(() => {
-    // Existing and future Auth states are now persisted in the current
-    // session only. Closing the window would clear any existing state even
-    // if a user forgets to sign out.
-    // ...
-    // New sign-in will be persisted with session persistence.
-    return firebase.auth().signInWithPopup(auth, provider);
-  })
-  .catch((error) => {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-  });
+if (!isAuthenticated) { 
+  await signInWithPopup(auth, provider)
+    .then( (result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      email = user.email;   
+      // Set authenticated flag to true
+      isAuthenticated = true; 
+      // IdP data available using getAdditionalUserInfo(result)
+    }).catch((error) => {
+      // Handle errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // Log the errors in the console.
+      console.log("Error when authenticating user. Error code: ", errorCode);
+      console.log("Error when authenticating user. Error message: ", errorMessage);
+      console.log("Error when authenticating user. AuthCredential type used: ", credential); 
+      // Set authenticated flag to false 
+      isAuthenticated = false; 
+    });
+}
 
 // ============================ Run App ============================
 
@@ -107,3 +94,20 @@ if (isAuthenticated) {
     await runBackend(myDB, email, true);
   }
 }
+
+// ============================ working on user sessions ============================
+
+// firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+//   .then(() => {
+//     // Existing and future Auth states are now persisted in the current
+//     // session only. Closing the window would clear any existing state even
+//     // if a user forgets to sign out.
+//     // ...
+//     // New sign-in will be persisted with session persistence.
+//     return firebase.auth().signInWithPopup(auth, provider);
+//   })
+//   .catch((error) => {
+//     // Handle Errors here.
+//     var errorCode = error.code;
+//     var errorMessage = error.message;
+//   });

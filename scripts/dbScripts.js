@@ -96,6 +96,10 @@ export async function queryForPostsByFilter (db, filters, lim) {
     return posts; 
 }
 
+export async function getUserData(db, email) { 
+
+}
+
 /**
  * Add a newly created user and their data to the users collection
  * 

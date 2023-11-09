@@ -1,8 +1,9 @@
 .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
     max-width: 100%;
     margin: auto;
     text-align: center;
+    
   }
   
   .title {
@@ -10,7 +11,7 @@
     font-size: 18px;
   }
   /* create and adjust the submit button */
-  button {
+  .contact {
     border: none;
     outline: 0;
     display: inline-block;
@@ -19,8 +20,9 @@
     background-color: #000;
     text-align: center;
     cursor: pointer;
-    width: 30%;
+    width: 10%;
     font-size: 18px;
+    border-radius: 20px;
   }
   
   a {
@@ -36,21 +38,21 @@
     height: 800px;
   }
   /* This makes it so the contact button switches color, does same to nav bar tho */
-  #contact:hover, a:hover:not(.navBar) {
+  .contact:hover {
     opacity: 0.7;
   }
 
   /* userpost cards */
   .userCard {
     /* Add shadows to create the "card" effect */
-    box-shadow: 0 20px 20px 0 rgb(237, 234, 234);
-    transition: 0.3s;
+    /* box-shadow: 0 20px 20px 0 rgb(237, 234, 234); */
+    /* transition: 0.3s; */
   }
   
   /* On mouse-over, add a deeper shadow */
-  .userCard:hover {
-    box-shadow: 0 20px 20px 0 rgba(245, 242, 242, 0.888);
-  }
+  /* .userCard:hover {
+    box-shadow: 0 20px 20px 0 rgba(245, 242, 242, 0.888); */
+  /* } */
   
   /* Add some padding inside the card container */
   .container1 {
@@ -61,9 +63,9 @@
   }
 
   .userCard {
-    box-shadow: 0 20px 20px 0 rgb(255, 251, 251);
+    /* box-shadow: 0 20px 20px 0 rgb(255, 251, 251);
     transition: 0.3s;
-    border-radius: 5px; /* 5px rounded corners */
+    border-radius: 5px; 5px rounded corners */
   }
   
   /* Add rounded corners to the top left and the top right corner of the image */
@@ -112,3 +114,35 @@ button {
   text-decoration: none;
   cursor: pointer;
 }
+
+/* Display iamges in dropdown */
+/* Add this to your existing CSS or create a new CSS file */
+
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.selected-photo {
+  cursor: pointer;
+}
+
+.dropdown-options {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.option {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background-color: #ddd;
+}
+

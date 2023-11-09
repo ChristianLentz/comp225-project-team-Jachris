@@ -35,9 +35,13 @@ export async function runBackend(db, currUserEmail, userAdded) {
     // Add new user to DB
     // only if authenticated user's email not yet associated with user in DB  
     if (!userAdded) { 
+
         let userData = []; 
         userData.push({key: "user_email", value: currUserEmail});
-        await createUser(db, userData);
+
+
+        await createUser(db, currUserEmail);
+
     }
 
     // run scripts for the Home page

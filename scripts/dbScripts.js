@@ -100,22 +100,21 @@ export async function queryForPostsByFilter (db, filters, lim) {
  * Add a newly created user and their data to the users collection
  * 
  * @param {Firestore} db a reference to firestore 
- * @param {Array} data user data to be added to the database
+ * @param {String} email the email associated with the user we are creating
  */
-export async function createUser (db, data) { 
+export async function createUser (db, email) { 
 
     // generate a new userID
-    // TODO: AFTER MVP PHASE, FIX THIS
-    // should not be based on totals
-    // will not guarantee IDs are unique if we allow deletion!! 
     const numUsers = await getValueOfFieldByPath(db, 'metrics/totals', "total_users", 0);
     const newUserID = numUsers + 1; 
-    data.push({key: "userID", value: newUserID}); 
-
-    // cast data array to object, generate refernce to user doc, write to doc
-    const dataObj = Object.assign({}, data);
+    // create user data object 
+    const userData = {
+        user_email: email, 
+        userID: newUserID
+    }
+    // generate refernce to user doc, write to doc
     const userRef = doc(db, 'users/user' + newUserID.toString());
-    await setDoc(userRef, dataObj)
+    await setDoc(userRef, userData)
         .then(() => { 
             console.log(`user '${userRef.id}' has been added to users collection`); 
         })

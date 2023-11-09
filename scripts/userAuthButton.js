@@ -1,10 +1,10 @@
-import "./index";
-import { signInWithPopup } from "./index"
+//import "./index";
+//import { signInWithPopup } from "./index"
 
-function index(){
-    return (
-    <div className = "index">
-        <button onClick= {signInWithPopup}> Sign In With Google</button>;
-    </div>
-    );
-}
+//function index(){
+    //return (
+    //<div className = "signInWithPopup">
+        //<button onClick= {signInWithPopup}> Sign In With Google</button>;
+    //</div>
+    //);
+//}

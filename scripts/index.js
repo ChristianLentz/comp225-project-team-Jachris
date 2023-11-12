@@ -76,7 +76,7 @@ await signInWithPopup(auth, provider)
     isAuthenticated = false; 
   });
 // ============================ Sets token for user auth ============================
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+firebase.auth().setPersistence(Auth.Persistence.SESSION)
   .then(() => {
     // Existing and future Auth states are now persisted in the current
     // session only. Closing the window would clear any existing state even

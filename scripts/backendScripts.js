@@ -1,12 +1,14 @@
 /**
  * This file contains scripts which handle all of the backend functionality of 
- * the app. 
+ * the app. The main pupose of this file is to connect the database to the 
+ * front end.  
  */
 
 // ============================ Imports, variables, constants ============================
 
 // Import db scripts 
 import { queryForPostsByFilter,
+    getUserPosts,
     getUserData, 
     getValueOfFieldByPath,
     convertDataFromObjToArray,
@@ -84,7 +86,6 @@ async function homePageBackend(db, filters) {
         for (const post of postsToAdd) {
             addPostToHomePage(post, postGrid); 
         }
-
     } else { 
 
         // TODO: AFTER MVP PHASE
@@ -107,34 +108,45 @@ async function homePageBackend(db, filters) {
  * @param {String} userEmail email associated with the current authenticated user
  */
 async function accountPageBackend(db, userEmail) { 
-    // TODO: 
-    // ask user to set their account info if they are new
+
+    const userID = await getUserIDByEmail(db, userEmail);
+
+    // testing
     console.log("checking new user");
     console.log("new user boolean", newUser);
+
+    // TODO: 
     if (newUser) { 
-        // ask them to set their info! 
+        // ask user to set their account info if they are new
+
         console.log("new user found");
         openModal();
         console.log("should open mondal");
+
+    } else {  
+        // display the user's posts on their account page
+
+        // testing 
+        console.log("never found new user")
+
+        const userPosts = await getUserPosts(db, userID);
+        if (userPosts != null) { 
+            const posts = convertPosts(userPosts); 
+            // add the posts here!
+
+        }
     }
-    console.log("never found new user")
-    
+
     // TODO: 
-    // add the user's data to their account page
-    // const userData = await getUserData(db, userEmail);
+    // add the user's data to their account page 
+    const userCard = document.querySelector('.card');
+    const userData = await getUserData(db, userID);
 
-    // console.log("just before dom")
-        // Your code here
-        const userCard = document.querySelector('.card');
-        const userData = await getUserData(db, userEmail);
-        
-
-        // updates the text on account page, breaks the js for edit account
-        const titleElement = userCard.querySelector('.title');
-        titleElement.textContent = userEmail;
+    // ============= working on this ============= 
     
-    
-        
+    // // updates the text on account page, breaks the js for edit account
+    // const titleElement = userCard.querySelector('.title');
+    // titleElement.textContent = userEmail;
 
     // const userCard = document.querySelector('.card');
 
@@ -142,16 +154,14 @@ async function accountPageBackend(db, userEmail) {
     // console.log("titleElement:", titleElement); 
     // console.log("usercard", userCard);
 
-
     // console.log("user data", userData);
     // console.log("user email",userEmail);
-    //  console.log("test", userData.userEmail);
+    // console.log("test", userData.userEmail);
     // userCard.querySelector('.cardName').textContent = 'test bru';
     // userCard.querySelector('.title').textContent = "userEmail"; // Access 'post_title'
     // cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value;
-    // TODO:
-    // display the user's posts on their account page
-    const userPosts = null; 
+
+    // ============= working on this ============= 
 
     // TODO:
     // update the user's data when edit button clicked
@@ -179,9 +189,11 @@ async function postPageBackend(db) {
       postForm.addEventListener("submit", async function(event) {
         event.preventDefault();
         const newPostData = await getFormData("post-form"); 
-        await sendPostToDB(db, newPostData);  
+        await sendPostToDB(db, newPostData);
+        window.location.href = "/pages/accountPage/account.html"
       }); 
-    },1000); 
+    },1000);
+    // send user to their account page 
 }
 
 // ============================ Helper Functions ============================
@@ -218,22 +230,38 @@ async function sendPostToDB(db, newPostData) {
  * 
  * Will return queryLim posts at most. 
  * 
- * Used in homePageBackend and accountPageBackend
+ * Used in homePageBackend. 
  * 
  * @param {Firestore} db a reference to firestore
  * @param {Array} filters items to query by, an array of strings
+ * 
+ * @returns the posts data that we queried for, or null 
  */
-async function getPosts(db, filters) { 
-    let postArr = []; 
+async function getPosts(db, filters) {  
     const posts = await queryForPostsByFilter(db, filters, queryLim);
-        // for each post we fetched, convert to array
-        if (posts != null) { 
-            for (let i = 0; i < posts.length; i++) {  
-                const post = convertDataFromObjToArray(posts[i], numPostItems); 
-                postArr.push(post);   
-            }
-        }
-    return postArr; 
+    if (posts == null) { 
+        return posts;
+    } else { 
+        return convertPosts(posts);
+    } 
+}
+
+
+/**
+ * Call convertDataArrayFromObjToArray on an array of posts. Used multiple
+ * times in this file. 
+ * 
+ * @param {Array} posts the array of posts as objects from firestore
+ * 
+ * @returns an array of arrays, where each inner array is the data for one post. 
+ */
+function convertPosts(posts) { 
+    let postArr = [];
+    for (let i = 0; i < posts.length; i++) {  
+        const post = convertDataFromObjToArray(posts[i], numPostItems); 
+        postArr.push(post);   
+    }
+    return postArr;
 }
 
 /**

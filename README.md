@@ -41,8 +41,7 @@ This is the final (and simplest) step of the process. Open your terminal of choi
 - Make sure user auth only triggers at the start of a session
 - Storing images in Firestore -- store actual files in Firebase Storage and store filenames in Firebase Firestore
 - Backend for user account page
-    - Need to add a field for each user in the DB which stores post IDs
-    - Need to add functionality to retrieve and display user info on account page
+    - Need to add functionality to display user info on account page
     - Need to add backend functionality to edit/update a user doc 
 - Displaying images on the front end (home page and user account)
 

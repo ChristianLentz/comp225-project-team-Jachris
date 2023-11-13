@@ -15,11 +15,12 @@ import { queryForPostsByFilter,
     getFormData, 
     createUser} from "./dbScripts";
 
-// number of items per post/user document (WILL CHANGE AS MORE FEATURES ADDED)
-const numPostItems = 8; 
-const numUserItems = 2; 
+// number of items per post (WILL CHANGE AS MORE FEATURES ADDED)
+const numPostItems = 8;
 // limit for querying for posts
 const queryLim = 48; 
+// boolean to determine if this is a new user
+let newUser = false; 
 
 // ============================ Scripts ============================
 
@@ -33,12 +34,13 @@ const queryLim = 48;
  */
 export async function runBackend(db, currUserEmail, userAdded) { 
 
+    newUser = !userAdded
+
     // Add new user to DB
     // only if authenticated user's email not yet associated with user in DB  
-    if (!userAdded) { 
-        let userData = []; 
-        userData.push({key: "user_email", value: currUserEmail});
+    if (newUser) { 
         await createUser(db, currUserEmail);
+        window.location.href = "/pages/accountPage/account.html"
     }
 
     // run scripts for the Home page
@@ -105,6 +107,12 @@ async function homePageBackend(db, filters) {
  * @param {String} userEmail email associated with the current authenticated user
  */
 async function accountPageBackend(db, userEmail) { 
+    // TODO: 
+    // ask user to set their account info if they are new
+    if (newUser) { 
+        // ask them to set their info! 
+    }
+
     // TODO: 
     // add the user's data to their account page
     const userData = await getUserData(db, userEmail);

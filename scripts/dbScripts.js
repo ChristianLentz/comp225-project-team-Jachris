@@ -14,7 +14,7 @@
  * 
  *      - user_email: string
  *      - userID: an integer > 0
- *      - user_name: a string with the users first and last name (TODO)
+ *      - user_name: a string with the user's first and last name (TODO)
  *      - profile picture (TODO)
  * 
  * Each post will have the following items within its document:
@@ -96,8 +96,15 @@ export async function queryForPostsByFilter (db, filters, lim) {
     return posts; 
 }
 
+/**
+ * Get the data for a user which is associated with a given email
+ * @param {Firestore} db 
+ * @param {String} email 
+ */
 export async function getUserData(db, email) { 
-
+    const id = await getUserIDByEmail(db, email);
+    const docRef = doc(db, 'users/user' + id.toString()); 
+    return await getAllDocumentDataByRef(docRef); 
 }
 
 /**

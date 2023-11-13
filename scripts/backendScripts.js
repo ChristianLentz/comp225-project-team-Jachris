@@ -7,6 +7,7 @@
 
 // Import db scripts 
 import { queryForPostsByFilter,
+    getUserData, 
     getValueOfFieldByPath,
     convertDataFromObjToArray,
     getUserIDByEmail, 
@@ -35,13 +36,9 @@ export async function runBackend(db, currUserEmail, userAdded) {
     // Add new user to DB
     // only if authenticated user's email not yet associated with user in DB  
     if (!userAdded) { 
-
         let userData = []; 
         userData.push({key: "user_email", value: currUserEmail});
-
-
         await createUser(db, currUserEmail);
-
     }
 
     // run scripts for the Home page
@@ -79,35 +76,17 @@ async function homePageBackend(db, filters) {
     // this will be an arrary of arrays, where each post array has key-value pairs
     const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
     if (numPosts > 0) { 
+        // get posts and add to the home page
         let postsToAdd = await getPosts(db, filters); 
-
-        // TODO: 
-        // add posts to home page as html elements
-        const postGrid = document.querySelector('.postGrid'); // Select the grid container
+        const postGrid = document.querySelector('.postGrid'); 
         for (const post of postsToAdd) {
-            // Create a new card element based on the template
-            const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
-            // Update the card content with the retrieved data
-            // console.log("title" ,post.post_title.value);
-            // console.log("price", post.post_price);
-            // console.log("trying to get price", post[4].value);
-            // Front of card
-            cardTemplate.querySelector('.frontText').textContent = post[2].value; // Access 'post_title'
-            cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value; // Access 'post_price'
-            // Back of card
-            cardTemplate.querySelector('.backTitle').textContent = post[2].value;
-            cardTemplate.querySelector('.backDescription').textContent = post[4].value; //Post descrip
-            cardTemplate.querySelector('.price').textContent = '$' + post[3].value;
-            cardTemplate.querySelector('.sellerInfo').textContent = post[0].value; //seller name
-            
-            // Append the card to the "postGrid" container
-            postGrid.appendChild(cardTemplate);
+            addPostToHomePage(post, postGrid); 
         }
 
     } else { 
 
         // TODO: AFTER MVP PHASE
-        // show on the front end that the selected filter do not return anything
+        // show on the front end that the selected filters do not return anything
 
     }
 }
@@ -126,13 +105,16 @@ async function homePageBackend(db, filters) {
  * @param {String} userEmail email associated with the current authenticated user
  */
 async function accountPageBackend(db, userEmail) { 
-    const userData = null; 
+    // TODO: 
+    // add the user's data to their account page
+    const userData = await getUserData(db, userEmail);
+     
+    // TODO:
+    // display the user's posts on their account page
     const userPosts = null; 
 
     // TODO:
-    // get user's data to display on account page 
-    // get all posts associated with the user
-    // add button on front end to edit account, send to/update db on submit 
+    // update the user's data when edit button clicked
 
 }
 
@@ -212,4 +194,26 @@ async function getPosts(db, filters) {
             }
         }
     return postArr; 
+}
+
+/**
+ * Add a single post to the home page. Used in homePageBackend
+ * 
+ * @param {Array} post the post to add. 
+ * @param {HTMLElement} postGrid HTML element to add the data to.
+ */
+function addPostToHomePage(post, postGrid) { 
+    // Create a new card element based on the template
+    const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
+    // Update the card content with the retrieved data
+    // Front of card
+    cardTemplate.querySelector('.frontText').textContent = post[2].value; // Access 'post_title'
+    cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value; // Access 'post_price'
+    // Back of card
+    cardTemplate.querySelector('.backTitle').textContent = post[2].value;
+    cardTemplate.querySelector('.backDescription').textContent = post[4].value; // Post descrip
+    cardTemplate.querySelector('.price').textContent = '$' + post[3].value;
+    cardTemplate.querySelector('.sellerInfo').textContent = post[0].value; // seller name
+    // Append the card to the "postGrid" container
+    postGrid.appendChild(cardTemplate);
 }

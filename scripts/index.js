@@ -44,7 +44,7 @@ const auth = getAuth(firebaseAPP);
 const provider = new GoogleAuthProvider();
 auth.languageCode = 'en';  
 let email = null;  
-let isAuthenticated = null; 
+let isAuthenticated = false; 
 
 // Initialize database and analytics
 const myDB = getFirestore();                
@@ -107,3 +107,20 @@ if (isAuthenticated) {
     await runBackend(myDB, email, true);
   }
 }
+
+// ============================ working on user sessions ============================
+
+// firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+//   .then(() => {
+//     // Existing and future Auth states are now persisted in the current
+//     // session only. Closing the window would clear any existing state even
+//     // if a user forgets to sign out.
+//     // ...
+//     // New sign-in will be persisted with session persistence.
+//     return firebase.auth().signInWithPopup(auth, provider);
+//   })
+//   .catch((error) => {
+//     // Handle Errors here.
+//     var errorCode = error.code;
+//     var errorMessage = error.message;
+//   });

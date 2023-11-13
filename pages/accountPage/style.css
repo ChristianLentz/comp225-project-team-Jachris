@@ -120,16 +120,24 @@ button {
 
 .custom-dropdown {
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
+  display: list-item;
 }
 
 .selected-photo {
   cursor: pointer;
 }
 
+img, .dropdown-options img{
+  width: 120px;
+  
+}
+
 .dropdown-options {
   display: none;
   position: absolute;
+  min-height: 40px;         
+  min-width: 280px; 
   top: 100%;
   left: 0;
   background-color: #f9f9f9;

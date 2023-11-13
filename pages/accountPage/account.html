@@ -10,6 +10,7 @@
       <script src="/scripts/dist/bundle.js?v=1"></script>
       <link href="/css/style.css" rel="stylesheet">
       <link href="/pages/accountPage/style.css " rel="stylesheet">
+      <!-- <script src = "/pages/accountPage/script.js"></script> -->
     </head>
     <body>
       <!-- Creating the Nav bar  -->
@@ -37,8 +38,11 @@
       <span class="close" onclick="closeModal()">&times;</span>
       <h2>Edit Profile</h2>
       <form id="editForm">
-          <label for="username">Username:</label>
+          <label for="username">Name:</label>
           <input type="text" id="username" name="username" required>
+
+          <label for="username">Description:</label>
+          <input type="text" id="descrip" name="descrip" required>
 
           <label for="profilePhoto">Select Profile Photo:</label>
           <select id="profilePhoto" name="profilePhoto">
@@ -48,15 +52,6 @@
               <option value="/images/userimage.png">
                   <img src="/images/userimage.png" alt="Photo 2" style="width: 300px; height: 30px;">
               </option>
-              <!-- <option value="/images/userimage3.png">
-                  <img src="/images/userimage3.png" alt="Photo 3" style="width: 30px; height: 30px;">
-              </option>
-              <option value="/images/userimage4.png">
-                  <img src="/images/userimage4.png" alt="Photo 4" style="width: 30px; height: 30px;">
-              </option>
-              <option value="/images/userimage5.png">
-                  <img src="/images/userimage5.png" alt="Photo 5" style="width: 30px; height: 30px;">
-              </option>  -->
           </select>
 
          <button type="submit">Save Changes</button>
@@ -68,7 +63,7 @@
           <div class="card">
             <img id="cardImage" src="/images/userimage.png" alt="profile picture" style="width:20%">
             <h1 id="cardName">John Doe Moe</h1>
-            <p class="title">CEO & Founder, Example</p>
+            <p id="title">CEO & Founder, Example</p>
             <p>MacSwag University</p>
             <a href="mailto:jhellenb@macalester.edu">
                 <button class="contact">Email Me</button>
@@ -79,14 +74,14 @@
           <!-- Creating the post area and one post to be on the page -->
           <div class="userPostarea" style = "overflow-y:scroll; background-color:#4272da;">
             <h2>Users Posts</h2>
-              <div class="postCard">
+              <!-- <div class="postCard">
                 <img src="/images/machome3.png" alt="Avatar" style="width:30%">
                 <div class="container1" style = "width:30%">
                   <h4><b>My first post</b></h4>
                   <p>Check me out!</p>
                 </div>
-              </div>
-          </div>
+              </div>-->
+          </div> 
           <div class="footer">
             <p>Issues? Contact me <a href="mailto:jhellenb@macalester.edu">here</a>.</p>
           </div>

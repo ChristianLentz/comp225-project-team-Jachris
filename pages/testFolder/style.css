@@ -1,105 +1,82 @@
-.flipdiv {
-  position: relative;
-  width: 220px;
-  height: 160px;
-  perspective: 500px;
+.vodiapicker{
+  display: none; 
 }
 
-/* flipping the card to the back */
-.flipdiv.v.showBack .front, .flipdiv.v.flip .front {
-  transform: rotateX(180deg);
+#a{
+  padding-left: 0px;
 }
 
-.flipdiv.v.showBack .back, .flipdiv.v.flip .back {
-  transform: rotateX(0deg);
+#a img, .btn-select img{
+  width: 120px;
+  
 }
 
-.flipdiv.v .back {
-  transform: rotateX(-180deg);
+#a li{
+  list-style: none;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
-/* creating the front box */
-.flipdiv .front, .flipdiv .back {
-  position: absolute;
-  width: 180%;
-  height: 200%;
-  box-sizing: border-box;
-  /* transition: all 0.5s ease-in; */
-  transition: none;
-  color: white;
-  background-color: #3278da;
-  padding: 10px;
-  backface-visibility: hidden;
+#a li:hover{
+ background-color: #F4F3F3;
 }
 
-/* creating the back box */
-.flipdiv .back {
-  position: absolute;
-  width: 470%;
-  height: 470%;
-  box-sizing: border-box;
-  /* transition: all 0.5s ease-in; */
-  transition: none;
-  color: rgb(255, 255, 255);
-  background-color: #3278da;
-  padding: 10px;
-  backface-visibility: hidden;
+#a li img{
+  margin: 5px;
 }
 
-/* alliging the description on front */
-.flipdiv .frontText {
-  font-size: 20;
-  text-align: center;
+#a li span, .btn-select li span{
+  margin-left: 30px;
+}
+
+/* item list */
+
+.b{
+  display: none;
+  width: 100%;
+  max-width: 350px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 5px;
+  
+}
+
+.open{
+  display: show !important;
+}
+
+.btn-select{
   margin-top: 10px;
+  width: 100%;
+  max-width: 350px;
+  height: 34px;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+ 
+}
+.btn-select li{
+  list-style: none;
+  float: left;
+  padding-bottom: 0px;
 }
 
-.flipdiv .frontPrice{
-  font-size: 20;
-  text-align: center;
-  margin-top: 17px;
+.btn-select:hover li{
+  margin-left: 0px;
 }
 
-/* Aligning the information on the front */
-.flipdiv .frontImage img{
-  display: block;
-  height: 200px;
-  width: 200px;
-  margin-left: 95px;
-  margin-top: 10px;
+.btn-select:hover{
+  background-color: #F4F3F3;
+  border: 1px solid transparent;
+  box-shadow: inset 0 0px 0px 1px #ccc;
+  
+  
 }
 
-.flipdiv .backImage img {
-  display: block;
-  height: 500px;
-  width: 500px;
-  margin-left: 200px;
-  margin-top: 10px;
+.btn-select:focus{
+   outline:none;
 }
 
-/* aligning the information on the back */
-.flipdiv .backTitle{
-  position: absolute;
-  left: 10px;
-  top: 500px;
-  font-size: 40px;
-}
-
-.flipdiv .backDescription {
-  position: absolute;
-  left: 40px;
-  top: 620px;
-  font-size: 20px;
-}
-.flipdiv .price {
-  position: absolute;
-  left: 30px;
-  top: 550px;
-  font-size: 30px;
-
-}
-.flipdiv .sellerInfo {
-  position: absolute;
-  left: 900px;
-  top: 150px;
-  font-size: 30px;
+.lang-select{
+  margin-left: 50px;
 }

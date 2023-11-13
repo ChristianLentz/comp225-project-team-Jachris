@@ -109,14 +109,46 @@ async function homePageBackend(db, filters) {
 async function accountPageBackend(db, userEmail) { 
     // TODO: 
     // ask user to set their account info if they are new
+    console.log("checking new user");
+    console.log("new user boolean", newUser);
     if (newUser) { 
         // ask them to set their info! 
+        console.log("new user found");
+        openModal();
+        console.log("should open mondal");
     }
-
+    console.log("never found new user")
+    
     // TODO: 
     // add the user's data to their account page
-    const userData = await getUserData(db, userEmail);
-     
+    // const userData = await getUserData(db, userEmail);
+
+    // console.log("just before dom")
+        // Your code here
+        const userCard = document.querySelector('.card');
+        const userData = await getUserData(db, userEmail);
+        
+
+        // updates the text on account page, breaks the js for edit account
+        const titleElement = userCard.querySelector('.title');
+        titleElement.textContent = userEmail;
+    
+    
+        
+
+    // const userCard = document.querySelector('.card');
+
+    // const titleElement = userCard.querySelector('.title');
+    // console.log("titleElement:", titleElement); 
+    // console.log("usercard", userCard);
+
+
+    // console.log("user data", userData);
+    // console.log("user email",userEmail);
+    //  console.log("test", userData.userEmail);
+    // userCard.querySelector('.cardName').textContent = 'test bru';
+    // userCard.querySelector('.title').textContent = "userEmail"; // Access 'post_title'
+    // cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value;
     // TODO:
     // display the user's posts on their account page
     const userPosts = null; 

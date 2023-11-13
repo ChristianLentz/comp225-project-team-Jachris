@@ -10,6 +10,8 @@
       <script src="/scripts/dist/bundle.js?v=1"></script>
       <link href="/css/style.css" rel="stylesheet">
       <link href="/pages/accountPage/style.css " rel="stylesheet">
+      <script src="/pages/accountPage/script.js" defer></script> 
+      <script src="/scripts/backendScripts.js" defer></script>
       <!-- <script src = "/pages/accountPage/script.js"></script> -->
     </head>
     <body>
@@ -42,7 +44,7 @@
           <input type="text" id="username" name="username" required>
 
           <label for="username">Description:</label>
-          <input type="text" id="descrip" name="descrip" required>
+          <input type="text" id="descrip" name="descrip" >
 
           <label for="profilePhoto">Select Profile Photo:</label>
           <select id="profilePhoto" name="profilePhoto">
@@ -59,12 +61,14 @@
   </div>
 </div>
 
-<script src="script.js"></script>
+<!-- <script src="script.js"></script> -->
+
           <div class="card">
             <img id="cardImage" src="/images/userimage.png" alt="profile picture" style="width:20%">
-            <h1 id="cardName">John Doe Moe</h1>
-            <p id="title">CEO & Founder, Example</p>
-            <p>MacSwag University</p>
+            <div id="cardName">John Doe Moe</div>
+            <div id="title">CEO & Founder, Example</div> 
+            <!-- need class and not id for html to be edited by backend -->
+            <div>MacSwag University</div>
             <a href="mailto:jhellenb@macalester.edu">
                 <button class="contact">Email Me</button>
             </a>

@@ -12,19 +12,13 @@ import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";  
 import { getAuth,    
   GoogleAuthProvider, 
-  signInWithPopup,
-  setPersistence,
-  ProviderId} from "firebase/auth";  
+  signInWithPopup} from "firebase/auth";  
 
 // Import backend scripts
 import { runBackend } from "./backendScripts";
 
 // Import database scripts
 import { getUserIDByEmail } from "./dbScripts"; 
-
-// initialize express JS app - there is a webpack error when we try to use this?
-// const express = require('express'); 
-// const expressApp = express(); 
 
 // Firebase configuration - measurementID is an optional parameter
 const firebaseConfig = {
@@ -53,48 +47,28 @@ const analytics = getAnalytics();
 
 // ============================ User Auth ============================
 
+// sign in user with google O auth 
 await signInWithPopup(auth, provider)
   .then( (result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
-    // The signed-in user info.
     const user = result.user;
     email = user.email;   
-    // Set authenticated flag to true
     isAuthenticated = true; 
-    // IdP data available using getAdditionalUserInfo(result)
   }).catch((error) => {
-    // Handle errors here.
+    // handle errors 
     const errorCode = error.code;
     const errorMessage = error.message;
     const credential = GoogleAuthProvider.credentialFromError(error);
-    // Log the errors in the console.
+    // log the errors 
     console.log("Error when authenticating user. Error code: ", errorCode);
     console.log("Error when authenticating user. Error message: ", errorMessage);
     console.log("Error when authenticating user. AuthCredential type used: ", credential); 
-    // Set authenticated flag to false 
     isAuthenticated = false; 
   });
 
-// ============================ Sets token for user auth ============================
-
-// setPersistence(auth, )
-
-// firebase.auth().setPersistence(Auth.Persistence.SESSION)
-//   .then(() => {
-//     // Existing and future Auth states are now persisted in the current
-//     // session only. Closing the window would clear any existing state even
-//     // if a user forgets to sign out.
-//     // ...
-//     // New sign-in will be persisted with session persistence.
-//     return firebase.auth().signInWithPopup(auth, provider);
-//   })
-//   .catch((error) => {
-//     // Handle Errors here.
-//     var errorCode = error.code;
-//     var errorMessage = error.message;
-//   });
+// WE CANNOT USE setPersistence, this does not work with Node.js (see the documentation)
+// need to look into using the firebase admin SDK? 
 
 // ============================ Run App ============================
 
@@ -112,20 +86,3 @@ if (isAuthenticated) {
     await runBackend(myDB, email, true);
   }
 }
-
-// ============================ working on user sessions ============================
-
-// firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-//   .then(() => {
-//     // Existing and future Auth states are now persisted in the current
-//     // session only. Closing the window would clear any existing state even
-//     // if a user forgets to sign out.
-//     // ...
-//     // New sign-in will be persisted with session persistence.
-//     return firebase.auth().signInWithPopup(auth, provider);
-//   })
-//   .catch((error) => {
-//     // Handle Errors here.
-//     var errorCode = error.code;
-//     var errorMessage = error.message;
-//   });

@@ -1,82 +1,30 @@
-.vodiapicker{
-  display: none; 
+
+/* Style for the image grid */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
 }
 
-#a{
-  padding-left: 0px;
+/* Style for each image item */
+.image-item {
+  position: relative;
+  cursor: pointer;
 }
 
-#a img, .btn-select img{
-  width: 120px;
-  
+/* Style for the selected image */
+.image-item.selected::after {
+  content: '\2713'; /* Checkmark symbol */
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: #00f; /* Blue color for the checkmark */
+  font-size: 20px;
 }
 
-#a li{
-  list-style: none;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-#a li:hover{
- background-color: #F4F3F3;
-}
-
-#a li img{
-  margin: 5px;
-}
-
-#a li span, .btn-select li span{
-  margin-left: 30px;
-}
-
-/* item list */
-
-.b{
-  display: none;
+/* Style for the images to have a fixed width */
+.image-item img {
   width: 100%;
-  max-width: 350px;
-  box-shadow: 0 6px 12px rgba(0,0,0,.175);
-  border: 1px solid rgba(0,0,0,.15);
-  border-radius: 5px;
-  
-}
-
-.open{
-  display: show !important;
-}
-
-.btn-select{
-  margin-top: 10px;
-  width: 100%;
-  max-width: 350px;
-  height: 34px;
-  border-radius: 5px;
-  background-color: #fff;
-  border: 1px solid #ccc;
- 
-}
-.btn-select li{
-  list-style: none;
-  float: left;
-  padding-bottom: 0px;
-}
-
-.btn-select:hover li{
-  margin-left: 0px;
-}
-
-.btn-select:hover{
-  background-color: #F4F3F3;
-  border: 1px solid transparent;
-  box-shadow: inset 0 0px 0px 1px #ccc;
-  
-  
-}
-
-.btn-select:focus{
-   outline:none;
-}
-
-.lang-select{
-  margin-left: 50px;
+  height: auto;
+  display: block;
 }

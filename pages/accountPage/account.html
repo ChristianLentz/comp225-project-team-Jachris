@@ -46,15 +46,45 @@
           <label for="descrip" class="descrip-label">Description:</label>
           <input type="text" id="descrip" name="descrip" class="descrip-input" >
 
-          <label for="profilePhoto" class="photo-label">Select Profile Photo:</label>
+          <!-- <label for="profilePhoto" class="photo-label">Select Profile Photo:</label>
           <select id="profilePhoto" name="profilePhoto" class="photo-select">
-              <option value="/images/jachris-logo.png">
-                  <img src="/images/jachris-logo.png" alt="Photo 1" style="width: 30px; height: 30px;">
-              </option>
-              <option value="/images/userimage.png">
-                  <img src="/images/userimage.png" alt="Photo 2" style="width: 300px; height: 30px;">
-              </option>
-          </select>
+            <option value="/images/jachris-logo.png">
+                <img src="/images/jachris-logo.png" alt="Photo 1" style="width: 30px; height: 30px;">
+            </option>
+            <option value="/images/userimage.png">
+                <img src="/images/userimage.png" alt="Photo 2" style="width: 300px; height: 30px;">
+            </option>
+          </select> -->
+
+          <div class="photo-grid">
+            <!-- Replace the image paths with your actual image paths -->
+            <div class="image-item">
+              <input type="radio" id="photo1" name="profilePhoto" value="/images/jachris-logo.png">
+              <label for="photo1">
+                <img src="/images/jachris-logo.png" alt="Photo 1">
+              </label>
+            </div>
+            <div class="image-item">
+              <input type="radio" id="photo2" name="profilePhoto" value="/images/userimage.png">
+              <label for="photo2">
+                <img src="/images/userimage.png" alt="Photo 2">
+              </label>
+            </div>
+            <div class="image-item">
+              <input type="radio" id="photo3" name="profilePhoto" value="/images/macLogo.png">
+              <label for="photo3">
+                <img src="/images/macLogo.png" alt="Photo 3">
+              </label>
+            </div>
+            <div class="image-item">
+              <input type="radio" id="photo4" name="profilePhoto" value="/images/macHome2.png">
+              <label for="photo4">
+                <img src="/images/macHome2.png" alt="Photo 4">
+              </label>
+            </div>
+
+            <!-- Add more image items as needed -->
+          </div>
 
          <button type="submit" class="save-button">Save Changes</button>
       </form>
@@ -78,13 +108,6 @@
           <!-- Creating the post area and one post to be on the page -->
           <div class="userPostarea" style = "overflow-y:scroll; background-color:#4272da;">
             <h2>Users Posts</h2>
-              <!-- <div class="postCard">
-                <img src="/images/machome3.png" alt="Avatar" style="width:30%">
-                <div class="container1" style = "width:30%">
-                  <h4><b>My first post</b></h4>
-                  <p>Check me out!</p>
-                </div>
-              </div>-->
           </div> 
           <div class="footer">
             <p>Issues? Contact me <a href="mailto:jhellenb@macalester.edu">here</a>.</p>

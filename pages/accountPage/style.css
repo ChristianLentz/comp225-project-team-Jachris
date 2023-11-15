@@ -113,15 +113,16 @@ button {
 
 .name-label {
   position: absolute;
-  padding-top: 20px;
+  top: 30%;
+  left: 12%
   /* top: 20px; */
  
 }
 
 .name-input {
   position: absolute;
-  top: 183px;
-  left: 182px;
+  top: 30%;
+  left: 15.5%;
   /* padding-top: 20px; */
   /* width: 100%;
   padding: 8px;
@@ -131,28 +132,52 @@ button {
 
 .descrip-label {
   position: absolute;
-  padding-top: 40px;
+  top: 36%;
 }
 
 .descrip-input {
   position: absolute;
-  top: 230px;
-  left: 140px;
-  width: 30%;
-  height: 30%;
+  top: 40%;
+  left: 13%;
+  width: 38%;
+  height: 38%;
   box-sizing: border-box;
 }
 
-.photo-label {
+
+/* Style for the image grid */
+.photo-grid {
   position: absolute;
-  left: 500px;
-  padding-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  left: 55%;
+  margin-right: 100px;
+  /* margin-left: 200px; This will push the grid to the right */
 }
 
-.photo-select {
+/* Style for each image item */
+.image-item {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* Style for the selected image */
+.image-item.selected::after {
+  content: '\2713'; /* Checkmark symbol */
   position: absolute;
-  left: 635px;
-  padding-top: 25px;
+  top: 5px;
+  right: 5px;
+  color: #00f; /* Blue color for the checkmark */
+  font-size: 20px;
+}
+
+/* Style for the images to have a fixed width */
+.image-item img {
+  width: 60%;
+  height: auto;
+  display: block;
 }
 
 .close {

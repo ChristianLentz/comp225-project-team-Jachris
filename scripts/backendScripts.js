@@ -116,7 +116,7 @@ async function accountPageBackend(db, userEmail) {
     console.log("new user boolean", newUser);
 
     // TODO: 
-    if (newUser) { 
+    if (!newUser) { 
         // ask user to set their account info if they are new
 
         console.log("new user found");

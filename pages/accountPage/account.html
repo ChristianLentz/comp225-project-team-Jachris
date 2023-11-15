@@ -38,16 +38,16 @@
 <div class="modal" id="editModal">
   <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
-      <h2>Edit Profile</h2>
+      <h2>Lets update your profile</h2>
       <form id="editForm">
-          <label for="username">Name:</label>
-          <input type="text" id="username" name="username" required>
+          <label for="username" class="name-label">Name:</label>
+          <input type="text" id="username" name="username" class="name-input" required>
 
-          <label for="username">Description:</label>
-          <input type="text" id="descrip" name="descrip" >
+          <label for="descrip" class="descrip-label">Description:</label>
+          <input type="text" id="descrip" name="descrip" class="descrip-input" >
 
-          <label for="profilePhoto">Select Profile Photo:</label>
-          <select id="profilePhoto" name="profilePhoto">
+          <label for="profilePhoto" class="photo-label">Select Profile Photo:</label>
+          <select id="profilePhoto" name="profilePhoto" class="photo-select">
               <option value="/images/jachris-logo.png">
                   <img src="/images/jachris-logo.png" alt="Photo 1" style="width: 30px; height: 30px;">
               </option>
@@ -56,7 +56,7 @@
               </option>
           </select>
 
-         <button type="submit">Save Changes</button>
+         <button type="submit" class="save-button">Save Changes</button>
       </form>
   </div>
 </div>

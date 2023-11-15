@@ -81,6 +81,7 @@ button {
   font-size: 16px;
 }
 
+/* blurs the background slightly behind the white box */
 .modal {
   display: none;
   position: fixed;
@@ -93,12 +94,65 @@ button {
   background-color: rgba(0,0,0,0.4);
 }
 
+/* makes the white box for the fields to be on */
 .modal-content {
   background-color: #fefefe;
   margin: 10% auto;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+  height: 500px;
+}
+
+/* positions save button */
+.save-button {
+  position: absolute;
+  top: 550px;
+  left: 860px;
+}
+
+.name-label {
+  position: absolute;
+  padding-top: 20px;
+  /* top: 20px; */
+ 
+}
+
+.name-input {
+  position: absolute;
+  top: 183px;
+  left: 182px;
+  /* padding-top: 20px; */
+  /* width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 10px; */
+}
+
+.descrip-label {
+  position: absolute;
+  padding-top: 40px;
+}
+
+.descrip-input {
+  position: absolute;
+  top: 230px;
+  left: 140px;
+  width: 30%;
+  height: 30%;
+  box-sizing: border-box;
+}
+
+.photo-label {
+  position: absolute;
+  left: 500px;
+  padding-top: 20px;
+}
+
+.photo-select {
+  position: absolute;
+  left: 635px;
+  padding-top: 25px;
 }
 
 .close {
@@ -136,7 +190,7 @@ img, .dropdown-options img{
 .dropdown-options {
   display: none;
   position: absolute;
-  min-height: 40px;         
+  min-height: 200px;         
   min-width: 280px; 
   top: 100%;
   left: 0;
@@ -160,10 +214,10 @@ select.icon-menu option {
   background-position:bottom left;
   padding-left:30px;
   }
-  select#profilePhoto option[value="image1"] {
+  /* select#profilePhoto option[value="image1"] {
   background-image:url(/images/jachris-logo.png);
   }
 
   select#profilePhoto option[value="image2"] {
     background-image:url(/images/userimage.png);
-    }
+    } */

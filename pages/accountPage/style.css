@@ -101,14 +101,14 @@ button {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  height: 500px;
+  height: 550px;
 }
 
 /* positions save button */
 .save-button {
   position: absolute;
-  top: 550px;
-  left: 860px;
+  top: 640px;
+  left: 1130px;
 }
 
 .name-label {

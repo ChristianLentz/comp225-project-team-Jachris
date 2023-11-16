@@ -51,3 +51,9 @@ This is the final (and simplest) step of the process. Open your terminal of choi
 - Filter for posts on the home page according to tags
 - Allow users to search for other users
 - Allow users to delete their posts (this will require us to update the ID assignment for posts) 
+
+
+### Sources
+
+Profile images
+- https://www.freepik.com/search?format=search&query=cartoon%20animal%20profile

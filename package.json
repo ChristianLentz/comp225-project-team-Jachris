@@ -22,14 +22,16 @@
     "url": "https://github.com/ChristianLentz/comp225-project-jachris/issues"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "firebase": "^10.4.0",
+    "firebase": "^10.6.0",
     "firebase-admin": "^11.11.0",
     "form-data": "^4.0.0",
+    "node-polyfill-webpack-plugin": "^2.0.1",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
     "webpack-dev-server": "^4.15.1"
   },
   "devDependencies": {
-    "webpack": "^5.88.2",
+    "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4"
   },
   "homepage": "https://github.com/ChristianLentz/comp225-project-jachris#readme"

@@ -17,7 +17,7 @@
 const path = require('path');
 
 module.exports = {
-    // pick a mode for webpack to run 
+    // pick a mode for webpack to run (CHANGE TO PRODUCTION WHEN DONE!)
     mode: 'development', 
     // makes code more readable (and thus easier to debug) in the dev console 
     devtool: 'eval-source-map',
@@ -27,20 +27,22 @@ module.exports = {
     output: { 
         path: path.resolve(__dirname, 'scripts/dist'), 
         filename: 'bundle.js',
-    }
+    },
+    // resolve node module erros upon compile
+    resolve: {
+        fallback: {'path': require.resolve('path-browserify'),
+                    "os": require.resolve("os-browserify/browser"), 
+                    "querystring": false, 
+                    "stream": false, 
+                    "https": false, 
+                    "http": false, 
+                    "crypto": false, 
+                    "zlib": false,
+                    "fs": false,
+                    "tls": false,
+                    "net": false, 
+                    "child_process": false, 
+                    "request": false},
+        extensions: ['.jsx', '.js', '.tsx', '.ts'],
+     },
 };
-
-/**
- * TODO: set up webpack to run in production or development mode
- * 
- * Prodcution mode will be best for when the website is actually live. 
- * 
- * Right now we have webpack configured to run in development. In the future we can 
- * do this by configuring three files: 
- * 
- * - webpack.common.js --> webpack config common to both modes 
- * - webpack.dev.js --> webpack config only for development 
- * - webpack.prod.js --> webpack config only for production 
- * 
- * Refer to https://webpack.js.org/guides/production/
- */

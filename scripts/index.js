@@ -12,13 +12,15 @@ import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";  
 import { getAuth,    
   GoogleAuthProvider, 
-  signInWithPopup} from "firebase/auth";  
+  signInWithCredential, 
+  signInWithPopup, } from "firebase/auth";  
 
 // Import backend scripts
 import { runBackend } from "./backendScripts";
 
 // Import database scripts
 import { getUserIDByEmail } from "./dbScripts"; 
+import { credential } from "firebase-admin";
 
 // Firebase configuration - measurementID is an optional parameter
 const firebaseConfig = {
@@ -41,11 +43,12 @@ auth.languageCode = 'en';
 let email = null;  
 let isAuthenticated = false; 
 
+
 // Initialize database and analytics
 const myDB = getFirestore();                
 const analytics = getAnalytics(); 
 
-// ============================ User Auth ============================
+// ============================ User Auth Need to Put in other class ============================
 
 // sign in user with google O auth 
 await signInWithPopup(auth, provider)
@@ -69,7 +72,23 @@ await signInWithPopup(auth, provider)
 
 // WE CANNOT USE setPersistence, this does not work with Node.js (see the documentation)
 // need to look into using the firebase admin SDK? 
+function handleCredentialResponse(response) {
+  // Build Firebase credential with the Google ID token.
+  const idToken = response.credential;
+  const credential = GoogleAuthProvider.credential(idToken);
 
+  // Sign in with credential from the Google user.
+  signInWithCredential(auth, credential).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.email;
+    // The credential that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+}
 // ============================ Run App ============================
 
 // run the back end!

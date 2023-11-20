@@ -34,22 +34,18 @@ This is the final (and simplest) step of the process. Open your terminal of choi
 
 ### Current Issues/Bugs
 
-- Accessibility Issues with html elements
-
 ### TODOs for MVP
 
-- Beutify/comment code
-- Routing -- can use window.location.href = page
-- Make sure user auth only triggers at the start of a session
+- Beutify/comment code (uses shift+alt+f when you are done writing new code!)
+- Routing, use window.location.href = page
+- User auth 
 - Storing images in Firestore -- store actual files in Firebase Storage and store filenames in Firebase Firestore
-- Backend for user account page
-    - Need to add functionality to display user info on account page
-    - Need to add backend functionality to edit/update a user doc 
-- Displaying images on the front end (home page and user account)
+- Display user images on the account page
 
 ### Features after MVP 
 
 - Add tags to user posts
+- Add links to user profiles on posts on the home page
 - Filter for posts on the home page according to tags
 - Allow users to search for other users
 - Allow users to delete their posts (this will require us to update the ID assignment for posts) 

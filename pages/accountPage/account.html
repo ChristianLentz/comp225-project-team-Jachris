@@ -1,51 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">  
-    <!-- setup the page -->  
-    <head>
-      <meta charset="UTF-8"> 
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <!-- HTTP header, for security. See https://www.keycdn.com/support/what-is-mime-sniffing -->
-      <meta http-equiv="X-Content-Type-Options: nosniff" /> 
-      <title> Account </title> 
-      <script src="/scripts/dist/bundle.js?v=1"></script>
-      <link href="/css/style.css" rel="stylesheet">
-      <link href="/pages/accountPage/style.css " rel="stylesheet">
-      <script src="/pages/accountPage/script.js" defer></script> 
-      <script src="/scripts/backendScripts.js" defer></script>
-      <!-- <script src = "/pages/accountPage/script.js"></script> -->
-    </head>
-    <body>
-      <!-- Creating the Nav bar  -->
-        <nav id = "navBar">
-          <ul>
-            <div id="Mac-Logo">
-              <li><a href = "/index.html">
-                <img src="/images/macLogo.png" id="Mac-Logo0" alt="mac logo 0"/>
-                </a></li>
-            </div>
-            <div id="navright">
-              <!-- <li><a href = "/pages/loginPage/login.html"> Login</a></li> -->
-              <!-- <li><a href = "/index.html"> Home</a></li> -->
-              <li><a href = "/pages/accountPage/account.html"> Account</a></li>
-              <li><a href = "/pages/postPage/post.html"> Post</a></li>
-            </div>   
-            </ul>
-        </nav>
-        <!-- Create information to be on account page -->
-   
-      <button id="editBtn">Edit Profile</button>
+<html lang="en">
 
-<div class="modal" id="editModal">
-  <div class="modal-content">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-Content-Type-Options: nosniff" />
+  <title> Account </title>
+  <script src="/scripts/dist/bundle.js?v=1"></script>
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/pages/accountPage/style.css " rel="stylesheet">
+  <script src="/pages/accountPage/script.js" defer></script>
+  <script src="/scripts/backendScripts.js" defer></script>
+</head>
+
+<body>
+  <!-- Creating the Nav bar  -->
+  <nav id="navBar">
+    <ul>
+      <div id="Mac-Logo">
+        <li><a href="/index.html">
+            <img src="/images/macLogo.png" id="Mac-Logo0" alt="mac logo 0" />
+          </a></li>
+      </div>
+      <div id="navright">
+        <!-- <li><a href = "/pages/loginPage/login.html"> Login</a></li> -->
+        <!-- <li><a href = "/index.html"> Home</a></li> -->
+        <li><a href="/pages/accountPage/account.html"> Account</a></li>
+        <li><a href="/pages/postPage/post.html"> Post</a></li>
+      </div>
+    </ul>
+  </nav>
+
+  <!-- Create information to be on account page -->
+  <button id="editBtn">Edit Profile</button>
+  <div class="modal" id="editModal">
+    <div class="modal-content">
       <h2>Let's update your profile!</h2>
       <form id="editForm">
-          <label for="username" class="name-label">Name:</label>
-          <input type="text" id="username" name="username" class="name-input" required>
 
-          <label for="descrip" class="descrip-label">Description:</label>
-          <input type="text" id="descrip" name="descrip" class="descrip-input" >
+        <label for="username" class="name-label">Name:</label>
+        <input type="text" id="username" name="username" class="name-input" required>
 
-          <!-- <label for="profilePhoto" class="photo-label">Select Profile Photo:</label>
+        <label for="descrip" class="descrip-label">Description:</label>
+        <input type="text" id="descrip" name="descrip" class="descrip-input">
+
+        <!-- <label for="profilePhoto" class="photo-label">Select Profile Photo:</label>
           <select id="profilePhoto" name="profilePhoto" class="photo-select">
             <option value="/images/jachris-logo.png">
                 <img src="/images/jachris-logo.png" alt="Photo 1" style="width: 30px; height: 30px;">
@@ -55,90 +54,91 @@
             </option>
           </select> -->
 
-          <div class="photo-grid">
-            <!-- Replace the image paths with your actual image paths -->
-            <div class="image-item">
-              <input type="radio" id="photo1" name="profilePhoto" value="/images/pig.png">
-              <label for="photo1">
-                <img src="/images/pig.png" alt="Photo 1">
-              </label>
-            </div>
-            <div class="image-item">
-              <input type="radio" id="photo2" name="profilePhoto" value="/images/elephant.png">
-              <label for="photo2">
-                <img src="/images/elephant.png" alt="Photo 2">
-              </label>
-            </div>
-            <div class="image-item">
-              <input type="radio" id="photo3" name="profilePhoto" value="/images/walrus.png">
-              <label for="photo3">
-                <img src="/images/walrus.png" alt="Photo 3">
-              </label>
-            </div>
-            <div class="image-item">
-              <input type="radio" id="photo4" name="profilePhoto" value="/images/seal.png">
-              <label for="photo4">
-                <img src="/images/seal.png" alt="Photo 4">
-              </label>
-            </div>
-            <div class="image-item">
-              <input type="radio" id="photo5" name="profilePhoto" value="/images/rhino.png">
-              <label for="photo5">
-                <img src="/images/rhino.png" alt="Photo 5">
-              </label>
-            </div>
-            <div class="image-item">
-              <input type="radio" id="photo6" name="profilePhoto" value="/images/turtle.png">
-              <label for="photo6">
-                <img src="/images/turtle.png" alt="Photo 6">
-              </label>
-            </div>
-            <div class="image-item">
-              <input type="radio" id="photo7" name="profilePhoto" value="/images/zebra.png">
-              <label for="photo7">
-                <img src="/images/zebra.png" alt="Photo 7">
-              </label>
-            </div>
-            <div class="image-item">
-              <input type="radio" id="photo8" name="profilePhoto" value="/images/gorilla.png">
-              <label for="photo8">
-                <img src="/images/gorilla.png" alt="Photo 8">
-              </label>
-            </div>
-            <div class="image-item">
-              <input type="radio" id="photo9" name="profilePhoto" value="/images/beaver.png">
-              <label for="photo9">
-                <img src="/images/beaver.png" alt="Photo 9">
-              </label>
-            </div>
-            <!-- Add more image items as needed -->
+        <!-- Images for the default profile pictures -->
+        <div class="photo-grid">
+          <!-- Replace the image paths with your actual image paths -->
+          <div class="image-item">
+            <input type="radio" id="photo1" name="profilePhoto" value="/images/pig.png">
+            <label for="photo1">
+              <img src="/images/pig.png" alt="Photo 1">
+            </label>
           </div>
-
-         <button type="submit" class="save-button">Save Changes</button>
-      </form>
-  </div>
-</div>
-
-<!-- <script src="script.js"></script> -->
-
-          <div class="card">
-            <img id="cardImage" src="/images/userimage.png" alt="profile picture" style="width:20%">
-            <div id="cardName">John Doe Moe</div>
-            <div id="title">CEO & Founder, Example</div> 
-            <!-- need class and not id for html to be edited by backend -->
-            <div>MacSwag University</div>
-            <a href="mailto:jhellenb@macalester.edu">
-                <button class="contact">Email Me</button>
-            </a>
+          <div class="image-item">
+            <input type="radio" id="photo2" name="profilePhoto" value="/images/elephant.png">
+            <label for="photo2">
+              <img src="/images/elephant.png" alt="Photo 2">
+            </label>
+          </div>
+          <div class="image-item">
+            <input type="radio" id="photo3" name="profilePhoto" value="/images/walrus.png">
+            <label for="photo3">
+              <img src="/images/walrus.png" alt="Photo 3">
+            </label>
+          </div>
+          <div class="image-item">
+            <input type="radio" id="photo4" name="profilePhoto" value="/images/seal.png">
+            <label for="photo4">
+              <img src="/images/seal.png" alt="Photo 4">
+            </label>
+          </div>
+          <div class="image-item">
+            <input type="radio" id="photo5" name="profilePhoto" value="/images/rhino.png">
+            <label for="photo5">
+              <img src="/images/rhino.png" alt="Photo 5">
+            </label>
+          </div>
+          <div class="image-item">
+            <input type="radio" id="photo6" name="profilePhoto" value="/images/turtle.png">
+            <label for="photo6">
+              <img src="/images/turtle.png" alt="Photo 6">
+            </label>
+          </div>
+          <div class="image-item">
+            <input type="radio" id="photo7" name="profilePhoto" value="/images/zebra.png">
+            <label for="photo7">
+              <img src="/images/zebra.png" alt="Photo 7">
+            </label>
+          </div>
+          <div class="image-item">
+            <input type="radio" id="photo8" name="profilePhoto" value="/images/gorilla.png">
+            <label for="photo8">
+              <img src="/images/gorilla.png" alt="Photo 8">
+            </label>
+          </div>
+          <div class="image-item">
+            <input type="radio" id="photo9" name="profilePhoto" value="/images/beaver.png">
+            <label for="photo9">
+              <img src="/images/beaver.png" alt="Photo 9">
+            </label>
+          </div>
+          <!-- Add more image items as needed -->
         </div>
 
+        <button type="submit" class="save-button">Save Changes</button>
+      </form>
+    </div>
+  </div>
 
-          <!-- Creating the post area and one post to be on the page -->
-          <div class="userPostarea" style = "overflow-y:scroll; background-color:#4272da;">
-            <h2>Users Posts</h2>
-          </div> 
-          <div class="footer">
-            <p>Issues? Contact me <a href="mailto:jhellenb@macalester.edu">here</a>.</p>
-          </div>
-    </body>
+  <!-- <script src="script.js"></script> -->
+
+  <div class="card">
+    <img id="cardImage" src="/images/userimage.png" alt="profile picture" style="width:20%">
+    <div id="cardName">John Doe Moe</div>
+    <div id="title">CEO & Founder, Example</div>
+    <!-- need class and not id for html to be edited by backend -->
+    <div>Macalester College</div>
+    <a href="mailto:jhellenb@macalester.edu">
+      <button class="contact">Email Me</button>
+    </a>
+  </div>
+
+  <!-- Creating the post area and one post to be on the page -->
+  <div class="userPostarea" style="overflow-y:scroll; background-color:#4272da;">
+    <h2>Users Posts</h2>
+  </div>
+  <div class="footer">
+    <p>Issues? Contact me <a href="mailto:jhellenb@macalester.edu">here</a>.</p>
+  </div>
+</body>
+
 </html>

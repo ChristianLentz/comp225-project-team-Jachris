@@ -8,14 +8,16 @@
 
 // Import functions from the firebase SDK
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";  
-import { getAuth,    
-  GoogleAuthProvider, 
-  signInWithCredential, 
-  signInWithPopup, } from "firebase/auth";  
+import { getFirestore } from "firebase/firestore";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithCredential,
+  signInWithPopup,
+} from "firebase/auth";
 
 // Import backend scripts
-import { runBackend } from "./backendScripts"; 
+import { runBackend } from "./backendScripts";
 
 // Firebase configuration - measurementID is an optional parameter
 const firebaseConfig = {
@@ -29,17 +31,17 @@ const firebaseConfig = {
 };
 
 // Initialize firebase app 
-const firebaseAPP = initializeApp(firebaseConfig); 
+const firebaseAPP = initializeApp(firebaseConfig);
 
 // Initialize user auth 
 const auth = getAuth(firebaseAPP);
 const provider = new GoogleAuthProvider();
-auth.languageCode = 'en';  
-let email = null;  
-let isAuthenticated = false; 
+auth.languageCode = 'en';
+let email = null;
+let isAuthenticated = false;
 
 // Initialize database
-const myDB = getFirestore(); 
+const myDB = getFirestore();
 
 // Import database scripts
 import { getUserIDByEmail } from "./dbScripts";
@@ -86,19 +88,19 @@ import { getUserIDByEmail } from "./dbScripts";
 
 // ============================ Run App ============================
 
-isAuthenticated = true; 
+isAuthenticated = true;
 email = "clentz@macalester.edu";
 
 // run the back end!
-if (isAuthenticated) { 
+if (isAuthenticated) {
   console.log(`user '${email}' has been authenticated`);
-  const userID = await getUserIDByEmail(myDB, email); 
+  const userID = await getUserIDByEmail(myDB, email);
   // boolean passed to runBackend will determine if we add the user to the db 
-  if (userID == null) { 
+  if (userID == null) {
     // current authenticated user is new, userAdded = false  
     await runBackend(myDB, email, false);
-  } 
-  else { 
+  }
+  else {
     // current authenticated user is not new, userAdded = true
     await runBackend(myDB, email, true);
   }

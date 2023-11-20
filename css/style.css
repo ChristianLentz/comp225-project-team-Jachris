@@ -1,24 +1,29 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
+
 /* website background color */
-body{
-    background-color: white;
+body {
+  background-color: white;
 }
+
 .header {
-    /* padding: 80px; some padding */
-    text-align: center; /* center the text */
-    /* background: #0b4fc6; green background */
-    color: rgb(22, 20, 20); /* white text color */
-    background-color: #ddd;
+  /* padding: 80px; some padding */
+  text-align: center;
+  /* center the text */
+  /* background: #0b4fc6; green background */
+  color: rgb(22, 20, 20);
+  /* white text color */
+  background-color: #ddd;
 }
 
 /* Bottom right text */
 .descrip {
   background-color: #fffbfb;
   position: absolute;
-  top: 34.5vw;  /* vw used here to make it so text size moves according to window size */
+  top: 34.5vw;
+  /* vw used here to make it so text size moves according to window size */
   left: 50%;
   font-size: 2.949vw;
   transform: translate(-50%, -50%);
@@ -28,7 +33,7 @@ body{
 }
 
 /* Centered text */
-.homeTitle { 
+.homeTitle {
   background-color: #fffdfd;
   position: absolute;
   top: 30.6vw;
@@ -40,174 +45,207 @@ body{
   border-top-right-radius: 10px;
 }
 
-    
-#navBar{
-    width: 100%;
-    height: 100px;
-    background-color: rgb(232, 136, 52);
-}
-/* place text to the right of nav bar */
-#nav-items{
-    text-align: left;
-}
-#Mac-Logo {
-    padding-left: 5px;
-    display: inline;
-    text-align: left;
-}
-#Mac-Logo img{
-    height: 90px;
-    width: 90px;
-    padding-top: 5px;
-    padding-left: 0px;
-}
-#navright{
-    float:right;
+
+#navBar {
+  width: 100%;
+  height: 100px;
+  background-color: rgb(232, 136, 52);
 }
 
-ul li{
-    list-style: none;
-    display: inline-block;
-    line-height:100px;
+/* place text to the right of nav bar */
+#nav-items {
+  text-align: left;
 }
-ul li a{
-    display: block;
-    text-decoration: none;
-    font-size: 20px;
-    font-family: sans-serif ;
-    color: black;
-    padding: 0 20px;
+
+#Mac-Logo {
+  padding-left: 5px;
+  display: inline;
+  text-align: left;
 }
-ul li a:hover{
-    color: rgb(235, 236, 236);
-    background-color: rgb(208, 109, 9);
-    height:  100px;
+
+#Mac-Logo img {
+  height: 90px;
+  width: 90px;
+  padding-top: 5px;
+  padding-left: 0px;
+}
+
+#navright {
+  float: right;
+}
+
+ul li {
+  list-style: none;
+  display: inline-block;
+  line-height: 100px;
+}
+
+ul li a {
+  display: block;
+  text-decoration: none;
+  font-size: 20px;
+  font-family: sans-serif;
+  color: black;
+  padding: 0 20px;
+}
+
+ul li a:hover {
+  color: rgb(235, 236, 236);
+  background-color: rgb(208, 109, 9);
+  height: 100px;
 }
 
 /* Ensure proper sizing */
- *{
-    box-sizing: border-box;
-  }
-  
-  /* Column container */
-  .row { 
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  /* Create two unequal columns that sits next to each other */
-  /* Sidebar/left column */
-  .side {
-    flex: 20%; /* Set the width of the sidebar */
-    background-color: #f1f1f1; /* Grey background color */
-    padding: 20px; /* Some padding */
-    height: auto;
-    overflow-x: hidden;
-    overflow-y: auto;
-    
-  }
-  
-  /* Main column */
-  div.postArea { 
-    flex: 70%; /* Set the width of the main content */
-    background-color: white; /* White background color */
-    padding: 20px; /* Some padding */
-    height: 800px;
-    overflow-x: hidden;
-  }
-
-.footer {
-    padding: 20px; /* Some padding */
-    text-align: center; /* Center text*/
-    background: #ddd; /* Grey background */
+* {
+  box-sizing: border-box;
 }
 
-  #myInput {
-    width: 80%; /* Full-width */
-    font-size: 16px; /* Increase font-size */
-    padding: 12px 20px 12px 8px; /* Add some padding */
-    border: 1px solid #ddd; /* Add a grey border */
-    margin-bottom: 12px; /* Add some space below the input */
-  }
+/* Column container */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
 
-  #myUL {
-    width: 20%;
-    height: 100px;
-    /* Remove default list styling */
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  #myUL li a {
-    border: 1px solid #ddd; /* Add a border to all links */
-    margin-top: -1px; /* Prevent double borders */
-    background-color: #f6f6f6; /* Grey background color */
-    padding: 12px; /* Add some padding */
-    text-decoration: none; /* Remove default text underline */
-    font-size: 18px; /* Increase the font-size */
-    color: black; /* Add a black text color */
-    display: block; /* Make it into a block element to fill the whole list */
-  }
-  
-  #myUL li a:hover:not(.header) {
-    background-color: #eee; /* Add a hover effect to all links, except for headers */
-  }
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.side {
+  flex: 20%;
+  /* Set the width of the sidebar */
+  background-color: #f1f1f1;
+  /* Grey background color */
+  padding: 20px;
+  /* Some padding */
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 
-  /* filter options */
-  .container {
-    overflow: hidden;
-  }
-  
-  .filterDiv {
-    float: left;
-    background-color: #2196F3;
-    color: #ffffff;
-    width: 100px;
-    line-height: 100px;
-    text-align: center;
-    display: none; /* Hidden by default */
-  }
-  
-  /* The "show" class is added to the filtered elements */
-  .show {
-    display: block;
-  }
-  
-  /* Style the buttons */
-  .btn {
-    border: none;
-    outline: none;
-    padding: 12px 16px;
-    /* padding-top: 10px; */
-    background-color: #f1f1f1;
-    cursor: pointer;
-  }
-  /* creates space between layers of buttons */
-  .btn:nth-child(2) {
-    margin: 5px 0px;
-  }
-  .btn:nth-child(4) {
-    margin: 5px 0px;
-  }
-  .btn:nth-child(6) {
-    margin: 5px 0px;
-  }
+}
+
+/* Main column */
+div.postArea {
+  flex: 70%;
+  /* Set the width of the main content */
+  background-color: white;
+  /* White background color */
+  padding: 20px;
+  /* Some padding */
+  height: 800px;
+  overflow-x: hidden;
+}
+
+.footer {
+  padding: 20px;
+  /* Some padding */
+  text-align: center;
+  /* Center text*/
+  background: #ddd;
+  /* Grey background */
+}
+
+#myInput {
+  width: 80%;
+  /* Full-width */
+  font-size: 16px;
+  /* Increase font-size */
+  padding: 12px 20px 12px 8px;
+  /* Add some padding */
+  border: 1px solid #ddd;
+  /* Add a grey border */
+  margin-bottom: 12px;
+  /* Add some space below the input */
+}
+
+#myUL {
+  width: 20%;
+  height: 100px;
+  /* Remove default list styling */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL li a {
+  border: 1px solid #ddd;
+  /* Add a border to all links */
+  margin-top: -1px;
+  /* Prevent double borders */
+  background-color: #f6f6f6;
+  /* Grey background color */
+  padding: 12px;
+  /* Add some padding */
+  text-decoration: none;
+  /* Remove default text underline */
+  font-size: 18px;
+  /* Increase the font-size */
+  color: black;
+  /* Add a black text color */
+  display: block;
+  /* Make it into a block element to fill the whole list */
+}
+
+#myUL li a:hover:not(.header) {
+  background-color: #eee;
+  /* Add a hover effect to all links, except for headers */
+}
+
+/* filter options */
+.container {
+  overflow: hidden;
+}
+
+.filterDiv {
+  float: left;
+  background-color: #2196F3;
+  color: #ffffff;
+  width: 100px;
+  line-height: 100px;
+  text-align: center;
+  display: none;
+  /* Hidden by default */
+}
+
+/* The "show" class is added to the filtered elements */
+.show {
+  display: block;
+}
+
+/* Style the buttons */
+.btn {
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  /* padding-top: 10px; */
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* creates space between layers of buttons */
+.btn:nth-child(2) {
+  margin: 5px 0px;
+}
+
+.btn:nth-child(4) {
+  margin: 5px 0px;
+}
+
+.btn:nth-child(6) {
+  margin: 5px 0px;
+}
 
 
-  /* Add a light grey background on mouse-over */
-  .btn:hover {
-    background-color: #ddd;
-  }
-  
-  /* Add a dark background to the active button */
-  .btn.active {
-    background-color: #666;
-    color: white;
-  }
+/* Add a light grey background on mouse-over */
+.btn:hover {
+  background-color: #ddd;
+}
+
+/* Add a dark background to the active button */
+.btn.active {
+  background-color: #666;
+  color: white;
+}
 
 
-  
+
 /* Front and back of a card  */
 
 /* create inital size of front box */
@@ -217,43 +255,50 @@ ul li a:hover{
   height: 160px;
   perspective: 500px;
   margin-bottom: 160px;
-  
+
 }
 
 .postGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust column width as needed */
-  gap: 20px; /* Adjust the gap between grid items */
-  max-height: 800px; /* Set the maximum height for vertical scrolling */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  /* Adjust column width as needed */
+  gap: 20px;
+  /* Adjust the gap between grid items */
+  max-height: 800px;
+  /* Set the maximum height for vertical scrolling */
   /* overflow-y: auto; Enable vertical scrolling */
 }
 
 .enlarged-card {
-  grid-column-start: span 3; /* Adjust as needed to move the card to the left */
+  grid-column-start: span 3;
+  /* Adjust as needed to move the card to the left */
   z-index: 1;
 }
 
 /* flipping the card to the back */
-.flipdiv.v.showBack .front, .flipdiv.v.flip .front {
+.flipdiv.v.showBack .front,
+.flipdiv.v.flip .front {
   transform: rotateX(180deg);
   z-index: 1;
-  
- 
+
+
 }
 
-.flipdiv.v.showBack .back, .flipdiv.v.flip .back {
+.flipdiv.v.showBack .back,
+.flipdiv.v.flip .back {
   transform: rotateX(0deg);
   z-index: 2;
 }
 
 .flipdiv.v .back {
   transform: rotateX(-180deg);
-  
+
 }
 
 
 /* creating the front box */
-.flipdiv .front, .flipdiv .back {
+.flipdiv .front,
+.flipdiv .back {
   position: absolute;
   width: 180%;
   height: 200%;
@@ -262,7 +307,8 @@ ul li a:hover{
   transition: none;
   color: white;
   background-color: #0F51AE;
-  border-radius: 20px; /*round the corners */
+  border-radius: 20px;
+  /*round the corners */
   padding: 10px;
   backface-visibility: hidden;
 }
@@ -277,7 +323,8 @@ ul li a:hover{
   transition: none;
   color: rgb(255, 255, 255);
   background-color: #0F51AE;
-  border-radius: 20px; /*round the corners */
+  border-radius: 20px;
+  /*round the corners */
   padding: 10px;
   backface-visibility: hidden;
 }
@@ -289,14 +336,14 @@ ul li a:hover{
   margin-top: 10px;
 }
 
-.flipdiv .frontPrice{
+.flipdiv .frontPrice {
   font-size: 20;
   text-align: center;
   margin-top: 17px;
 }
 
 /* Aligning the information on the front */
-.flipdiv .frontImage img{
+.flipdiv .frontImage img {
   display: block;
   height: 200px;
   width: 200px;
@@ -313,7 +360,7 @@ ul li a:hover{
 }
 
 /* aligning the information on the back */
-.flipdiv .backTitle{
+.flipdiv .backTitle {
   position: absolute;
   left: 10px;
   top: 500px;
@@ -326,6 +373,7 @@ ul li a:hover{
   top: 620px;
   font-size: 20px;
 }
+
 .flipdiv .price {
   position: absolute;
   left: 30px;
@@ -333,6 +381,7 @@ ul li a:hover{
   font-size: 30px;
 
 }
+
 .flipdiv .sellerInfo {
   position: absolute;
   left: 900px;

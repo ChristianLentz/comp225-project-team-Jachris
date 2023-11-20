@@ -17,9 +17,9 @@
  * 
  *      - user_email: string
  *      - userID: an integer > 0
- *      - user_description: string (TODO:)
- *      - user_name: a string with the user's first and last name (TODO:)
- *      - profile picture (TODO:)
+ *      - user_title: string
+ *      - user_name: a string with the user's first and last name
+ *      - profile_pic (TODO:)
  * 
  * Each post will have the following items within its document:
  * 
@@ -49,13 +49,13 @@
 
 import {
     collection,
-    doc, 
-    setDoc, 
-    getDoc, 
+    doc,
+    setDoc,
+    getDoc,
     where,
-    getDocs, 
+    getDocs,
     query,
-    deleteDoc, 
+    deleteDoc,
     limit,
     QuerySnapshot
 } from "firebase/firestore";
@@ -72,24 +72,24 @@ import {
  * 
  * @returns an array of posts as the objects retrieved from firestore, or null.
  */
-export async function queryForPostsByFilter (db, filters, lim) { 
-    let postQuery = null; 
+export async function queryForPostsByFilter(db, filters, lim) {
+    let postQuery = null;
     // if no filters selected, query posts with no constraint other than limit = lim
-    if (filters.length == 0) { 
-        postQuery = query( 
-            collection(db, "posts"), 
-            limit(lim), 
+    if (filters.length == 0) {
+        postQuery = query(
+            collection(db, "posts"),
+            limit(lim),
         );
-    } 
+    }
     // else, query by filters with limit = lim 
-    else { 
+    else {
 
         // TODO: AFTER MVP PHASE
 
     }
     // get the posts from the query and return the data 
     const postSnapshot = await getDocs(postQuery);
-    return await unwrapPostQuery(postSnapshot); 
+    return await unwrapPostQuery(postSnapshot);
 }
 
 /**
@@ -100,9 +100,9 @@ export async function queryForPostsByFilter (db, filters, lim) {
  * 
  * @returns the array of data for a given user, or throws an error.
  */
-export async function getUserData(db, id) { 
-    const docRef = doc(db, 'users/user' + id.toString()); 
-    return await getAllDocumentDataByRef(docRef); 
+export async function getUserData(db, id) {
+    const docRef = doc(db, 'users/user' + id.toString());
+    return await getAllDocumentDataByRef(docRef);
 }
 
 /**
@@ -113,13 +113,13 @@ export async function getUserData(db, id) {
  * 
  * @returns an array of posts as the objects collected from firestore, or null. 
  */
-export async function getUserPosts(db, id) { 
-    const postQuery = query( 
-        collection(db, "posts"), 
-        where("post_userID", "==", id), 
+export async function getUserPosts(db, id) {
+    const postQuery = query(
+        collection(db, "posts"),
+        where("post_userID", "==", id),
     );
-    return await unwrapPostQuery(postQuery); 
-} 
+    return await unwrapPostQuery(postQuery);
+}
 
 /**
  * Add a newly created user and their data to the users collection.
@@ -127,23 +127,23 @@ export async function getUserPosts(db, id) {
  * @param {Firestore} db a reference to firestore.
  * @param {String} email the email associated with the user we are creating.  
  */
-export async function createUser (db, email) { 
+export async function createUser(db, email) {
 
     // generate a new userID
     const numUsers = await getValueOfFieldByPath(db, 'metrics/totals', "total_users", 0);
-    const newUserID = numUsers + 1; 
+    const newUserID = numUsers + 1;
     // create user data object 
     const userData = {
-        user_email: email, 
+        user_email: email,
         userID: newUserID,
-        isNew: true, 
+        isNew: true,
     }
     // generate refernce to user doc, write to doc
     const userRef = doc(db, 'users/user' + newUserID.toString());
     await setDocByRef(userRef, userData);
     // increment the number of users 
     const totalsRef = doc(db, 'metrics/totals');
-    await setDoc(totalsRef, {total_users: numUsers+1}, {merge : true});
+    await setDocByRef(totalsRef, { total_users: numUsers + 1 });
 }
 
 /**
@@ -155,18 +155,18 @@ export async function createUser (db, email) {
  * @param {Firestore} db a reference to firestore.
  * @param {Number} userID the ID associated with the user to delete. 
  */
-export async function deleteUser (db, userID) { 
+export async function deleteUser(db, userID) {
     // get number of users
     const numUsers = await getValueOfFieldByPath(db, 'metrics/totals', "total_users", 0);
-    if (numUsers > 0) { 
+    if (numUsers > 0) {
         // get reference to document
         const userDocRef = doc(db, 'users/user' + userID.toString());
         // delete the user 
         await deleteDocByRef(userDocRef);
         // decrement user total 
         const totalsRef = doc(db, 'metrics/totals');
-        await setDoc(totalsRef, {total_users: numUsers-1}, {merge : true});
-    } 
+        await setDocByRef(totalsRef, { total_users: numUsers - 1 });
+    }
 }
 
 /**
@@ -175,26 +175,26 @@ export async function deleteUser (db, userID) {
  * @param {Firestore} db a reference to firestore.
  * @param {Array} data post data to be added to the db.
  */
-export async function createPost (db, data) { 
+export async function createPost(db, data) {
 
     // generate an ID for the post
     // TODO: AFTER MVP PHASE, FIX THIS 
     // should not be based on totals
     // will not guarantee IDs are unique if we allow deletion!!
-    const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0); 
+    const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
     const newPostID = numPosts + 1;
-    data.push({key: "postID", value: newPostID});
- 
+    data.push({ key: "postID", value: newPostID });
+
     // generate date posted 
-    const datePosted = getTodayDate(); 
-    data.push({key: "date_posted", value: datePosted}); 
+    const datePosted = getTodayDate();
+    data.push({ key: "date_posted", value: datePosted });
     // cast data array to object, generate refernce to user doc, write to doc 
     const dataObj = Object.assign({}, data);
-    const postRef = doc(db, 'posts/post' + newPostID.toString()); 
+    const postRef = doc(db, 'posts/post' + newPostID.toString());
     await setDocByRef(postRef, dataObj);
     // increment the number of posts  
     const totalsRef = doc(db, 'metrics/totals');
-    await setDoc(totalsRef, {total_posts: numPosts+1}, {merge : true});
+    await setDocByRef(totalsRef, { total_posts: numPosts + 1 });
 }
 
 /**
@@ -206,35 +206,35 @@ export async function createPost (db, data) {
  * @param {Firestore} db a reference to firestore.
  * @param {Number} postID the ID associated with the post to delete.
  */
-export async function deletePost (db, postID) { 
+export async function deletePost(db, postID) {
     // get number of posts
     const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
-    if (numPosts > 0) { 
+    if (numPosts > 0) {
         // get reference to the document to delete 
         const postDocRef = doc(db, 'posts/post' + postID.toString());
         // delete the post 
         await deleteDocByRef(postDocRef);
         // decrement post total 
         const totalsRef = doc(db, 'metrics/totals');
-        await setDoc(totalsRef, {total_posts: numPosts-1}, {merge : true}); 
-    } 
+        await setDocByRef(totalsRef, { total_posts: numPosts - 1 });
+    }
 }
 
 // ============================ Helper Functions ============================
 
 /**
- * Set the data for a document given a reference to it. 
+ * Set/update the data for a document given a reference to it. 
  * 
  * @param {any[]} data data to set
  * @param {DocumentSnapshot<DocumentData, DocumentData>} docRef reference to document
  */
-async function setDocByRef(docRef, data) { 
-    await setDoc(docRef, data)
-        .then(() => { 
-            console.log(`document '${docRef.id}' has been added to database`); 
+export async function setDocByRef(docRef, data) {
+    await setDoc(docRef, data, { merge: true })
+        .then(() => {
+            console.log(`document '${docRef.id}' has been added/updated in database`);
         })
-        .catch((error) => { 
-            console.log(`Error when create document '${docRef.id}': '${error}'`);
+        .catch((error) => {
+            console.log(`Error when adding/editing document '${docRef.id}': '${error}'`);
         });
 }
 
@@ -243,14 +243,14 @@ async function setDocByRef(docRef, data) {
  * 
  * @param {DocumentSnapshot<DocumentData, DocumentData>} docRef reference to document
  */
-async function deleteDocByRef(docRef) { 
+async function deleteDocByRef(docRef) {
     await deleteDoc(docRef)
-        .then(() => { 
+        .then(() => {
             console.log(`document '${docRef.id}' has been deleted from database`);
         })
-        .catch((error) => { 
+        .catch((error) => {
             console.log(`Error when delete document '${docRef.id}': '${error}'`);
-        }); 
+        });
 }
 
 /**
@@ -261,19 +261,19 @@ async function deleteDocByRef(docRef) {
  * 
  * @returns An array of posts as the object retrieved from firestore, or null. 
  */
-async function unwrapPostQuery(postSnapshot){ 
-    let posts = []; 
-    if (postSnapshot.query == undefined) { 
+async function unwrapPostQuery(postSnapshot) {
+    let posts = [];
+    if (postSnapshot.query == undefined) {
         // no posts found for the given query 
-        return null; 
-    } else { 
+        return null;
+    } else {
         const len = postSnapshot.docs.length;
-        for (let i = 0; i < len; i++) { 
+        for (let i = 0; i < len; i++) {
             // get the object stored in Firestore
             const docRef = postSnapshot.docs.at(i).ref;
             const newDataOb = await getAllDocumentDataByRef(docRef);
             // add to the array to return
-            posts.push(newDataOb);  
+            posts.push(newDataOb);
         }
         return posts;
     }
@@ -290,13 +290,13 @@ async function unwrapPostQuery(postSnapshot){
  * 
  * @returns field value or the default that was set.
  */
-export async function getValueOfFieldByPath(db, pathToDoc, field, defaultVal) { 
-    const docRef = doc(db, pathToDoc); 
-    const docSnapshot = getDoc(docRef); 
-    if ((await docSnapshot).exists) {  
+export async function getValueOfFieldByPath(db, pathToDoc, field, defaultVal) {
+    const docRef = doc(db, pathToDoc);
+    const docSnapshot = getDoc(docRef);
+    if ((await docSnapshot).exists) {
         return (await docSnapshot).get(field);
-    } else { 
-        return await defaultVal; 
+    } else {
+        return await defaultVal;
     }
 }
 
@@ -311,11 +311,11 @@ export async function getValueOfFieldByPath(db, pathToDoc, field, defaultVal) {
  * 
  * @returns A data object from firestore, or an error if the document DNE. 
  */
-async function getAllDocumentDataByRef(docRef) { 
+async function getAllDocumentDataByRef(docRef) {
     const docData = getDoc(docRef);
-    if ( (await docData).data() == undefined) { 
-        throw new Error(`Error when getting document data: document ${docRef.id} does not exist` ); 
-    } else { 
+    if ((await docData).data() == undefined) {
+        throw new Error(`Error when getting document data: document ${docRef.id} does not exist`);
+    } else {
         return (await docData).data();
     }
 }
@@ -336,12 +336,12 @@ async function getAllDocumentDataByRef(docRef) {
  * 
  * @returns an array of key value pairs.
  */
-export function convertDataFromObjToArray(object, len) { 
-    const objAsArr = []; 
-    for (let j = 0; j < len; j++) { 
-        objAsArr.push({key: object[j].key, value: object[j].value})
+export function convertDataFromObjToArray(object, len) {
+    const objAsArr = [];
+    for (let j = 0; j < len; j++) {
+        objAsArr.push({ key: object[j].key, value: object[j].value })
     }
-    return objAsArr; 
+    return objAsArr;
 }
 
 /**
@@ -354,23 +354,23 @@ export function convertDataFromObjToArray(object, len) {
  * 
  * @returns a number, or null if no user is found by provided email. 
  */
-export async function getUserIDByEmail(db, email) {  
+export async function getUserIDByEmail(db, email) {
     // query for user with the provided email (this should be unique!)
-    const userQuery = query( 
-        collection(db, "users"), 
+    const userQuery = query(
+        collection(db, "users"),
         where('user_email', '==', email),
-        limit(1),); 
+        limit(1),);
     // get the user's ID 
-    const userQuerySnap = await getDocs(userQuery); 
-    if (userQuerySnap.empty) { 
+    const userQuerySnap = await getDocs(userQuery);
+    if (userQuerySnap.empty) {
         // no user with that email was found  
-        return null; 
+        return null;
     }
-    else { 
+    else {
         // existing user with that email was found 
-        let user = await getDoc(userQuerySnap.docs.at(0).ref); 
-        return user.data()['userID'];  
-    } 
+        let user = await getDoc(userQuerySnap.docs.at(0).ref);
+        return user.data()['userID'];
+    }
 }
 
 /**
@@ -379,10 +379,10 @@ export async function getUserIDByEmail(db, email) {
  * @param {Firestore} db 
  * @param {String} pathToDoc 
  */
-export async function updateUserStatus(db, pathToDoc) { 
+export async function updateUserStatus(db, pathToDoc) {
     console.log("made it here");
-    const userRef = doc(db, pathToDoc); 
-    await setDoc(userRef, {isNew: false}, {merge : true});
+    const userRef = doc(db, pathToDoc);
+    await setDoc(userRef, { isNew: false }, { merge: true });
 }
 
 /**
@@ -400,15 +400,15 @@ export async function updateUserStatus(db, pathToDoc) {
  * @returns An array/dictionary of data extracted from an HTML form placed in 
  * (key, value) pairs. 
  */
-export async function getFormData(formName) { 
-    const formDataArr = [];   
+export async function getFormData(formName) {
+    const formDataArr = [];
     // get form as HTMLFormElement using HTML name attribute 
     const newForm = document.forms.namedItem(formName);
     // if form not null, create data dictionary 
-    if (newForm) {  
-        let formData = new FormData(newForm); 
-        for (const [newKey, newValue] of formData) { 
-            formDataArr.push({key: newKey, value: newValue}); 
+    if (newForm) {
+        let formData = new FormData(newForm);
+        for (const [newKey, newValue] of formData) {
+            formDataArr.push({ key: newKey, value: newValue });
         }
     }
     return formDataArr;
@@ -419,8 +419,8 @@ export async function getFormData(formName) {
  * 
  * @returns date as a string in mm/dd/yyyy format. 
  */
-function getTodayDate() { 
-    const date = new Date();   
-    const today = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear(); 
-    return today; 
+function getTodayDate() {
+    const date = new Date();
+    const today = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+    return today;
 }

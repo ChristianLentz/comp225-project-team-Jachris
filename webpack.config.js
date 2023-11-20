@@ -6,9 +6,13 @@
  * 
  * This bundle that we then use to build our website is put into scripts/dist/bundle.js
  * 
- * Use $ npm run build in the terminal to compile new code to bundle.js, and then 
- * serve to see the changes locally. $ npm run build will update bundle.js everytime 
- * we use it. This puts our changes into production and tests them
+ * Use 
+ * 
+ * $ npm run build 
+ * 
+ * in the terminal to compile new code to bundle.js, and then serve to see the changes 
+ * locally. $ npm run build will update bundle.js everytime we use it. This puts our 
+ * changes into production and tests them.
  * 
  * Note that, in general, the main.js and bundle.js that we get from webpack is 
  * typically unreadable, but we can use source maps to get readable code in dev console 
@@ -30,19 +34,22 @@ module.exports = {
     },
     // resolve node module erros upon compile
     resolve: {
-        fallback: {'path': require.resolve('path-browserify'),
-                    "os": require.resolve("os-browserify/browser"), 
-                    "querystring": false, 
-                    "stream": false, 
-                    "https": false, 
-                    "http": false, 
-                    "crypto": false, 
-                    "zlib": false,
-                    "fs": false,
-                    "tls": false,
-                    "net": false, 
-                    "child_process": false, 
-                    "request": false},
+        fallback: {
+            "path": require.resolve('path-browserify'),
+            "os": require.resolve("os-browserify/browser"), 
+            "querystring": false, 
+            "stream": false, 
+            "https": false, 
+            "http": false, 
+            "crypto": false, 
+            "zlib": false,
+            "fs": false,
+            "tls": false,
+            "net": false, 
+            "child_process": false, 
+            "request": false},
+        alias: {
+            process: "process/browser"},
         extensions: ['.jsx', '.js', '.tsx', '.ts'],
      },
 };

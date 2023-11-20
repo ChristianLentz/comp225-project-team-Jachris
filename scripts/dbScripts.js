@@ -17,6 +17,7 @@
  * 
  *      - user_email: string
  *      - userID: an integer > 0
+ *      - user_description: string (TODO:)
  *      - user_name: a string with the user's first and last name (TODO:)
  *      - profile picture (TODO:)
  * 
@@ -124,7 +125,7 @@ export async function getUserPosts(db, id) {
  * Add a newly created user and their data to the users collection.
  * 
  * @param {Firestore} db a reference to firestore.
- * @param {String} email the email associated with the user we are creating.
+ * @param {String} email the email associated with the user we are creating.  
  */
 export async function createUser (db, email) { 
 
@@ -134,27 +135,22 @@ export async function createUser (db, email) {
     // create user data object 
     const userData = {
         user_email: email, 
-        userID: newUserID
+        userID: newUserID,
+        isNew: true, 
     }
     // generate refernce to user doc, write to doc
     const userRef = doc(db, 'users/user' + newUserID.toString());
-    await setDoc(userRef, userData)
-        .then(() => { 
-            console.log(`user '${userRef.id}' has been added to users collection`); 
-        })
-        .catch((error) => { 
-            console.log(`Error when create user '${userRef.id}': '${error}'`);
-        }); 
-
+    await setDocByRef(userRef, userData);
     // increment the number of users 
-    await changeUserTotal(db, newUserID); 
+    const totalsRef = doc(db, 'metrics/totals');
+    await setDoc(totalsRef, {total_users: numUsers+1}, {merge : true});
 }
 
 /**
  * Delete the user data associated with the provided userID.
  * 
  * TODO: AFTER MVP PHASE 
- * rewrite (don't need to query if we have the id) and test this!
+ * test this!
  * 
  * @param {Firestore} db a reference to firestore.
  * @param {Number} userID the ID associated with the user to delete. 
@@ -163,26 +159,14 @@ export async function deleteUser (db, userID) {
     // get number of users
     const numUsers = await getValueOfFieldByPath(db, 'metrics/totals', "total_users", 0);
     if (numUsers > 0) { 
-        // query for the user to delete
-        const userQuery = query( 
-            collection(db, "users"), 
-            where('userID', '==', userID), 
-        ); 
-        const userQuerySnap = await getDocs(userQuery);
-        let userDocRef = await getDoc(userQuerySnap.docs.at(0).ref);
+        // get reference to document
+        const userDocRef = doc(db, 'users/user' + userID.toString());
         // delete the user 
-        deleteDoc(userDocRef)
-            .then(() => { 
-                console.log(`user '${userDocRef.id}' has been deleted from users collection`);
-            })
-            .catch((error) => { 
-                console.log(`Error when delete user '${userDocRef.id}': '${error}'`);
-            }); 
+        await deleteDocByRef(userDocRef);
         // decrement user total 
-        await changeUserTotal(db, numUsers-1);
-    } else { 
-        throw new Error(`cannot delete user '${userDocRef.id}', there are no users in the database.`); 
-    }
+        const totalsRef = doc(db, 'metrics/totals');
+        await setDoc(totalsRef, {total_users: numUsers-1}, {merge : true});
+    } 
 }
 
 /**
@@ -207,22 +191,17 @@ export async function createPost (db, data) {
     // cast data array to object, generate refernce to user doc, write to doc 
     const dataObj = Object.assign({}, data);
     const postRef = doc(db, 'posts/post' + newPostID.toString()); 
-    await setDoc(postRef, dataObj)
-        .then(() => { 
-            console.log(`post '${postRef.id}' has been added to posts collection`); 
-        })
-        .catch((error) => { 
-            console.log(`Error when create post '${postRef.id}': '${error}'`);
-        }); 
-    // increment the number of posts 
-    await changePostTotal(db, newPostID); 
+    await setDocByRef(postRef, dataObj);
+    // increment the number of posts  
+    const totalsRef = doc(db, 'metrics/totals');
+    await setDoc(totalsRef, {total_posts: numPosts+1}, {merge : true});
 }
 
 /**
- * Delte the post data associated with the provided postID.
+ * Delete the post data associated with the provided postID.
  * 
  * TODO: AFTER MVP PHASE
- * rewrite (don't need to query if we have the id) and test this!
+ * test this!
  * 
  * @param {Firestore} db a reference to firestore.
  * @param {Number} postID the ID associated with the post to delete.
@@ -231,29 +210,48 @@ export async function deletePost (db, postID) {
     // get number of posts
     const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
     if (numPosts > 0) { 
-        // query for the post to delete
-        const postQuery = query( 
-            collection(db, "posts"), 
-            where('postID', '==', postID), 
-        ); 
-        const postQuerySnap = await getDocs(postQuery);
-        let postDocRef = await getDoc(postQuerySnap.docs.at(0).ref);
+        // get reference to the document to delete 
+        const postDocRef = doc(db, 'posts/post' + postID.toString());
         // delete the post 
-        deleteDoc(postDocRef)
-            .then(() => { 
-                console.log(`post '${postDocRef.id}' has been deleted from posts collection`);
-            })
-            .catch((error) => { 
-                console.log(`Error when delete post '${postDocRef.id}': '${error}'`);
-            }); 
-        // decrement user total 
-        await changePostTotal(db, numPosts-1);
-    } else { 
-        throw new Error(`cannot delete post '${postDocRef.id}', there are no posts in the database.`); 
-    }
+        await deleteDocByRef(postDocRef);
+        // decrement post total 
+        const totalsRef = doc(db, 'metrics/totals');
+        await setDoc(totalsRef, {total_posts: numPosts-1}, {merge : true}); 
+    } 
 }
 
 // ============================ Helper Functions ============================
+
+/**
+ * Set the data for a document given a reference to it. 
+ * 
+ * @param {any[]} data data to set
+ * @param {DocumentSnapshot<DocumentData, DocumentData>} docRef reference to document
+ */
+async function setDocByRef(docRef, data) { 
+    await setDoc(docRef, data)
+        .then(() => { 
+            console.log(`document '${docRef.id}' has been added to database`); 
+        })
+        .catch((error) => { 
+            console.log(`Error when create document '${docRef.id}': '${error}'`);
+        });
+}
+
+/**
+ * Delete a document from the database given a refernce to it. 
+ * 
+ * @param {DocumentSnapshot<DocumentData, DocumentData>} docRef reference to document
+ */
+async function deleteDocByRef(docRef) { 
+    await deleteDoc(docRef)
+        .then(() => { 
+            console.log(`document '${docRef.id}' has been deleted from database`);
+        })
+        .catch((error) => { 
+            console.log(`Error when delete document '${docRef.id}': '${error}'`);
+        }); 
+}
 
 /**
  * Unwrap a query snapshot from the post database. This is used in both 
@@ -376,6 +374,18 @@ export async function getUserIDByEmail(db, email) {
 }
 
 /**
+ * Set the user's isNew status to false once we have initialized their profile. 
+ * 
+ * @param {Firestore} db 
+ * @param {String} pathToDoc 
+ */
+export async function updateUserStatus(db, pathToDoc) { 
+    console.log("made it here");
+    const userRef = doc(db, pathToDoc); 
+    await setDoc(userRef, {isNew: false}, {merge : true});
+}
+
+/**
  * Get data from an HTMLFormElement and construct a dictionary to hold the data.
  * 
  * Helpful links for using form-data node module: 
@@ -402,40 +412,6 @@ export async function getFormData(formName) {
         }
     }
     return formDataArr;
-}
-
-/**
- * Log new user created in the metrics collection. 
- * 
- * @param {firestore} db a reference to Firestore.
- * @param {Number} count the new number of users to set.
- */
-async function changeUserTotal(db, count) { 
-    const totalsRef = doc(db, 'metrics/totals');
-    await setDoc(totalsRef, {total_users: count}, {merge : true})
-        .then(() => { 
-            console.log(`total users is now: '${count}'`); 
-        })
-        .catch((error) => { 
-            console.log(`Error when incrementing user count: '${error}'`);
-        }); 
-}
-
-/**
- * Log new pose created in the metrics collection. 
- * 
- * @param {firestore} db a reference to Firestore.
- * @param {Number} count the new number of posts to set.
- */
-async function changePostTotal(db, count) { 
-    const totalsRef = doc(db, 'metrics/totals');
-    await setDoc(totalsRef, {total_posts: count}, {merge : true})
-        .then(() => { 
-            console.log(`total posts is now: '${count}'`); 
-        })
-        .catch((error) => { 
-            console.log(`Error when incrementing post count: '${error}'`);
-        });
 }
 
 /**

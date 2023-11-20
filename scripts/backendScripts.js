@@ -11,18 +11,21 @@ import { queryForPostsByFilter,
     getUserPosts,
     getUserData, 
     getValueOfFieldByPath,
+    updateUserStatus, 
     convertDataFromObjToArray,
     getUserIDByEmail, 
     createPost, 
     getFormData, 
     createUser} from "./dbScripts";
 
+// Import firebstore function 
+import { setDoc } from "firebase/firestore"
+
 // number of items per post (WILL CHANGE AS MORE FEATURES ADDED)
 const numPostItems = 8;
+
 // limit for querying for posts
 const queryLim = 48; 
-// boolean to determine if this is a new user
-let newUser = false; 
 
 // ============================ Scripts ============================
 
@@ -36,11 +39,9 @@ let newUser = false;
  */
 export async function runBackend(db, currUserEmail, userAdded) { 
 
-    newUser = !userAdded
-
     // Add new user to DB
     // only if authenticated user's email not yet associated with user in DB  
-    if (newUser) { 
+    if (!userAdded) { 
         await createUser(db, currUserEmail);
         window.location.href = "/pages/accountPage/account.html"
     }
@@ -109,63 +110,46 @@ async function homePageBackend(db, filters) {
  */
 async function accountPageBackend(db, userEmail) { 
 
+    // get information about the current user
     const userID = await getUserIDByEmail(db, userEmail);
-
-    // testing
-    console.log("checking new user");
-    console.log("new user boolean", newUser);
-
-    // TODO: 
-    if (!newUser) { 
-        // ask user to set their account info if they are new
-
-        console.log("new user found");
-        openModal();
-        console.log("should open mondal");
-
+    const userPath = "users/user" + userID.toString(); 
+    const isNew = await getValueOfFieldByPath(db, userPath, "isNew", false); 
+    if (isNew) { 
+        // ask user to set their account info 
+        await accountModal(db);
+        await updateUserStatus(db, userPath);
     } else {  
         // display the user's posts on their account page
-
-        // testing 
-        console.log("never found new user")
-
         const userPosts = await getUserPosts(db, userID);
         if (userPosts != null) { 
             const posts = convertPosts(userPosts); 
-            // add the posts here!
+            
+            // TODO:  
+            // ============= working on this ============= 
 
+            // updates the text on account page, breaks the js for edit account
+            // const titleElement = userCard.querySelector('.title');
+            // titleElement.textContent = userEmail;
+
+            // const userCard = document.querySelector('.card');
+
+            // const titleElement = userCard.querySelector('.title');
+            // console.log("titleElement:", titleElement); 
+            // console.log("usercard", userCard);
+
+            // console.log("user data", userData);
+            // console.log("user email",userEmail);
+            // console.log("test", userData.userEmail);
+            // userCard.querySelector('.cardName').textContent = 'test bru';
+            // userCard.querySelector('.title').textContent = "userEmail"; // Access 'post_title'
+            // cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value;
+
+            // ============= working on this ============= 
         }
     }
-
     // TODO: 
-    // add the user's data to their account page 
-    const userCard = document.querySelector('.card');
+    // display the user's data to their account page
     const userData = await getUserData(db, userID);
-
-    // ============= working on this ============= 
-    
-    // // updates the text on account page, breaks the js for edit account
-    // const titleElement = userCard.querySelector('.title');
-    // titleElement.textContent = userEmail;
-
-    // const userCard = document.querySelector('.card');
-
-    // const titleElement = userCard.querySelector('.title');
-    // console.log("titleElement:", titleElement); 
-    // console.log("usercard", userCard);
-
-    // console.log("user data", userData);
-    // console.log("user email",userEmail);
-    // console.log("test", userData.userEmail);
-    // userCard.querySelector('.cardName').textContent = 'test bru';
-    // userCard.querySelector('.title').textContent = "userEmail"; // Access 'post_title'
-    // cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value;
-
-    // ============= working on this ============= 
-
-    // TODO:
-    // update the user's data when edit button clicked
-
 }
 
 /**
@@ -246,7 +230,6 @@ async function getPosts(db, filters) {
     } 
 }
 
-
 /**
  * Call convertDataArrayFromObjToArray on an array of posts. Used multiple
  * times in this file. 
@@ -271,17 +254,63 @@ function convertPosts(posts) {
  * @param {HTMLElement} postGrid HTML element to add the data to.
  */
 function addPostToHomePage(post, postGrid) { 
-    // Create a new card element based on the template
+    // Create a new card element
     const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
-    // Update the card content with the retrieved data
     // Front of card
-    cardTemplate.querySelector('.frontText').textContent = post[2].value; // Access 'post_title'
+    cardTemplate.querySelector('.frontText').textContent = post[2].value;        // Access 'post_title'
     cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value; // Access 'post_price'
     // Back of card
     cardTemplate.querySelector('.backTitle').textContent = post[2].value;
-    cardTemplate.querySelector('.backDescription').textContent = post[4].value; // Post descrip
+    cardTemplate.querySelector('.backDescription').textContent = post[4].value;  // Post descrip
     cardTemplate.querySelector('.price').textContent = '$' + post[3].value;
-    cardTemplate.querySelector('.sellerInfo').textContent = post[0].value; // seller name
+    cardTemplate.querySelector('.sellerInfo').textContent = post[0].value;       // seller name
     // Append the card to the "postGrid" container
     postGrid.appendChild(cardTemplate);
+}
+
+/**
+ * Open the edit account modal when a new user is logged in, or when the 
+ * current user requests to edit. When the user is done, close the model, 
+ * update the front end, and send the data to the database. 
+ * 
+ * @param db a reference to firestore 
+ */
+async function accountModal(db) { 
+    // open the modal
+    document.getElementById('editModal').style.display = 'block';
+    // update values for html elements
+    document.getElementById('username').value = document.getElementById('cardName').innerText;
+    document.getElementById('descrip').value = document.getElementById('title').innerText;
+
+    // TODO: 
+    // implement images for account profiles 
+    // var currentImageSrc = document.getElementById('cardImage').getAttribute('src');
+    // document.querySelector(`input[name="profilePhoto"][value="${currentImageSrc}"]`).checked = true;
+
+    // add event listener to the submit button 
+    document.getElementById('editForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        await updateAccountInfo(db); 
+        // close the modal 
+        document.getElementById('editModal').style.display = 'none';
+    });
+}
+
+/**
+ * When user is done updating profile, update the front end and send 
+ * data to the databse. 
+ * 
+ * @param {Firestore} db a reference to firestore
+ */
+async function updateAccountInfo(db) { 
+    // Update card content with form data
+    document.getElementById('cardName').innerText = document.getElementById('username').value;
+    document.getElementById('title').innerText = document.getElementById('descrip').value;
+    // Get the selected image value
+    var selectedImage = document.querySelector('input[name="profilePhoto"]:checked').value;
+    // Update the card image source
+    document.getElementById('cardImage').setAttribute('src', selectedImage);
+    
+    // send data to the database
+
 }

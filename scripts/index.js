@@ -7,8 +7,7 @@
 // ============================ Initialize App ============================
 
 // Import functions from the firebase SDK
-import { initializeApp } from "firebase/app"; 
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";  
 import { getAuth,    
   GoogleAuthProvider, 
@@ -16,11 +15,7 @@ import { getAuth,
   signInWithPopup, } from "firebase/auth";  
 
 // Import backend scripts
-import { runBackend } from "./backendScripts";
-
-// Import database scripts
-import { getUserIDByEmail } from "./dbScripts"; 
-import { credential } from "firebase-admin";
+import { runBackend } from "./backendScripts"; 
 
 // Firebase configuration - measurementID is an optional parameter
 const firebaseConfig = {
@@ -43,31 +38,33 @@ auth.languageCode = 'en';
 let email = null;  
 let isAuthenticated = false; 
 
-// Initialize database and analytics
-const myDB = getFirestore();                
-const analytics = getAnalytics(); 
+// Initialize database
+const myDB = getFirestore(); 
 
-// ============================ User Auth Need to Put in other class ============================
+// Import database scripts
+import { getUserIDByEmail } from "./dbScripts";
 
-// sign in user with google O auth 
-await signInWithPopup(auth, provider)
-  .then( (result) => {
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    const user = result.user;
-    email = user.email;   
-    isAuthenticated = true; 
-  }).catch((error) => {
-    // handle errors 
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // log the errors 
-    console.log("Error when authenticating user. Error code: ", errorCode);
-    console.log("Error when authenticating user. Error message: ", errorMessage);
-    console.log("Error when authenticating user. AuthCredential type used: ", credential); 
-    isAuthenticated = false; 
-  });
+// ============================ User Auth ============================
+
+// // sign in user with google O auth 
+// await signInWithPopup(auth, provider)
+//   .then( (result) => {
+//     const credential = GoogleAuthProvider.credentialFromResult(result);
+//     const token = credential.accessToken;
+//     const user = result.user;
+//     email = user.email;   
+//     isAuthenticated = true; 
+//   }).catch((error) => {
+//     // handle errors 
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     const credential = GoogleAuthProvider.credentialFromError(error);
+//     // log the errors 
+//     console.log("Error when authenticating user. Error code: ", errorCode);
+//     console.log("Error when authenticating user. Error message: ", errorMessage);
+//     console.log("Error when authenticating user. AuthCredential type used: ", credential); 
+//     isAuthenticated = false; 
+//   });
 
 // function handleCredentialResponse(response) {
 //   // Build Firebase credential with the Google ID token.
@@ -86,7 +83,11 @@ await signInWithPopup(auth, provider)
 //     // ...
 //   });
 // }
+
 // ============================ Run App ============================
+
+isAuthenticated = true; 
+email = "clentz@macalester.edu";
 
 // run the back end!
 if (isAuthenticated) { 

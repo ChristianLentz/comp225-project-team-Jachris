@@ -20,9 +20,9 @@ If you want to get started with running this application on your local machine, 
   - **npm install os-browserify** --> needed to run webpack with the Firebase admin SDK.
   - **npm install path-browserify** --> needed to run webpack with Firebase admin SDK.
   - Note: the two steps above are rather important, as the admin SDK is needed to authenticate users. 
-  - **npm i form-data --save** --> allows you to use the form-data node module, which is useful for collectiong user data from an HTML from  
+  - **npm i form-data --save** --> allows you to use the form-data node module, which is useful for collectiong user data from an HTML from
  
-If at anytime you get authentication errors in the terminal when trying to install these packages (which may happen with Mac iOS) you should remove node_modules from your local repository and redo the previous steps using **sudo npm ...** for each command line prompt. You are now ready to go! 
+If at anytime you get authentication errors in the terminal when trying to install these packages (which may happen with Mac iOS) you should remove node_modules from your local repository and redo the previous steps using **sudo npm ...** for each command line prompt. It will then ask for your Mac password and just hit enter. You are now ready to go!
 
 ### Using Webpack 
 

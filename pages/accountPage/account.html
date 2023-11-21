@@ -9,8 +9,6 @@
   <script src="/scripts/dist/bundle.js?v=1"></script>
   <link href="/css/style.css" rel="stylesheet">
   <link href="/pages/accountPage/style.css " rel="stylesheet">
-  <script src="/pages/accountPage/script.js" defer></script>
-  <script src="/scripts/backendScripts.js" defer></script>
 </head>
 
 <body>
@@ -23,15 +21,13 @@
           </a></li>
       </div>
       <div id="navright">
-        <!-- <li><a href = "/pages/loginPage/login.html"> Login</a></li> -->
-        <!-- <li><a href = "/index.html"> Home</a></li> -->
         <li><a href="/pages/accountPage/account.html"> Account</a></li>
         <li><a href="/pages/postPage/post.html"> Post</a></li>
       </div>
     </ul>
   </nav>
 
-  <!-- Create information to be on account page -->
+  <!-- Create the modal that opens to edit account info -->
   <button id="editBtn">Edit Profile</button>
   <div class="modal" id="editModal">
     <div class="modal-content">
@@ -44,19 +40,8 @@
         <label for="descrip" class="descrip-label">Description:</label>
         <input type="text" id="descrip" name="descrip" class="descrip-input">
 
-        <!-- <label for="profilePhoto" class="photo-label">Select Profile Photo:</label>
-          <select id="profilePhoto" name="profilePhoto" class="photo-select">
-            <option value="/images/jachris-logo.png">
-                <img src="/images/jachris-logo.png" alt="Photo 1" style="width: 30px; height: 30px;">
-            </option>
-            <option value="/images/userimage.png">
-                <img src="/images/userimage.png" alt="Photo 2" style="width: 300px; height: 30px;">
-            </option>
-          </select> -->
-
-        <!-- Images for the default profile pictures -->
+        <!-- Create the photo options -->
         <div class="photo-grid">
-          <!-- Replace the image paths with your actual image paths -->
           <div class="image-item">
             <input type="radio" id="photo1" name="profilePhoto" value="/images/pig.png">
             <label for="photo1">
@@ -111,16 +96,12 @@
               <img src="/images/beaver.png" alt="Photo 9">
             </label>
           </div>
-          <!-- Add more image items as needed -->
         </div>
-
         <button type="submit" class="save-button">Save Changes</button>
       </form>
     </div>
   </div>
-
-  <!-- <script src="script.js"></script> -->
-
+  <!-- Creating the user card  -->
   <div class="card">
     <img id="cardImage" src="/images/userimage.png" alt="profile picture" style="width:20%">
     <div id="cardName">John Doe Moe</div>
@@ -131,7 +112,6 @@
       <button class="contact">Email Me</button>
     </a>
   </div>
-
   <!-- Creating the post area and one post to be on the page -->
   <div class="userPostarea" style="overflow-y:scroll; background-color:#4272da;">
     <h2>Users Posts</h2>

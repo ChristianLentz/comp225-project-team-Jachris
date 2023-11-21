@@ -2,36 +2,35 @@
   margin: 0;
   padding: 0;
 }
-
 /* website background color */
 body {
   background-color: white;
 }
-
 .header {
-  /* padding: 80px; some padding */
+ /* padding: 80px;
+  some padding */
   text-align: center;
-  /* center the text */
-  /* background: #0b4fc6; green background */
+ /* center the text */
+ /* background: #0b4fc6;
+  green background */
   color: rgb(22, 20, 20);
-  /* white text color */
+ /* white text color */
   background-color: #ddd;
 }
-
 /* Bottom right text */
 .descrip {
   background-color: #fffbfb;
   position: absolute;
   top: 34.5vw;
-  /* vw used here to make it so text size moves according to window size */
+ /* vw used here to make it so text size moves according to window size */
   left: 50%;
   font-size: 2.949vw;
   transform: translate(-50%, -50%);
-  /* border-radius: 10px; */
+ /* border-radius: 10px;
+  */
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
-
 /* Centered text */
 .homeTitle {
   background-color: #fffdfd;
@@ -44,42 +43,34 @@ body {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-
-
 #navBar {
   width: 100%;
   height: 100px;
   background-color: rgb(232, 136, 52);
 }
-
 /* place text to the right of nav bar */
 #nav-items {
   text-align: left;
 }
-
 #Mac-Logo {
   padding-left: 5px;
   display: inline;
   text-align: left;
 }
-
 #Mac-Logo img {
   height: 90px;
   width: 90px;
   padding-top: 5px;
   padding-left: 0px;
 }
-
 #navright {
   float: right;
 }
-
 ul li {
   list-style: none;
   display: inline-block;
   line-height: 100px;
 }
-
 ul li a {
   display: block;
   text-decoration: none;
@@ -88,125 +79,63 @@ ul li a {
   color: black;
   padding: 0 20px;
 }
-
 ul li a:hover {
   color: rgb(235, 236, 236);
   background-color: rgb(208, 109, 9);
   height: 100px;
 }
-
 /* Ensure proper sizing */
 * {
   box-sizing: border-box;
 }
-
 /* Column container */
 .row {
   display: flex;
   flex-wrap: wrap;
 }
-
 /* Create two unequal columns that sits next to each other */
 /* Sidebar/left column */
 .side {
   flex: 20%;
-  /* Set the width of the sidebar */
+ /* Set the width of the sidebar */
   background-color: #f1f1f1;
-  /* Grey background color */
+ /* Grey background color */
   padding: 20px;
-  /* Some padding */
+ /* Some padding */
   height: auto;
   overflow-x: hidden;
   overflow-y: auto;
-
 }
-
 /* Main column */
 div.postArea {
   flex: 70%;
-  /* Set the width of the main content */
+ /* Set the width of the main content */
   background-color: white;
-  /* White background color */
+ /* White background color */
   padding: 20px;
-  /* Some padding */
+ /* Some padding */
   height: 800px;
   overflow-x: hidden;
 }
-
 .footer {
   padding: 20px;
-  /* Some padding */
+ /* Some padding */
   text-align: center;
-  /* Center text*/
+ /* Center text*/
   background: #ddd;
-  /* Grey background */
+ /* Grey background */
 }
-
 #myInput {
   width: 80%;
-  /* Full-width */
+ /* Full-width */
   font-size: 16px;
-  /* Increase font-size */
+ /* Increase font-size */
   padding: 12px 20px 12px 8px;
-  /* Add some padding */
+ /* Add some padding */
   border: 1px solid #ddd;
-  /* Add a grey border */
+ /* Add a grey border */
   margin-bottom: 12px;
-  /* Add some space below the input */
-}
-
-#myUL {
-  width: 20%;
-  height: 100px;
-  /* Remove default list styling */
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-#myUL li a {
-  border: 1px solid #ddd;
-  /* Add a border to all links */
-  margin-top: -1px;
-  /* Prevent double borders */
-  background-color: #f6f6f6;
-  /* Grey background color */
-  padding: 12px;
-  /* Add some padding */
-  text-decoration: none;
-  /* Remove default text underline */
-  font-size: 18px;
-  /* Increase the font-size */
-  color: black;
-  /* Add a black text color */
-  display: block;
-  /* Make it into a block element to fill the whole list */
-}
-
-#myUL li a:hover:not(.header) {
-  background-color: #eee;
-  /* Add a hover effect to all links, except for headers */
-}
-
-/* filter options */
-.container {
-  overflow: hidden;
-}
-
-.filterDiv {
-  float: left;
-  background-color: #2196F3;
-  color: #ffffff;
-  width: 100px;
-  line-height: 100px;
-  text-align: center;
-  display: none;
-  /* Hidden by default */
-}
-
-/* The "show" class is added to the filtered elements */
-.show {
-  display: block;
+ /* Add some space below the input */
 }
 
 /* Style the buttons */
@@ -214,40 +143,31 @@ div.postArea {
   border: none;
   outline: none;
   padding: 12px 16px;
-  /* padding-top: 10px; */
+ /* padding-top: 10px;
+  */
   background-color: #f1f1f1;
   cursor: pointer;
 }
-
 /* creates space between layers of buttons */
 .btn:nth-child(2) {
   margin: 5px 0px;
 }
-
 .btn:nth-child(4) {
   margin: 5px 0px;
 }
-
 .btn:nth-child(6) {
   margin: 5px 0px;
 }
-
-
 /* Add a light grey background on mouse-over */
 .btn:hover {
   background-color: #ddd;
 }
-
 /* Add a dark background to the active button */
 .btn.active {
   background-color: #666;
   color: white;
 }
-
-
-
-/* Front and back of a card  */
-
+/* Front and back of a card */
 /* create inital size of front box */
 .flipdiv {
   position: relative;
@@ -255,93 +175,78 @@ div.postArea {
   height: 160px;
   perspective: 500px;
   margin-bottom: 160px;
-
 }
-
 .postGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  /* Adjust column width as needed */
+ /* Adjust column width as needed */
   gap: 20px;
-  /* Adjust the gap between grid items */
+ /* Adjust the gap between grid items */
   max-height: 800px;
-  /* Set the maximum height for vertical scrolling */
-  /* overflow-y: auto; Enable vertical scrolling */
+ /* Set the maximum height for vertical scrolling */
+ /* overflow-y: auto;
+  Enable vertical scrolling */
 }
-
 .enlarged-card {
   grid-column-start: span 3;
-  /* Adjust as needed to move the card to the left */
+ /* Adjust as needed to move the card to the left */
   z-index: 1;
 }
-
 /* flipping the card to the back */
-.flipdiv.v.showBack .front,
-.flipdiv.v.flip .front {
+.flipdiv.v.showBack .front, .flipdiv.v.flip .front {
   transform: rotateX(180deg);
   z-index: 1;
-
-
 }
-
-.flipdiv.v.showBack .back,
-.flipdiv.v.flip .back {
+.flipdiv.v.showBack .back, .flipdiv.v.flip .back {
   transform: rotateX(0deg);
   z-index: 2;
 }
-
 .flipdiv.v .back {
   transform: rotateX(-180deg);
-
 }
-
-
 /* creating the front box */
-.flipdiv .front,
-.flipdiv .back {
+.flipdiv .front, .flipdiv .back {
   position: absolute;
   width: 180%;
   height: 200%;
   box-sizing: border-box;
-  /* transition: all 0.5s ease-in; */
+ /* transition: all 0.5s ease-in;
+  */
   transition: none;
   color: white;
   background-color: #0F51AE;
   border-radius: 20px;
-  /*round the corners */
+ /*round the corners */
   padding: 10px;
   backface-visibility: hidden;
 }
-
 /* creating the back box */
 .flipdiv .back {
   position: absolute;
   width: 470%;
   height: 470%;
   box-sizing: border-box;
-  /* transition: all 0.5s ease-in; */
+ /* transition: all 0.5s ease-in;
+  */
   transition: none;
   color: rgb(255, 255, 255);
   background-color: #0F51AE;
   border-radius: 20px;
-  /*round the corners */
+ /*round the corners */
   padding: 10px;
   backface-visibility: hidden;
 }
-
 /* alliging the description on front */
 .flipdiv .frontText {
   font-size: 20;
   text-align: center;
   margin-top: 10px;
 }
-
 .flipdiv .frontPrice {
   font-size: 20;
   text-align: center;
   margin-top: 17px;
 }
-
 /* Aligning the information on the front */
 .flipdiv .frontImage img {
   display: block;
@@ -350,7 +255,6 @@ div.postArea {
   margin-left: 55px;
   margin-top: 10px;
 }
-
 .flipdiv .backImage img {
   display: block;
   height: 500px;
@@ -358,7 +262,6 @@ div.postArea {
   margin-left: 200px;
   margin-top: 10px;
 }
-
 /* aligning the information on the back */
 .flipdiv .backTitle {
   position: absolute;
@@ -366,22 +269,18 @@ div.postArea {
   top: 500px;
   font-size: 40px;
 }
-
 .flipdiv .backDescription {
   position: absolute;
   left: 40px;
   top: 620px;
   font-size: 20px;
 }
-
 .flipdiv .price {
   position: absolute;
   left: 30px;
   top: 550px;
   font-size: 30px;
-
 }
-
 .flipdiv .sellerInfo {
   position: absolute;
   left: 900px;

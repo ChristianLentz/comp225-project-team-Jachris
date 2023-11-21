@@ -1,256 +1,207 @@
 .card {
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
-  max-width: 100%;
-  margin: auto;
-  text-align: center;
-
+	/* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+	max-width: 100%;
+	margin: auto;
+	text-align: center;
+	font-size: larger;
 }
-
 .title {
-  color: grey;
-  font-size: 18px;
+	color: grey;
+	font-size: 18px;
 }
-
 /* create and adjust the submit button */
+
 .contact {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  padding: 8px;
-  color: white;
-  background-color: #000;
-  text-align: center;
-  cursor: pointer;
-  width: 10%;
-  font-size: 18px;
-  border-radius: 20px;
+	border: none;
+	outline: 0;
+	display: inline-block;
+	padding: 8px;
+	color: white;
+	background-color: #000;
+	text-align: center;
+	cursor: pointer;
+	width: 10%;
+	font-size: 18px;
+	border-radius: 20px;
 }
-
-a {
-  text-decoration: none;
-  font-size: 22px;
-  color: black;
-}
-
+/* a {
+	text-decoration: none;
+	font-size: 22px;
+	color: black;
+} */
 div.userPostarea {
-  flex: 100%;
-  /* Set the width of the main content */
-  background-color: rgb(34, 86, 198);
-  padding: 20px;
-  /* Some padding */
-  height: 800px;
+	flex: 100%;
+	/* Set the width of the main content */
+	background-color: rgb(34, 86, 198);
+	padding: 20px;
+	/* Some padding */
+	height: 800px;
 }
-
 /* This makes it so the contact button switches color, does same to nav bar tho */
+
 .contact:hover {
-  opacity: 0.7;
+	opacity: 0.7;
 }
-
-/* userpost cards */
-.userCard {
-  /* Add shadows to create the "card" effect */
-  /* box-shadow: 0 20px 20px 0 rgb(237, 234, 234); */
-  /* transition: 0.3s; */
-}
-
-/* On mouse-over, add a deeper shadow */
-/* .userCard:hover {
-    box-shadow: 0 20px 20px 0 rgba(245, 242, 242, 0.888); */
-/* } */
-
 /* Add some padding inside the card container */
+
 .container1 {
-  padding: 2px 16px;
-  background-color: white;
-  text-align: center;
-  border-radius: 5px;
+	padding: 2px 16px;
+	background-color: white;
+	text-align: center;
+	border-radius: 5px;
 }
-
-.userCard {
-  /* box-shadow: 0 20px 20px 0 rgb(255, 251, 251);
-    transition: 0.3s;
-    border-radius: 5px; 5px rounded corners */
-}
-
 /* Add rounded corners to the top left and the top right corner of the image */
+
 img {
-  border-radius: 5px;
+	border-radius: 5px;
 }
-
-
 /* css for edit profile page */
 
 button {
-  padding: 10px 20px;
-  font-size: 16px;
+	padding: 10px 20px;
+	font-size: 16px;
 }
-
 /* blurs the background slightly behind the white box */
+
 .modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
 }
-
 /* makes the white box for the fields to be on */
+
 .modal-content {
-  background-color: #fefefe;
-  margin: 10% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  height: 550px;
+	background-color: #fefefe;
+	margin: 10% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+	height: 550px;
 }
-
 /* positions save button */
+
 .save-button {
-  position: absolute;
-  top: 640px;
-  left: 1130px;
+	position: absolute;
+	top: 640px;
+	left: 1130px;
 }
-
 .name-label {
-  position: absolute;
-  top: 30%;
-  left: 12%
-    /* top: 20px; */
-
+	position: absolute;
+	top: 30%;
+	left: 12%
+	/* top: 20px; */
 }
-
 .name-input {
-  position: absolute;
-  top: 30%;
-  left: 15.5%;
-  /* padding-top: 20px; */
-  /* width: 100%;
+	position: absolute;
+	top: 30%;
+	left: 15.5%;
+	/* padding-top: 20px; */
+	/* width: 100%;
   padding: 8px;
   box-sizing: border-box;
   margin-bottom: 10px; */
 }
-
 .descrip-label {
-  position: absolute;
-  top: 36%;
+	position: absolute;
+	top: 36%;
 }
-
 .descrip-input {
-  position: absolute;
-  top: 40%;
-  left: 13%;
-  width: 38%;
-  height: 38%;
-  box-sizing: border-box;
+	position: absolute;
+	top: 40%;
+	left: 13%;
+	width: 38%;
+	height: 38%;
+	box-sizing: border-box;
 }
-
-
 /* Style for the image grid */
+
 .photo-grid {
-  position: absolute;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 10px;
-  left: 55%;
-  margin-right: 100px;
-  /* margin-left: 200px; This will push the grid to the right */
+	position: absolute;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+	gap: 10px;
+	left: 55%;
+	margin-right: 100px;
+	/* margin-left: 200px; This will push the grid to the right */
 }
-
 /* Style for each image item */
+
 .image-item {
-  position: relative;
-  cursor: pointer;
-  overflow: hidden;
+	position: relative;
+	cursor: pointer;
+	overflow: hidden;
 }
-
 /* Style for the selected image */
+
 .image-item.selected::after {
-  content: '\2713';
-  /* Checkmark symbol */
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  color: #00f;
-  /* Blue color for the checkmark */
-  font-size: 20px;
+	content: '\2713';
+	/* Checkmark symbol */
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	color: #00f;
+	/* Blue color for the checkmark */
+	font-size: 20px;
 }
-
 /* Style for the images to have a fixed width */
+
 .image-item img {
-  width: 60%;
-  height: auto;
-  display: block;
+	width: 60%;
+	height: auto;
+	display: block;
 }
-
 .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
 }
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
 }
-
 /* Display iamges in dropdown */
+
 /* Add this to your existing CSS or create a new CSS file */
 
 .custom-dropdown {
-  position: relative;
-  /* display: inline-block; */
-  display: list-item;
+	position: relative;
+	/* display: inline-block; */
+	display: list-item;
 }
-
 .selected-photo {
-  cursor: pointer;
+	cursor: pointer;
 }
-
-img,
-.dropdown-options img {
-  width: 120px;
-
+img, .dropdown-options img {
+	width: 120px;
 }
-
 .dropdown-options {
-  display: none;
-  position: absolute;
-  min-height: 200px;
-  min-width: 280px;
-  top: 100%;
-  left: 0;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  z-index: 1;
+	display: none;
+	position: absolute;
+	min-height: 200px;
+	min-width: 280px;
+	top: 100%;
+	left: 0;
+	background-color: #f9f9f9;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	z-index: 1;
 }
-
 .option {
-  padding: 5px;
-  cursor: pointer;
+	padding: 5px;
+	cursor: pointer;
 }
-
 .option:hover {
-  background-color: #ddd;
+	background-color: #ddd;
 }
-
-
 select.icon-menu option {
-  background-repeat: no-repeat;
-  background-position: bottom left;
-  padding-left: 30px;
+	background-repeat: no-repeat;
+	background-position: bottom left;
+	padding-left: 30px;
 }
-
-/* select#profilePhoto option[value="image1"] {
-  background-image:url(/images/jachris-logo.png);
-  }
-
-  select#profilePhoto option[value="image2"] {
-    background-image:url(/images/userimage.png);
-    } */

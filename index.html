@@ -1,252 +1,117 @@
 <!-- hompage of our website, and needs to be located in root directory -->
 <!-- <html> element wraps the content of the whole web page, this is the root element -->
-<!DOCTYPE html>
-<html lang="en">
-<!-- <head> is a container to hold the content the page needs but the user will not see -->
-
-<head>
-  <meta charset="UTF-8"> <!-- set the character set for the webpage -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Home </title>
-  <script src="/scripts/dist/bundle.js?v=1"></script> <!-- define the script -->
-  <link href="/css/style.css" rel="stylesheet">
-  <script src="/pages/testFolder/testScript.js"></script>
-</head>
-
-<!-- this is a container to hold all of the content which we actually want the user to see -->
-
-<body>
-  <!-- This creates the picture slide show on the home page -->
-  <section class="header">
-    <img class="mySlides" src="/images/machome1.png" style="width:100%" alt="img1">
-    <img class="mySlides" src="/images/machome2.png" style="width:100%" alt="img2">
-    <img class="mySlides" src="/images/machome3.png" style="width:100%" alt="img3">
-    <div class="homeTitle">Mac Community Trade Center </div>
-    <div class="descrip"> &nbsp &nbsp &nbsp &nbsp A way to Increase Sustainability &nbsp &nbsp &nbsp&nbsp </div>
-  </section>
-  <!-- Creating the nav bar to be on the page -->
-  <nav id="navBar">
-    <ul id="nav-items">
-      <!-- seperating the logo -->
-      <div id="Mac-Logo">
-        <li><a href="/index.html">
-            <img src="/images/macLogo.png" id="Mac-Logo0" alt="mac logo 0" />
-          </a></li>
-      </div>
-      <!-- seperating the tabs -->
-      <div id="navright">
-        <li><a href="/pages/testFolder/testpost.html"> Test</a></li>
-        <!-- <li><a href = "/pages/loginPage/login.html"> Login</a></li> -->
-        <li><a href="/pages/accountPage/account.html"> Account</a></li>
-        <li><a href="/pages/postPage/post.html"> Post</a></li>
-      </div>
-    </ul>
-  </nav>
-
-  <!-- Java script timer to change the image on the homepage -->
-  <script>
+  <!DOCTYPE html>
+  <html lang="en">
+  <!-- <head> is a container to hold the content the page needs but the user will not see -->
+  
+  <head>
+    <meta charset="UTF-8">
+    <!-- set the character set for the webpage -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Home </title>
+    <script src="/scripts/dist/bundle.js?v=1"></script>
+    <!-- define the script -->
+    <link href="/css/style.css" rel="stylesheet">
+    <script src="/pages/flipcards.js"></script>
+  </head>
+  <!-- this is a container to hold all of the content which we actually want the user to see -->
+  
+  <body>
+    <!-- This creates the picture slide show on the home page -->
+    <section class="header"> <img class="mySlides" src="/images/machome1.png" style="width:100%" alt="img1"> <img class="mySlides" src="/images/machome2.png" style="width:100%" alt="img2"> <img class="mySlides" src="/images/machome3.png" style="width:100%" alt="img3">
+      <div class="homeTitle">Mac Community Trade Center </div>
+      <div class="descrip"> &nbsp &nbsp &nbsp &nbsp A way to Increase Sustainability &nbsp &nbsp &nbsp&nbsp </div>
+    </section>
+    <!-- Creating the nav bar to be on the page -->
+    <nav id="navBar">
+      <ul id="nav-items">
+        <!-- seperating the logo -->
+        <div id="Mac-Logo">
+          <li>
+            <a href="/index.html"> <img src="/images/macLogo.png" id="Mac-Logo0" alt="mac logo 0" /> </a>
+          </li>
+        </div>
+        <!-- seperating the tabs -->
+        <div id="navright">
+          <li><a href="/pages/accountPage/account.html"> Account</a></li>
+          <li><a href="/pages/postPage/post.html"> Post</a></li>
+        </div>
+      </ul>
+    </nav>
+    <!-- Java script timer to change the image on the homepage -->
+    <script>
     var myIndex = 0;
     carousel();
+  
     function carousel() {
       var i;
       var x = document.getElementsByClassName("mySlides");
-      for (i = 0; i < x.length; i++) {
+      for(i = 0; i < x.length; i++) {
         x[i].style.display = "none";
       }
       myIndex++;
-      if (myIndex > x.length) { myIndex = 1 }
+      if(myIndex > x.length) {
+        myIndex = 1
+      }
       x[myIndex - 1].style.display = "block";
       setTimeout(carousel, 5000);
     }
-  </script>
-
-  <!-- Splitting the bottom half of the home page into search and posts -->
-
-  <!-- Search bar sections -->
-  <div class="row">
-    <div class="side" style="background-color:#c3c1c1;">
-      <h2>Search</h2>
-      <input type="text" id="myInput" placeholder="Search for items...">
-      <div id="myBtnContainer">
-        <h2>Filter</h2>
-        <button class="btn active" onclick="filterSelection('all')"> Show all</button>
-        <button class="btn" onclick="filterSelection('cars')"> Price: Low-High</button>
-        <button class="btn" onclick="filterSelection('fruits')"> Clothing</button>
-        <button class="btn" onclick="filterSelection('animals')"> Price: High-low</button>
-        <button class="btn" onclick="filterSelection('colors')"> Dorm Items</button>
-        <button class="btn" onclick="filterSelection('colors')"> Misc</button>
-      </div>
-
-      <!-- inactive code right now -->
-      <script>
+    </script>
+    <!-- Splitting the bottom half of the home page into search and posts -->
+    <!-- Search bar sections -->
+    <div class="row">
+      <div class="side" style="background-color:#c3c1c1;">
+        <h2>Search</h2>
+        <input type="text" id="myInput" placeholder="Search for items...">
+        <div id="myBtnContainer">
+          <h2>Filter</h2>
+          <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+          <button class="btn" onclick="filterSelection('cars')"> Price: Low-High</button>
+          <button class="btn" onclick="filterSelection('fruits')"> Clothing</button>
+          <button class="btn" onclick="filterSelection('animals')"> Price: High-low</button>
+          <button class="btn" onclick="filterSelection('colors')"> Dorm Items</button>
+          <button class="btn" onclick="filterSelection('colors')"> Misc</button>
+        </div>
+        <!-- inactive code right now -->
+        <script>
         // Add active class to the current control button (highlight it)
         var btnContainer = document.getElementById("myBtnContainer");
         var btns = btnContainer.getElementsByClassName("btn");
-        for (var i = 0; i < btns.length; i++) {
-          btns[i].addEventListener("click", function () {
+        for(var i = 0; i < btns.length; i++) {
+          btns[i].addEventListener("click", function() {
             var current = document.getElementsByClassName("active");
             current[0].className = current[0].className.replace(" active", "");
             this.className += " active";
           });
         }
-      </script>
-    </div>
-
-    <!-- Post Section -->
-    <div class="postArea" style="overflow-y:scroll; background-color:#ffffff;">
-      <h2>Posts</h2>
-      <div class="postGrid">
-        <!-- creating one post -->
-        <div class="flipdiv v">
-          <div class="front">
-            <div class="frontImage">
-              <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 1" />
+        </script>
+      </div>
+      <!-- Post Section -->
+      <div class="postArea" style="overflow-y:scroll; background-color:#ffffff;">
+        <h2>Posts</h2>
+        <div class="postGrid">
+          <!-- creating one post -->
+          <div class="flipdiv v">
+            <div class="front">
+              <div class="frontImage"> <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 1" /> </div>
+              <div class="frontText"> Here is my image </div>
+              <div class="frontPrice"> $10 </div>
             </div>
-            <div class="frontText">
-              Here is my image
-            </div>
-            <div class="frontPrice">
-              $10
-            </div>
-          </div>
-          <div class="back">
-            <div class="backImage">
-              <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 2" />
-            </div>
-            <div class="backTitle">
-              Here is my image
-            </div>
-            <div class="backDescription">
-              Here is the description of the back of my photo it is a very cool photo that
-              i like very much and it is awesome.
-            </div>
-            <div class="price">
-              $10
-            </div>
-            <div class="sellerInfo">
-              Seller: Jacob
+            <div class="back">
+              <div class="backImage"> <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 2" /> </div>
+              <div class="backTitle"> Here is my image </div>
+              <div class="backDescription"> Here is the description of the back of my photo it is a very cool photo that i like very much and it is awesome. </div>
+              <div class="price"> $10 </div>
+              <div class="sellerInfo"> Seller: Jacob </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Make the footer for the homepage -->
-  <div class="footer">
-    <p>Issues? Click here to<a href="mailto:jhellenb@macalester.edu"> contact an admin for help</a>.</p>
-  </div>
-
-  <!-- <button id="createCardButton">Create Card</button> -->
-  <!-- <div id="cardContainer"></div> -->
-
-  <!-- <script>
-
-      function createCard() {
-        // Create the card container element
-        const card = document.createElement('div');
-        card.classList.add('flipdiv', 'v'); // Add the 'flipdiv' and 'v' classes
-
-        // ...
-
-        // Create the front side of the card
-        const front = document.createElement('div');
-        front.classList.add('front', 'card-side'); // Add the 'front' and 'card-side' classes
-
-        // ...
-
-        // Create the back side of the card
-        const back = document.createElement('div');
-        back.classList.add('back', 'card-side'); // Add the 'back' and 'card-side' classes
-
-        // Apply your CSS classes to specific elements
-        const frontText = document.createElement('div');
-        frontText.classList.add('frontText'); // Add the 'frontText' class
-        frontText.textContent = 'Here is my image';
-
-        const frontPrice = document.createElement('div');
-        frontPrice.classList.add('frontPrice'); // Add the 'frontPrice' class
-        frontPrice.textContent = '$10';
-
-        const frontImage = document.createElement('div');
-        frontImage.classList.add('frontImage'); // Add the 'frontImage' class
-        const frontImageImg = document.createElement('img');
-        frontImageImg.src = '/images/macLogo.png';
-        frontImageImg.alt = 'mac logo 1';
-        frontImage.appendChild(frontImageImg);
-
-        const backImage = document.createElement('div');
-        backImage.classList.add('backImage'); // Add the 'backImage' class
-        const backImageImg = document.createElement('img');
-        backImageImg.src = '/images/macLogo.png';
-        backImageImg.alt = 'mac logo 2';
-        backImage.appendChild(backImageImg);
-
-        const backTitle = document.createElement('div');
-        backTitle.classList.add('backTitle'); // Add the 'backTitle' class
-        backTitle.textContent = 'Here is my image';
-
-        const backDescription = document.createElement('div');
-        backDescription.classList.add('backDescription'); // Add the 'backDescription' class
-        backDescription.textContent = 'Here is the description of the back of my photo it is a very cool photo that I like very much and it is awesome.';
-
-        const price = document.createElement('div');
-        price.classList.add('price'); // Add the 'price' class
-        price.textContent = '$10';
-
-        const sellerInfo = document.createElement('div');
-        sellerInfo.classList.add('sellerInfo'); // Add the 'sellerInfo' class
-        sellerInfo.textContent = 'Seller: Jacob';
-
-        // Append elements to the front and back sides
-        front.appendChild(frontImage);
-        front.appendChild(frontText);
-        front.appendChild(frontPrice);
-
-        back.appendChild(backImage);
-        back.appendChild(backTitle);
-        back.appendChild(backDescription);
-        back.appendChild(price);
-        back.appendChild(sellerInfo);
-
-        // Append front and back sides to the card
-        card.appendChild(front);
-        card.appendChild(back);
-
-        card.style.marginBottom = '200px';
-
-        // Append the card to the document (or a specific container)
-        document.body.appendChild(card);
-
-        const cardContainer = document.getElementById('cardContainer');
-
-      // Append the new card to the container
-        cardContainer.appendChild(card);
-
-        // const createCardButton = document.getElementById('createCardButton');
-        // createCardButton.addEventListener('click', createCard);
-
-      //   const cardContainer = document.getElementById('flipdiv');
-
-
-
-      //   // Insert the new card before the first card in the container
-        // if (cardContainer.firstChild) {
-        //   cardContainer.insertBefore(card, cardContainer.firstChild);
-        // } else {
-        //   cardContainer.appendChild(card);
-        // }
-
-        console.log(urlParams.get('createCard'));
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('createCard') === 'true') {
-      // Call the createCard function when the parameter is present
-      console.log("true");
-      createCard();
-    }
-       }
-      
-    </script> -->
-</body>
-
-</html>
+    <!-- Make the footer for the homepage -->
+    <div class="footer">
+      <p>Issues? Click here to<a href="mailto:jhellenb@macalester.edu"> contact an admin for help</a>.</p>
+    </div>
+  </body>
+  
+  </html>

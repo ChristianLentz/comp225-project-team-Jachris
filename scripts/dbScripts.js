@@ -118,6 +118,9 @@ export async function getUserPosts(db, id) {
         collection(db, "posts"),
         where("post_userID", "==", id),
     );
+    console.log("user id", id);
+    console.log("collection",collection(db, "posts"));
+    console.log("where",where("post_userID", "==", id));
     return await unwrapPostQuery(postQuery);
 }
 
@@ -263,8 +266,10 @@ async function deleteDocByRef(docRef) {
  */
 async function unwrapPostQuery(postSnapshot) {
     let posts = [];
+    console.log("snapshot", postSnapshot)
     if (postSnapshot.query == undefined) {
         // no posts found for the given query 
+        console.log("im null???")
         return null;
     } else {
         const len = postSnapshot.docs.length;

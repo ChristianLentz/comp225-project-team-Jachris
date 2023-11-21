@@ -135,10 +135,19 @@ async function accountPageBackend(db, userEmail) {
             userData['profile_pic'],
             userEmail
         );
+        console.log("1");
         // display posts
         const userPosts = await getUserPosts(db, userID);
+        console.log(userPosts);
         if (userPosts != null) {
+            console.log(userPosts);
             const posts = convertPosts(userPosts);
+            console.log(posts);
+            const userPostarea = document.querySelector('.userPostarea');
+            for (const posts of userPosts) {
+                console.log("trying to add posts to account in loop");
+                // addPostToHomePage(post, userPostarea);
+            }
 
             // TODO:  
             // add the user's posts here!
@@ -152,6 +161,7 @@ async function accountPageBackend(db, userEmail) {
             // }
         }
     }
+    console.log("3");
 }
 
 /**

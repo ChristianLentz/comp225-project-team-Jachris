@@ -120,7 +120,7 @@ async function accountPageBackend(db, userEmail) {
     // edit account when 'editBtn' is clicked 
     document.getElementById('editBtn').addEventListener('click', async function () {
         await accountModal(db, userPath, userEmail, isNew);
-        await updateUserStatus(db, useerPath);
+        await updateUserStatus(db, userPath);
     });
     // ask user to set their info upon account creation
     if (isNew) {
@@ -138,11 +138,11 @@ async function accountPageBackend(db, userEmail) {
         console.log("1");
         // display posts
         const userPosts = await getUserPosts(db, userID);
-        console.log(userPosts);
+        console.log("here are my UserPosts 2",userPosts);
         if (userPosts != null) {
-            console.log(userPosts);
+            console.log("here are my UserPosts 4", userPosts);
             const posts = convertPosts(userPosts);
-            console.log(posts);
+            console.log("Posts", posts);
             const userPostarea = document.querySelector('.userPostarea');
             for (const posts of userPosts) {
                 console.log("trying to add posts to account in loop");

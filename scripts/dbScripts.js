@@ -73,6 +73,7 @@ import {
  * @returns an array of posts as the objects retrieved from firestore, or null.
  */
 export async function queryForPostsByFilter(db, filters, lim) {
+
     let postQuery = null;
     // if no filters selected, query posts with no constraint other than limit = lim
     if (filters.length == 0) {
@@ -101,6 +102,7 @@ export async function queryForPostsByFilter(db, filters, lim) {
  * @returns the array of data for a given user, or throws an error.
  */
 export async function getUserData(db, id) {
+
     const docRef = doc(db, 'users/user' + id.toString());
     return await getAllDocumentDataByRef(docRef);
 }
@@ -109,19 +111,22 @@ export async function getUserData(db, id) {
  * Get all of the posts associated with a given user. 
  * 
  * @param {Firestore} db a reference to firestore. 
- * @param {Number}  id the id of a user in the database.
+ * @param {Number} email the id of a user in the database.
  * 
  * @returns an array of posts as the objects collected from firestore, or null. 
  */
-export async function getUserPosts(db, id) {
+export async function getUserPosts(db, id) { 
+
+    const queryMap = {key: "post_userID", value: id}
     const postQuery = query(
         collection(db, "posts"),
-        where("post_userID", "==", id),
+        where("5", "==", queryMap), 
     );
-    console.log("user id", id);
-    console.log("collection",collection(db, "posts"));
-    console.log("where",where("post_userID", "==", id));
-    return await unwrapPostQuery(postQuery);
+    const postSnapshot = await getDocs(postQuery);
+    postSnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+      });
+    return await unwrapPostQuery(postSnapshot);
 }
 
 /**
@@ -159,6 +164,7 @@ export async function createUser(db, email) {
  * @param {Number} userID the ID associated with the user to delete. 
  */
 export async function deleteUser(db, userID) {
+
     // get number of users
     const numUsers = await getValueOfFieldByPath(db, 'metrics/totals', "total_users", 0);
     if (numUsers > 0) {
@@ -210,6 +216,7 @@ export async function createPost(db, data) {
  * @param {Number} postID the ID associated with the post to delete.
  */
 export async function deletePost(db, postID) {
+
     // get number of posts
     const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
     if (numPosts > 0) {
@@ -232,6 +239,7 @@ export async function deletePost(db, postID) {
  * @param {DocumentSnapshot<DocumentData, DocumentData>} docRef reference to document
  */
 export async function setDocByRef(docRef, data) {
+
     await setDoc(docRef, data, { merge: true })
         .then(() => {
             console.log(`document '${docRef.id}' has been added/updated in database`);
@@ -247,6 +255,7 @@ export async function setDocByRef(docRef, data) {
  * @param {DocumentSnapshot<DocumentData, DocumentData>} docRef reference to document
  */
 async function deleteDocByRef(docRef) {
+
     await deleteDoc(docRef)
         .then(() => {
             console.log(`document '${docRef.id}' has been deleted from database`);
@@ -265,11 +274,10 @@ async function deleteDocByRef(docRef) {
  * @returns An array of posts as the object retrieved from firestore, or null. 
  */
 async function unwrapPostQuery(postSnapshot) {
+
     let posts = [];
-    console.log("snapshot", postSnapshot)
     if (postSnapshot.query == undefined) {
         // no posts found for the given query 
-        console.log("im null???")
         return null;
     } else {
         const len = postSnapshot.docs.length;
@@ -296,6 +304,7 @@ async function unwrapPostQuery(postSnapshot) {
  * @returns field value or the default that was set.
  */
 export async function getValueOfFieldByPath(db, pathToDoc, field, defaultVal) {
+
     const docRef = doc(db, pathToDoc);
     const docSnapshot = getDoc(docRef);
     if ((await docSnapshot).exists) {
@@ -317,6 +326,7 @@ export async function getValueOfFieldByPath(db, pathToDoc, field, defaultVal) {
  * @returns A data object from firestore, or an error if the document DNE. 
  */
 async function getAllDocumentDataByRef(docRef) {
+
     const docData = getDoc(docRef);
     if ((await docData).data() == undefined) {
         throw new Error(`Error when getting document data: document ${docRef.id} does not exist`);
@@ -342,6 +352,7 @@ async function getAllDocumentDataByRef(docRef) {
  * @returns an array of key value pairs.
  */
 export function convertDataFromObjToArray(object, len) {
+
     const objAsArr = [];
     for (let j = 0; j < len; j++) {
         objAsArr.push({ key: object[j].key, value: object[j].value })
@@ -360,6 +371,7 @@ export function convertDataFromObjToArray(object, len) {
  * @returns a number, or null if no user is found by provided email. 
  */
 export async function getUserIDByEmail(db, email) {
+
     // query for user with the provided email (this should be unique!)
     const userQuery = query(
         collection(db, "users"),
@@ -385,7 +397,7 @@ export async function getUserIDByEmail(db, email) {
  * @param {String} pathToDoc 
  */
 export async function updateUserStatus(db, pathToDoc) {
-    console.log("made it here");
+
     const userRef = doc(db, pathToDoc);
     await setDoc(userRef, { isNew: false }, { merge: true });
 }
@@ -406,6 +418,7 @@ export async function updateUserStatus(db, pathToDoc) {
  * (key, value) pairs. 
  */
 export async function getFormData(formName) {
+
     const formDataArr = [];
     // get form as HTMLFormElement using HTML name attribute 
     const newForm = document.forms.namedItem(formName);
@@ -425,6 +438,7 @@ export async function getFormData(formName) {
  * @returns date as a string in mm/dd/yyyy format. 
  */
 function getTodayDate() {
+    
     const date = new Date();
     const today = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
     return today;

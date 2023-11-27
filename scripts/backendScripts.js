@@ -80,6 +80,7 @@ export async function runBackend(db, currUserEmail, userAdded) {
  * @param {Array} filters the filters currently selected for filtering posts 
  */
 async function homePageBackend(db, filters) {
+
     // get the data for the posts 
     // this will be an arrary of arrays, where each post array has key-value pairs
     const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
@@ -135,33 +136,17 @@ async function accountPageBackend(db, userEmail) {
             userData['profile_pic'],
             userEmail
         );
-        console.log("1");
         // display posts
-        const userPosts = await getUserPosts(db, userID);
-        console.log("here are my UserPosts 2",userPosts);
+        const userPostObjs = await getUserPosts(db, userID);
+        const userPosts = convertPosts(userPostObjs);
+        console.log(userPosts);
         if (userPosts != null) {
-            console.log("here are my UserPosts 4", userPosts);
-            const posts = convertPosts(userPosts);
-            console.log("Posts", posts);
-            const userPostarea = document.querySelector('.userPostarea');
-            for (const posts of userPosts) {
-                console.log("trying to add posts to account in loop");
-                // addPostToHomePage(post, userPostarea);
+            const userPostArea = document.querySelector('.userPostarea');
+            for (const post of userPosts) {
+                addPostToAccountPage(post, userPostArea);
             }
-
-            // TODO:  
-            // add the user's posts here!
-            // can we do this with another post grid like on the home page?
-            // this would make the html pretty quick and would save on amount of JS code. 
-
-            // for (const post in posts) { 
-            //     userCard.querySelector('.cardName').textContent = 'test bru';
-            //     userCard.querySelector('.title').textContent = "userEmail"; 
-            //     cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3];
-            // }
         }
     }
-    console.log("3");
 }
 
 /**
@@ -189,7 +174,6 @@ async function postPageBackend(db) {
             window.location.href = "/pages/accountPage/account.html"
         });
     }, 1000);
-    // send user to their account page 
 }
 
 // ============================ Helper Functions ============================
@@ -201,6 +185,7 @@ async function postPageBackend(db) {
  * @param {Array} newPostData data to be added to the databse
  */
 async function sendPostToDB(db, newPostData) {
+    
     // get the user's email and userID 
     const emailText = document.getElementById("post-mail").value;
     const userID = await getUserIDByEmail(db, emailText);
@@ -234,6 +219,7 @@ async function sendPostToDB(db, newPostData) {
  * @returns the posts data that we queried for, or null 
  */
 async function getPosts(db, filters) {
+
     const posts = await queryForPostsByFilter(db, filters, queryLim);
     if (posts == null) {
         return posts;
@@ -251,6 +237,7 @@ async function getPosts(db, filters) {
  * @returns an array of arrays, where each inner array is the data for one post. 
  */
 function convertPosts(posts) {
+
     let postArr = [];
     for (let i = 0; i < posts.length; i++) {
         const post = convertDataFromObjToArray(posts[i], numPostItems);
@@ -266,6 +253,7 @@ function convertPosts(posts) {
  * @param {HTMLElement} postGrid HTML element to add the data to.
  */
 function addPostToHomePage(post, postGrid) {
+
     // create a new card element
     const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
     // front of card
@@ -291,6 +279,7 @@ function addPostToHomePage(post, postGrid) {
  * @param {Boolean} isNew boolean to determine if the user is new
  */
 async function accountModal(db, path, email, isNew) {
+
     // open the modal
     document.getElementById('editModal').style.display = 'block';
     // update values for html elements
@@ -317,6 +306,7 @@ async function accountModal(db, path, email, isNew) {
  * @param {String} path a path to the user's document in firebase
  */
 async function updateAccountInfo(db, path, email) {
+
     // get data entered by the user
     const userName = document.getElementById('username').value;
     const userTitle = document.getElementById('descrip').value;
@@ -341,8 +331,25 @@ async function updateAccountInfo(db, path, email) {
  * @param {String} email email of the user
  */
 function setFrontend(name, title, img, email) {
+
     document.getElementById('cardName').innerText = name;
     document.getElementById('title').innerText = title;
     document.getElementById('cardImage').setAttribute('src', img);
     document.querySelector('div.card > a').setAttribute('href', "mailto:" + email);
+}
+
+/**
+ * Add a post to the user's account page
+ * 
+ * @param {Array} post 
+ * @param {HTMLElement} postArea 
+ */
+function addPostToAccountPage(post, postArea) {
+
+    console.log("adding post!");
+
+    // TODO:  
+    // add the user's posts here!
+    // can we do this with another post grid like on the home page?
+    // this would make the html pretty quick and would save on amount of JS code.
 }

@@ -205,3 +205,6 @@ select.icon-menu option {
 	background-position: bottom left;
 	padding-left: 30px;
 }
+.flipdiv {
+	display: none;
+}

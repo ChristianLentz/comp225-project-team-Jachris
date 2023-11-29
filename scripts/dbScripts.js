@@ -124,7 +124,7 @@ export async function getUserPosts(db, id) {
     );
     const postSnapshot = await getDocs(postQuery);
     postSnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
+        // console.log(doc.id, " => ", doc.data());
       });
     return await unwrapPostQuery(postSnapshot);
 }

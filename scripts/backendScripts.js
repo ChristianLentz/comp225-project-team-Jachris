@@ -139,7 +139,6 @@ async function accountPageBackend(db, userEmail) {
         // display posts
         const userPostObjs = await getUserPosts(db, userID);
         const userPosts = convertPosts(userPostObjs);
-        console.log(userPosts);
         if (userPosts != null) {
             const userPostArea = document.querySelector('.userPostarea');
             for (const post of userPosts) {
@@ -346,7 +345,24 @@ function setFrontend(name, title, img, email) {
  */
 function addPostToAccountPage(post, postArea) {
 
-    console.log("adding post!");
+ 
+
+    const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
+    // cardTemplate.removeAttribute('hidden');
+    // console.log(cardTemplate.removeAttribute('hidden'));
+    cardTemplate.style.display = '';
+    // front of card
+    cardTemplate.querySelector('.frontText').textContent = post[2].value;        // Access 'post_title'
+    cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value;
+    console.log("test part,");
+    // Access 'post_price'
+    // back of card
+    cardTemplate.querySelector('.backTitle').textContent = post[2].value;
+    cardTemplate.querySelector('.price').textContent = '$' + post[3].value;
+    cardTemplate.querySelector('.backDescription').textContent = post[4].value;  // access post descrip
+    cardTemplate.querySelector('.sellerInfo').textContent = post[0].value;       // access seller name
+    // append the card to the "postGrid" container
+    postArea.appendChild(cardTemplate);
 
     // TODO:  
     // add the user's posts here!

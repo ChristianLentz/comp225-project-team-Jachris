@@ -8,7 +8,7 @@ Mac Buy-Back resembles a virtual Mac Free-Swap. This website is an online and ea
 ### Getting Started 
 If you want to get started with running this application locally, follow these step:
 
-- Download nodeJS and npm. This is a crucial step. You can do this here: https://nodejs.org/en/download
+- Download nodeJS and npm. This is a crucial step. You can do this [here](https://nodejs.org/en/download).
 - Clone this repository from remote. You can do this by opening with Github Desktop, downloading the zipped folder directly to your machine, or using **git clone**.
 - Open the project and navigate to the root directory in your terminal of choice.
 - Install the following packages by running the following in the terminal: 
@@ -57,7 +57,7 @@ Nothing!
 
 ### Helpful Sources
 
-- Defualt profile images retreived from [here}](https://www.freepik.com/search?format=search&query=cartoon%20animal%20profile)
+- Defualt profile images retreived from [here](https://www.freepik.com/search?format=search&query=cartoon%20animal%20profile).
 - The [Firebase documentation](https://firebase.google.com/docs?hl=en&authuser=0&_gl=1*1pfdh62*_ga*ODU2OTQzNTM0LjE3MDAwNzY3NTg.*_ga_CW55HF8NVT*MTcwMTI3NTEwOC4yMS4xLjE3MDEyNzY1MzUuNjAuMC4w) describes how to get started with and use Google Firebase. In particular, we use Firestore, Storage and Hosting for this project. 
 - Support for the programming languages and other tools used in this project: 
   - [JavaScript, W3Schools](https://www.w3schools.com/js/DEFAULT.asp)

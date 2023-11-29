@@ -39,7 +39,6 @@ import { getUserIDByEmail } from "./dbScripts";
 
 // Initialize storage with reference to our storage bucket
 const myStore = getStorage(); 
-const storeRef = ref(myStore); // use this to get an image ex: ref(myStore, images/myimage.png)
 
 // Initialize user auth 
 const auth = getAuth(firebaseAPP);
@@ -51,9 +50,11 @@ let isAuthenticated = false;
 // ============================ MVP Auth ============================
 
     // direct user to login page when the site is opened 
-    // ask that they enter their F/L name and email 
+    // ask that they enter their email 
     // verify that the email string contains @macalester.edu
     // authenticate user 
+        // let isAuthenticated = true 
+        // let email = the email the user provided
     // check if user exists in DB currently
     // proceed with running the app 
     window.location.href = "/pages/loginPage/login.html"
@@ -110,14 +111,10 @@ if (isAuthenticated) {
   // boolean passed to runBackend will determine if we add the user to the db 
   if (userID == null) {
     // current authenticated user is new, userAdded = false  
-    // TODO: 
-    // pass a reference to storage to the backend
-    await runBackend(myDB, email, false);
+    await runBackend(myDB, myStore, email, false);
   }
   else {
     // current authenticated user is not new, userAdded = true
-    // TODO: 
-    // pass a reference to storage to the backend
-    await runBackend(myDB, email, true);
+    await runBackend(myDB, myStore, email, true);
   }
 }

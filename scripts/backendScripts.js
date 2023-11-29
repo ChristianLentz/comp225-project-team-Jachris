@@ -22,7 +22,7 @@ import {
 } from "./dbScripts";
 
 // import firestore functions
-import { doc, getDoc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 
 // number of items per post (WILL CHANGE AS MORE FEATURES ADDED)
 const numPostItems = 8;
@@ -37,10 +37,11 @@ const queryLim = 48;
  * the current html document where they are located.
  * 
  * @param {Firestore} db a reference to firestore 
+ * @param {Storage} store a reference to storage
  * @param {String} currUserEmail the email for the current authenticated user
  * @param {Boolean} userAdded determines if we add the current user to the db as a new user
  */
-export async function runBackend(db, currUserEmail, userAdded) {
+export async function runBackend(db, store, currUserEmail, userAdded) {
 
     // Add new user to DB
     // only if authenticated user's email not yet associated with user in DB  
@@ -55,17 +56,17 @@ export async function runBackend(db, currUserEmail, userAdded) {
         // TODO: AFTER MVP PHASE
         // get filters currently selected 
 
-        await homePageBackend(db, []);
+        await homePageBackend(db, store, []);
     }
 
     // run scripts for the Account page
     if (document.title == "Account") {
-        await accountPageBackend(db, currUserEmail);
+        await accountPageBackend(db, store, currUserEmail);
     }
 
     // run scripts for the Post page
     if (document.title == "Post") {
-        await postPageBackend(db)
+        await postPageBackend(db, store)
     }
 }
 
@@ -77,9 +78,10 @@ export async function runBackend(db, currUserEmail, userAdded) {
  * Eventually we may query posts based on filters. 
  * 
  * @param {Firestore} db a reference to firestore
+ * @param {Storage} store a reference to storage
  * @param {Array} filters the filters currently selected for filtering posts 
  */
-async function homePageBackend(db, filters) {
+async function homePageBackend(db, store, filters) {
 
     // get the data for the posts 
     // this will be an arrary of arrays, where each post array has key-value pairs
@@ -110,9 +112,10 @@ async function homePageBackend(db, filters) {
  * account page.  
  * 
  * @param {Firestore} db a reference to firestore
+ * @param {Storage} store a reference to storage
  * @param {String} userEmail email associated with the current authenticated user
  */
-async function accountPageBackend(db, userEmail) {
+async function accountPageBackend(db, store, userEmail) {
 
     // get information about the current user
     const userID = await getUserIDByEmail(db, userEmail);
@@ -158,9 +161,10 @@ async function accountPageBackend(db, userEmail) {
  * Eventually we will allow multiple photoes per posts and tags for the posts 
  * which correspond to the filters on the home page. 
  * 
- * @param {Firestore} db a referece to firestore 
+ * @param {Firestore} db a referece to firestore
+ * @param {Storage} store a reference to storage
  */
-async function postPageBackend(db) {
+async function postPageBackend(db, store) {
 
     // pause and let window load 
     window.setTimeout(async function () {

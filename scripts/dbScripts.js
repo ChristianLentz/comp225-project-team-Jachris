@@ -426,10 +426,27 @@ export async function getFormData(formName) {
     if (newForm) {
         let formData = new FormData(newForm);
         for (const [newKey, newValue] of formData) {
-            formDataArr.push({ key: newKey, value: newValue });
+            // get image associated with the post
+            if (newKey == "post_img") { 
+
+                // TODO:
+                // define a function which adds the post to firebase storage
+                // add the storage ref to formDataArr
+
+            }
+            // handle other HTML elements
+            else { 
+                formDataArr.push({ key: newKey, value: newValue });
+                console.log(newKey);
+            }
         }
     }
     return formDataArr;
+}
+
+// TODO: finish this! 
+async function storeImage() { 
+
 }
 
 /**

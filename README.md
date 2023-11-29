@@ -65,3 +65,6 @@ Nothing!
   - [CSS, mozilla.org](https://developer.mozilla.org/en-US/docs/Web/CSS)
   - [Webpack CLI](https://webpack.js.org/)
   - A brief introduction to [NoSQL](https://www.geeksforgeeks.org/introduction-to-nosql/), since the Firestore database is a NoSQL databse.
+- Support for other node modules and tools used: 
+  - [form-data](https://www.npmjs.com/package/form-data) for working with HTML form elements 
+  - [FileReader objects](https://developer.mozilla.org/en-US/docs/Web/API/FileReader) for reading image files and [File API](https://developer.mozilla.org/en-US/docs/Web/API/File) for creating file objects in JavaScript. These are used in conjunction with Firebase Storage for handling images that users upload for their posts. 

@@ -58,7 +58,7 @@ Nothing!
 ### Helpful Sources
 
 - Defualt profile images retreived from [here](https://www.freepik.com/search?format=search&query=cartoon%20animal%20profile).
-- The [Firebase documentation](https://firebase.google.com/docs?hl=en&authuser=0&_gl=1*1pfdh62*_ga*ODU2OTQzNTM0LjE3MDAwNzY3NTg.*_ga_CW55HF8NVT*MTcwMTI3NTEwOC4yMS4xLjE3MDEyNzY1MzUuNjAuMC4w) describes how to get started with and use Google Firebase. In particular, we use Firestore, Storage and Hosting for this project. 
+- The [Firebase documentation](https://firebase.google.com/docs?hl=en&authuser=0&_gl=1*1pfdh62*_ga*ODU2OTQzNTM0LjE3MDAwNzY3NTg.*_ga_CW55HF8NVT*MTcwMTI3NTEwOC4yMS4xLjE3MDEyNzY1MzUuNjAuMC4w) describes how to get started with and use Google Firebase. In particular, we use Firestore, Storage and Hosting for this project. Also note that for this project, we are using the Web Modular API, as this is setup for module bundling and \textit{tree shaking}. 
 - Support for the programming languages and other tools used in this project: 
   - [JavaScript, W3Schools](https://www.w3schools.com/js/DEFAULT.asp)
   - [HTML, mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTML)

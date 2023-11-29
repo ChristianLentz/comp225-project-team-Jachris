@@ -9,8 +9,8 @@
 // Import functions from the firebase SDK
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import {getStorage } from "firebase/storage"; 
-import {getAuth, 
+import { ref, getStorage } from "firebase/storage"; 
+import { getAuth, 
   GoogleAuthProvider,
   signInWithCredential, 
   signInWithPopup, } from "firebase/auth";
@@ -37,8 +37,9 @@ const firebaseAPP = initializeApp(firebaseConfig);
 const myDB = getFirestore();
 import { getUserIDByEmail } from "./dbScripts";
 
-// Initialize storage 
+// Initialize storage with reference to our storage bucket
 const myStore = getStorage(); 
+const storeRef = ref(myStore); // use this to get an image ex: ref(myStore, images/myimage.png)
 
 // Initialize user auth 
 const auth = getAuth(firebaseAPP);
@@ -108,10 +109,14 @@ if (isAuthenticated) {
   // boolean passed to runBackend will determine if we add the user to the db 
   if (userID == null) {
     // current authenticated user is new, userAdded = false  
+    // TODO: 
+    // pass a reference to storage to the backend
     await runBackend(myDB, email, false);
   }
   else {
     // current authenticated user is not new, userAdded = true
+    // TODO: 
+    // pass a reference to storage to the backend
     await runBackend(myDB, email, true);
   }
 }

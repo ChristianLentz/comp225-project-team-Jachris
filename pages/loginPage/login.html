@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- setup the page -->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- HTTP header, for security. See https://www.keycdn.com/support/what-is-mime-sniffing -->
+  <meta http-equiv="X-Content-Type-Options: nosniff" />
+  <title> Login </title>
+  <script src="/scripts/dist/bundle.js?v=1"></script>
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/pages/loginPage/style.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Creating our nav bar -->
+  <nav id="navBar">
+    <ul>
+      <div id="Mac-Logo">
+        <li><a href="/index.html">
+            <img src="/images/macLogo.png" id="Mac-Logo0" alt="mac logo 0" />
+          </a></li>
+      </div>
+      <div id="navright">
+        <li><a href="/pages/accountPage/account.html">Account</a></li>
+        <li><a href="/pages/postPage/post.html"> Posts</a></li>
+      </div>
+    </ul>
+  </nav>
+  <!-- Create our form for logging in  -->
+  <form name="login-form" action="/pages/accountPage/account.html" method="POST">
+    <ul>
+      <li>
+        <label for="user-mail">Email:</label>
+        <input type="email" id="user-mail" name="user_email" />
+      </li>
+      <!-- <li>
+        <label for="user-password">Password:</label>
+        <input type="text" id="user-password" name="user_password" />
+      </li> -->
+      <li class="button">
+        <button type="submit" id="create-user-btn">Sign In</button>
+      </li>
+    </ul>
+  </form>
+  <!-- Hyper Referene to create account page -->
+  <!-- <p>Don't have an account?<a href="/pages/createAccountPage/createacount.html">
+      Create one here.</a>
+  </p> -->
+</body>
+
+</html>

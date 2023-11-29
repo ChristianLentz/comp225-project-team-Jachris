@@ -56,6 +56,7 @@ let isAuthenticated = false;
     // authenticate user 
     // check if user exists in DB currently
     // proceed with running the app 
+    window.location.href = "/pages/loginPage/login.html"
 
 // ============================ Google OAuth ============================
 

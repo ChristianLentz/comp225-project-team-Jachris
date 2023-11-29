@@ -37,7 +37,7 @@ form {
     box-sizing: border-box;
   
     /* Match form field borders */
-    border: 1px solid #999;
+    border: 1px solid black;
   }
   
   /* input:focus, */
@@ -59,11 +59,10 @@ form {
     /* same size as the label elements */
   }
   
-  button:hover{
+  button{
     /* This extra margin represent roughly the same space as the space
          between the labels and their text fields */
     margin-left: 0.4em;
     background-color: aqua;
     font-size: large;
-    box-shadow: 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   }

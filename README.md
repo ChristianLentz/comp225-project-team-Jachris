@@ -6,9 +6,9 @@
 Mac Buy-Back resembles a virtual Mac Free-Swap. This website is an online and easily accessible space for any member of the Macalester community to buy, sell, trade or donate used items. The ultimate goal is to connect members of the Macalester community with each other and with the Mac Free-Swap, creating a sense of community while reducing the potential for waste on campus. In addition, students will be able to find the necesities that they need to live at little to no cost. 
 
 ### Getting Started 
-If you want to get started with running this application on your local machine, follow these step:
+If you want to get started with running this application locally, follow these step:
 
-- Download nodeJS and npm on your local machine. This is a crucial step. You can do this here: https://nodejs.org/en/download
+- Download nodeJS and npm. This is a crucial step. You can do this here: https://nodejs.org/en/download
 - Clone this repository from remote. You can do this by opening with Github Desktop, downloading the zipped folder directly to your machine, or using **git clone**.
 - Open the project and navigate to the root directory in your terminal of choice.
 - Install the following packages by running the following in the terminal: 
@@ -22,7 +22,7 @@ If you want to get started with running this application on your local machine, 
   - Note: the two steps above are rather important, as the admin SDK is needed to authenticate users. 
   - **npm i form-data --save** --> allows you to use the form-data node module, which is useful for collectiong user data from an HTML from
  
-If at anytime you get authentication errors in the terminal when trying to install these packages (which may happen with Mac iOS) you should remove node_modules from your local repository and redo the previous steps using **sudo npm ...** for each command line prompt. It will then ask for your Mac password and just hit enter. You are now ready to go!
+If at anytime you get authentication errors in the terminal when trying to install these packages (which may happen with Mac iOS) you should remove node_modules from your local repository and redo the previous steps using **sudo npm ...** for each command line prompt. You are now ready to go!
 
 ### Using Webpack 
 
@@ -33,6 +33,8 @@ We use the Webpack CLI to compile and bundle our Java Script code into an output
 This is the final (and simplest) step of the process. Open your terminal of choice and navigate to the root directory of this project. In the terminal run **serve** or **npm serve**. Using **serve** without specifying a directory to serve will sereve the root directory of the project. This is what we want, since *index.html* (the html file for the homepage of our website) is located in our root directory. Follow the link provided in the terminal, you are now looking at a local instance of the webiste!
 
 ### Current Issues/Bugs
+
+Nothing!
 
 ### TODOs for MVP
 
@@ -53,7 +55,13 @@ This is the final (and simplest) step of the process. Open your terminal of choi
 - Allow users to search for other users
 - Allow users to delete their posts (this will require us to update the ID assignment for posts) 
 
-### Sources
+### Helpful Sources
 
-Profile images
-- https://www.freepik.com/search?format=search&query=cartoon%20animal%20profile
+- Defualt profile images retreived from [here}](https://www.freepik.com/search?format=search&query=cartoon%20animal%20profile)
+- The [Firebase documentation](https://firebase.google.com/docs?hl=en&authuser=0&_gl=1*1pfdh62*_ga*ODU2OTQzNTM0LjE3MDAwNzY3NTg.*_ga_CW55HF8NVT*MTcwMTI3NTEwOC4yMS4xLjE3MDEyNzY1MzUuNjAuMC4w) describes how to get started with and use Google Firebase. In particular, we use Firestore, Storage and Hosting for this project. 
+- Support for the programming languages and other tools used in this project: 
+  - [JavaScript, W3Schools](https://www.w3schools.com/js/DEFAULT.asp)
+  - [HTML, mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTML)
+  - [CSS, mozilla.org](https://developer.mozilla.org/en-US/docs/Web/CSS)
+  - [Webpack CLI](https://webpack.js.org/)
+  - A brief introduction to [NoSQL](https://www.geeksforgeeks.org/introduction-to-nosql/), since the Firestore database is a NoSQL databse.

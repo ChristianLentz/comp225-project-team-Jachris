@@ -36,11 +36,14 @@ This is the final (and simplest) step of the process. Open your terminal of choi
 
 ### TODOs for MVP
 
-- Beutify/comment code (uses shift+alt+f when you are done writing new code!)
+- Beutify/comment code, uses shift+alt+f when you are done writing new code!
 - Routing, use window.location.href = page
-- User auth 
-- Storing images in Firestore -- store actual files in Firebase Storage and store filenames in Firebase Firestore
-- Display user images on the account page
+- User auth, imlement simple MVP version using html forms
+- Storing images in Firestore, setup firestore/storage
+- Display user images on the account page, last step for user account backend
+- update the project proposal
+- deploy the website and set security rules for DB and storage
+- user testing 
 
 ### Features after MVP 
 
@@ -49,7 +52,6 @@ This is the final (and simplest) step of the process. Open your terminal of choi
 - Filter for posts on the home page according to tags
 - Allow users to search for other users
 - Allow users to delete their posts (this will require us to update the ID assignment for posts) 
-
 
 ### Sources
 

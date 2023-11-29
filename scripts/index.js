@@ -9,12 +9,11 @@
 // Import functions from the firebase SDK
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import {
-  getAuth,
+import {getStorage } from "firebase/storage"; 
+import {getAuth, 
   GoogleAuthProvider,
-  signInWithCredential,
-  signInWithPopup,
-} from "firebase/auth";
+  signInWithCredential, 
+  signInWithPopup, } from "firebase/auth";
 
 // Import backend scripts
 import { runBackend } from "./backendScripts";
@@ -27,11 +26,19 @@ const firebaseConfig = {
   storageBucket: "mac-community-trade-center.appspot.com",
   messagingSenderId: "889714479210",
   appId: "1:889714479210:web:c6719ae19008c2da0eba13",
-  measurementId: "G-DWMWXEG7BY"
+  measurementId: "G-DWMWXEG7BY",
+  storageBucket: "gs://mac-community-trade-center.appspot.com"
 };
 
 // Initialize firebase app 
 const firebaseAPP = initializeApp(firebaseConfig);
+
+// Initialize database, get db scripts 
+const myDB = getFirestore();
+import { getUserIDByEmail } from "./dbScripts";
+
+// Initialize storage 
+const myStore = getStorage(); 
 
 // Initialize user auth 
 const auth = getAuth(firebaseAPP);
@@ -40,13 +47,16 @@ auth.languageCode = 'en';
 let email = null;
 let isAuthenticated = false;
 
-// Initialize database
-const myDB = getFirestore();
+// ============================ MVP Auth ============================
 
-// Import database scripts
-import { getUserIDByEmail } from "./dbScripts";
+    // direct user to login page when the site is opened 
+    // ask that they enter their F/L name and email 
+    // verify that the email string contains @macalester.edu
+    // authenticate user 
+    // check if user exists in DB currently
+    // proceed with running the app 
 
-// ============================ User Auth ============================
+// ============================ Google OAuth ============================
 
 // // sign in user with google O auth 
 // await signInWithPopup(auth, provider)

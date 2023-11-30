@@ -142,7 +142,7 @@ div.postArea {
   background-color: #f1f1f1;
   cursor: pointer;
 }
-/* creates space between layers of buttons */
+/* creates space between layers of FILTER buttons */
 .btn:nth-child(2) {
   margin: 5px 0px;
 }
@@ -233,11 +233,12 @@ div.postArea {
   font-size: 20;
   text-align: center;
   margin-top: 10px;
+  /* overflow-x: auto; */
 }
 .flipdiv .frontPrice {
   font-size: 20;
   text-align: center;
-  margin-top: 17px;
+  margin-bottom: 14px;
 }
 /* Aligning the information on the front */
 .flipdiv .frontImage img {
@@ -256,26 +257,54 @@ div.postArea {
 }
 /* aligning the information on the back */
 .flipdiv .backTitle {
+  
   position: absolute;
   left: 10px;
-  top: 500px;
+  top: 530px;
   font-size: 40px;
+
+}
+.backTitle { 
+  width: 1000px;
+  height: 45px;
+  /* overflow-x: auto; */
 }
 .flipdiv .backDescription {
   position: absolute;
+  width: 960px;
+  height: 110px;
   left: 40px;
   top: 620px;
   font-size: 20px;
+  /* overflow-x: auto; */
 }
 .flipdiv .price {
   position: absolute;
   left: 30px;
-  top: 550px;
+  top: 580px;
   font-size: 30px;
 }
 .flipdiv .sellerInfo {
+  width: 190px;
+  height: 100px;
   position: absolute;
-  left: 900px;
+  left: 830px;
   top: 150px;
   font-size: 30px;
+  overflow-y: auto;
 }
+.flipdiv .trashButton {
+  position: fixed;
+  bottom: -150px;
+  left: 10px;
+  width: 40px;
+  height: 30px;
+  border-radius: 5px;
+}
+.flipdiv .back .visitBtn {
+  position: fixed;
+  right: 40px;
+  top: 60px;
+  font-size: 20px;
+}
+

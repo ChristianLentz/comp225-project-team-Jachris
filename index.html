@@ -41,9 +41,9 @@
     <!-- Java script timer to change the image on the homepage -->
     <script>
     var myIndex = 0;
-    carousel();
+    rotateImages();
   
-    function carousel() {
+    function rotateImages() {
       var i;
       var x = document.getElementsByClassName("mySlides");
       for(i = 0; i < x.length; i++) {
@@ -54,7 +54,7 @@
         myIndex = 1
       }
       x[myIndex - 1].style.display = "block";
-      setTimeout(carousel, 5000);
+      setTimeout(rotateImages, 5000);
     }
     </script>
     <!-- Splitting the bottom half of the home page into search and posts -->
@@ -96,7 +96,7 @@
               <div class="frontImage"> <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 1" /> </div>
               <div class="frontText"> Here is my image </div>
               <div class="frontPrice"> $10 </div>
-              <button onclick="deleteFlipdiv()"> Trash </button>
+              <!-- <img class="trashButton" src="/images/trash.png" alt="Trash Icon" onclick="deleteFlipdiv(this)"> -->
             </div>
             <div class="back">
               <div class="backImage"> <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 2" /> </div>
@@ -104,6 +104,7 @@
               <div class="backDescription"> Here is the description of the back of my photo it is a very cool photo that i like very much and it is awesome. </div>
               <div class="price"> $10 </div>
               <div class="sellerInfo"> Seller: Jacob </div>
+              <button class="visitBtn"onclick="goToNewPage()">Visit my Profile!</button>
             </div>
           </div>
         </div>
@@ -111,21 +112,21 @@
     </div>
 
     <script>
+      function goToNewPage() {
+        // Change the URL to the desired destination
+        window.location.href = '/pages/accountPage/account.html';
+      }
+    </script>
+    <!-- <script>
       function deleteFlipdiv(button) {
-        // Get the parent element (flipdiv) of the button
-        
-        var flipdiv = button.parentNode.parentNode.parentNode;
-        console.log(flipdiv);
-
-        // Check if the flipdiv element exists
-        if (flipdiv) {
-            // Remove the flipdiv element
-            flipdiv.remove();
-        } else {
-            console.log('Flipdiv not found');
-        }
-    }
-  </script>
+        // Get the parent element (the card) of the clicked button
+        var card = button.parentNode;
+      
+        // Remove the card from the DOM
+        card.parentNode.removeChild(card);
+      }
+      
+      </script> -->
     
     <!-- Make the footer for the homepage -->
     <div class="footer">

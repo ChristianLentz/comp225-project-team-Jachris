@@ -143,7 +143,7 @@ async function accountPageBackend(db, store, userEmail) {
         const userPostObjs = await getUserPosts(db, userID);
         const userPosts = convertPosts(userPostObjs);
         if (userPosts != null) {
-            const userPostArea = document.querySelector('.userPostarea');
+            const userPostArea = document.querySelector('.postGrid');
             for (const post of userPosts) {
                 addPostToAccountPage(post, userPostArea);
             }
@@ -266,7 +266,7 @@ function addPostToHomePage(post, postGrid) {
     cardTemplate.querySelector('.backTitle').textContent = post[2].value;
     cardTemplate.querySelector('.price').textContent = '$' + post[3].value;
     cardTemplate.querySelector('.backDescription').textContent = post[4].value;  // access post descrip
-    cardTemplate.querySelector('.sellerInfo').textContent = post[0].value;       // access seller name
+    cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;       // access seller name
     // append the card to the "postGrid" container
     postGrid.appendChild(cardTemplate);
 }
@@ -345,29 +345,22 @@ function setFrontend(name, title, img, email) {
  * Add a post to the user's account page
  * 
  * @param {Array} post 
- * @param {HTMLElement} postArea 
+ * @param {HTMLElement} postGrid
  */
-function addPostToAccountPage(post, postArea) {
-
- 
-
+function addPostToAccountPage(post, postGrid) {
+    // create a new card element
     const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
-    // cardTemplate.removeAttribute('hidden');
-    // console.log(cardTemplate.removeAttribute('hidden'));
-    cardTemplate.style.display = '';
     // front of card
     cardTemplate.querySelector('.frontText').textContent = post[2].value;        // Access 'post_title'
-    cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value;
-    console.log("test part,");
-    // Access 'post_price'
+    cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value; // Access 'post_price'
     // back of card
     cardTemplate.querySelector('.backTitle').textContent = post[2].value;
     cardTemplate.querySelector('.price').textContent = '$' + post[3].value;
     cardTemplate.querySelector('.backDescription').textContent = post[4].value;  // access post descrip
-    cardTemplate.querySelector('.sellerInfo').textContent = post[0].value;       // access seller name
+    cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;       // access seller name
     // append the card to the "postGrid" container
-    postArea.appendChild(cardTemplate);
-
+    postGrid.appendChild(cardTemplate);
+    
     // TODO:  
     // add the user's posts here!
     // can we do this with another post grid like on the home page?

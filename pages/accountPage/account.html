@@ -9,6 +9,7 @@
   <script src="/scripts/dist/bundle.js?v=1"></script>
   <link href="/css/style.css" rel="stylesheet">
   <link href="/pages/accountPage/style.css " rel="stylesheet">
+  <script src="/pages/flipcards.js"></script>
 </head>
 
 <body>
@@ -113,27 +114,41 @@
     </a>
   </div>
   <!-- Creating the post area and one post to be on the page -->
-  <div class="userPostarea" style="overflow-y:scroll; background-color:#4272da;">
+  <div class="userPostarea" style="overflow-y:scroll;">
     <h2>Users Posts</h2>
-    <div id="cardTemp" class="flipdiv v">
-      <div class="front">
-        <div class="frontImage"> <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 1" /> </div>
-        <div class="frontText"> Here is my image </div>
-        <div class="frontPrice"> $10 </div>
-        <button onclick="deleteFlipdiv()"> Trash </button>
-      </div>
-      <div class="back">
-        <div class="backImage"> <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 2" /> </div>
-        <div class="backTitle"> Here is my image </div>
-        <div class="backDescription"> Here is the description of the back of my photo it is a very cool photo that i like very much and it is awesome. </div>
-        <div class="price"> $10 </div>
-        <div class="sellerInfo"> Seller: Jacob </div>
+    <div class="postGrid">
+      <!-- creating one post -->
+      <div class="flipdiv v">
+        <div class="front">
+          <div class="frontImage"> <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 1" /> </div>
+          <div class="frontText"> Here is my image </div>
+          <div class="frontPrice"> $10 </div>
+          <img class="trashButton" src="/images/trash.png" alt="Trash Icon" onclick="deleteFlipdiv(this)">
+        </div>
+        <div class="back">
+          <div class="backImage"> <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 2" /> </div>
+          <div class="backTitle"> Here is my image </div>
+          <div class="backDescription"> Here is the description of the back of my photo it is a very cool photo that i like very much and it is awesome. </div>
+          <div class="price"> $10 </div>
+          <div class="sellerInfo"> Seller: Jacob </div>
+        </div>
       </div>
     </div>
   </div>
+</div>
+<script>
+function deleteFlipdiv(button) {
+  // Get the parent element (the card) of the clicked button
+  var card = button.parentNode;
+
+  // Remove the card from the DOM
+  card.parentNode.removeChild(card);
+}
+
+</script>
   </div>
   <div class="footer">
-    <p>Issues? Contact me <a href="mailto:jhellenb@macalester.edu">here</a>.</p>
+    <p>Issues? Click here to <a href="mailto:jhellenb@macalester.edu">contact an admin for help</a>.</p>
   </div>
 </body>
 

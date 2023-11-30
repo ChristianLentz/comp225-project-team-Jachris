@@ -33,7 +33,7 @@ form {
     font: 1em sans-serif;
   
     /* Uniform text field size */
-    width: 300px;
+    width: 200px;
     box-sizing: border-box;
   
     /* Match form field borders */
@@ -56,6 +56,7 @@ form {
   .button {
     /* Align buttons with the text fields */
     padding-left: 200px;
+    text-align: center;
     /* same size as the label elements */
   }
   

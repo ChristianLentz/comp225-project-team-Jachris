@@ -43,6 +43,8 @@ const queryLim = 48;
  */
 export async function runBackend(db, store, currUserEmail, userAdded) {
 
+    window.location.href = "/index.html"; 
+
     // Add new user to DB
     // only if authenticated user's email not yet associated with user in DB  
     if (!userAdded) {
@@ -115,7 +117,7 @@ async function homePageBackend(db, store, filters) {
  * @param {Storage} store a reference to storage
  * @param {String} userEmail email associated with the current authenticated user
  */
-async function accountPageBackend(db, store, userEmail) {
+async function accountPageBackend(db, store, userEmail) { 
 
     // get information about the current user
     const userID = await getUserIDByEmail(db, userEmail);

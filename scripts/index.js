@@ -9,7 +9,7 @@
 // Import functions from the firebase SDK
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { ref, getStorage } from "firebase/storage"; 
+import { getStorage } from "firebase/storage"; 
 import { getAuth, 
   GoogleAuthProvider,
   signInWithCredential, 
@@ -35,51 +35,107 @@ const firebaseAPP = initializeApp(firebaseConfig);
 
 // Initialize database, get db scripts 
 const myDB = getFirestore();
-import { getUserIDByEmail } from "./dbScripts";
+import { getFormData, getUserIDByEmail } from "./dbScripts";
 
 // Initialize storage with reference to our storage bucket
 const myStore = getStorage(); 
 
-// Initialize user auth 
-const auth = getAuth(firebaseAPP);
-const provider = new GoogleAuthProvider();
-auth.languageCode = 'en';
-let email = null;
-let isAuthenticated = false;
+// MVP user auth - we use window.sessionStorage for these
+var email = "email";
+var isAuthenticated = "isAuth";
 
 // ============================ MVP Auth ============================
 
-window.setTimeout( async function () {
+// window.setTimeout( async function () {
 
-  // get selectors for nav bar elements 
-  const navbar = document.getElementById("navBar"); 
-  const accountLink = navbar.querySelector(".account")
-  const postLink = navbar.querySelector(".post");
+//   // ONLY RUN ALL OF THIS IF THE SESSION STORAGE IS EMPTY ?
 
-  // if user clicks account page, send them to login
-  accountLink.addEventListener( "mouseover", async function() { 
-    console.log("made it here");
-    window.location.href = "/pages/loginPage/login.html";  
-  });
+//   // get selectors for nav bar elements 
+//   const navbar = document.getElementById("navBar"); 
+//   const accountLink = navbar.querySelector(".account"); 
+//   const postLink = navbar.querySelector(".post");
 
-  // if user clicks post page, send them to login 
-  postLink.addEventListener( "mouseover", async function() { 
-    console.log("made it here");
-    window.location.href = "/pages/loginPage/login.html";  
-  });
+//   // if user clicks account page, send them to login
+//   if(accountLink) { 
+//     accountLink.addEventListener( "mouseover", function() { 
+//       forceLogin();  
+//     });
+//   }
+  
+//   // if user clicks post page, send them to login
+//   if (postLink) {  
+//     postLink.addEventListener( "mouseover", function() { 
+//       forceLogin();  
+//     });
+//   }
 
-}, 1000); 
+//   // authenticate user once they submit the login form
+//   if (document.title == "Login") {
+//     await authenticate(); 
+//   }
+// }, 1000); 
 
-    // direct user to login page when the site is opened 
-    // ask that they enter their email 
-    // verify that the email string contains @macalester.edu
-    // authenticate user 
-        // let isAuthenticated = true 
-        // let email = the email the user provided
-    // check if user exists in DB currently
-    // proceed with running the app 
+// // ============================ Helper Functions ============================
+
+// /**
+//  * Prevent user from viewing the website before authentication. 
+//  */
+// function forceLogin() { 
+//   const isAuth = localStorage.getItem("isAuth"); 
+//   if (isAuth != "true") { 
+//     window.location.href = "/pages/loginPage/login.html";
+//   } 
+// }
+
+// /**
+//  * Authenticate the user once they submit the login form. 
+//  */
+// async function authenticate() { 
+//   window.setTimeout(async function () {  
+//     const loginForm = document.getElementsByName("login-form").item(0);
+//     loginForm.addEventListener("submit", async function (event) {
+//       event.preventDefault();
+//       const logininfo = await getFormData("login-form");
+//       const emailFetched = logininfo.at(0).value.toString();
+//       if (emailFetched.endsWith("@macalester.edu")) { 
+//         sessionStorage.setItem(email, emailFetched); 
+//         sessionStorage.setItem(isAuthenticated, "true"); 
+//         await runApp(); 
+//       }
+//       else { 
+            
+//         // TODO: throw an error on the front end, email is not valid!
+
+//       }
+//     });
+//   }, 1000);
+// }
+
+// /**
+//  * Run the app/backend once we have authenticated the user. 
+//  */
+// async function runApp() { 
+
+//   // NEED TO CREATE THE USER AND ADD THE USER IN THE DB FIRST ?
+
+//   const userEmail = sessionStorage.getItem(email); 
+//   const userID = await getUserIDByEmail(myDB, userEmail); 
+//   if (userID == null) {
+//     // current authenticated user is new, userAdded = false 
+//     await runBackend(myDB, myStore, userEmail, false); 
+//   }
+//   else {
+//     // current authenticated user is not new, userAdded = true
+//     await runBackend(myDB, myStore, userEmail, true);
+//   }
+// }
 
 // ============================ Google OAuth ============================
+
+// Initialize user auth 
+// const auth = getAuth(firebaseAPP);
+// const provider = new GoogleAuthProvider();
+// auth.languageCode = 'en';
 
 // // sign in user with google O auth 
 // await signInWithPopup(auth, provider)
@@ -120,9 +176,6 @@ window.setTimeout( async function () {
 // }
 
 // ============================ Run App ============================
-
-isAuthenticated = true;
-email = "clentz@macalester.edu";
 
 // run the back end!
 if (isAuthenticated) {

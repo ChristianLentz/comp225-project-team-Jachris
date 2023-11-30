@@ -437,7 +437,6 @@ export async function getFormData(formName) {
             // handle other HTML elements
             else { 
                 formDataArr.push({ key: newKey, value: newValue });
-                console.log(newKey);
             }
         }
     }

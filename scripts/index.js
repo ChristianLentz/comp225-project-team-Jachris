@@ -49,6 +49,27 @@ let isAuthenticated = false;
 
 // ============================ MVP Auth ============================
 
+window.setTimeout( async function () {
+
+  // get selectors for nav bar elements 
+  const navbar = document.getElementById("navBar"); 
+  const accountLink = navbar.querySelector(".account")
+  const postLink = navbar.querySelector(".post");
+
+  // if user clicks account page, send them to login
+  accountLink.addEventListener( "mouseover", async function() { 
+    console.log("made it here");
+    window.location.href = "/pages/loginPage/login.html";  
+  });
+
+  // if user clicks post page, send them to login 
+  postLink.addEventListener( "mouseover", async function() { 
+    console.log("made it here");
+    window.location.href = "/pages/loginPage/login.html";  
+  });
+
+}, 1000); 
+
     // direct user to login page when the site is opened 
     // ask that they enter their email 
     // verify that the email string contains @macalester.edu
@@ -57,7 +78,6 @@ let isAuthenticated = false;
         // let email = the email the user provided
     // check if user exists in DB currently
     // proceed with running the app 
-    window.location.href = "/pages/loginPage/login.html"
 
 // ============================ Google OAuth ============================
 

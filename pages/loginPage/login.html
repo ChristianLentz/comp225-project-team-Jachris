@@ -23,8 +23,9 @@
           </a></li>
       </div>
       <div id="navright">
-        <li><a href="/pages/accountPage/account.html">Account</a></li>
-        <li><a href="/pages/postPage/post.html"> Posts</a></li>
+        <li class="login"><a href="/pages/loginPage/login.html"> Login</a></li>
+        <li class="account"><a href="/pages/accountPage/account.html">Account</a></li>
+        <li class="post"><a href="/pages/postPage/post.html"> Posts</a></li>
       </div>
     </ul>
   </nav>
@@ -33,21 +34,13 @@
     <ul>
       <li>
         <label for="user-mail">Email:</label>
-        <input type="email" id="user-mail" name="user_email" />
+        <input type="email" id="user-mail" name="user_email" required />
       </li>
-      <!-- <li>
-        <label for="user-password">Password:</label>
-        <input type="text" id="user-password" name="user_password" />
-      </li> -->
       <li class="button">
         <button type="submit" id="create-user-btn">Sign In</button>
       </li>
     </ul>
   </form>
-  <!-- Hyper Referene to create account page -->
-  <!-- <p>Don't have an account?<a href="/pages/createAccountPage/createacount.html">
-      Create one here.</a>
-  </p> -->
 </body>
 
 </html>

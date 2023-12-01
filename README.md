@@ -39,10 +39,8 @@ Nothing!
 ### TODOs for MVP
 
 - Beutify/comment code, uses shift+alt+f when you are done writing new code!
-- Routing, use window.location.href = page
 - User auth, imlement simple MVP version using html forms
 - Storing images in Firestore, setup firestore/storage
-- Display user images on the account page, last step for user account backend
 - update the project proposal
 - deploy the website and set security rules for DB and storage
 - user testing 

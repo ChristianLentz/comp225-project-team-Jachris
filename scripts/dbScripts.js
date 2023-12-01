@@ -115,17 +115,17 @@ export async function getUserData(db, id) {
  * 
  * @returns an array of posts as the objects collected from firestore, or null. 
  */
-export async function getUserPosts(db, id) { 
+export async function getUserPosts(db, id) {
 
-    const queryMap = {key: "post_userID", value: id}
+    const queryMap = { key: "post_userID", value: id }
     const postQuery = query(
         collection(db, "posts"),
-        where("5", "==", queryMap), 
+        where("5", "==", queryMap),
     );
     const postSnapshot = await getDocs(postQuery);
     postSnapshot.forEach((doc) => {
         // console.log(doc.id, " => ", doc.data());
-      });
+    });
     return await unwrapPostQuery(postSnapshot);
 }
 
@@ -427,7 +427,7 @@ export async function getFormData(formName) {
         let formData = new FormData(newForm);
         for (const [newKey, newValue] of formData) {
             // get image associated with the post
-            if (newKey == "post_img") { 
+            if (newKey == "post_img") {
 
                 // TODO:
                 // define a function which adds the post to firebase storage
@@ -435,7 +435,7 @@ export async function getFormData(formName) {
 
             }
             // handle other HTML elements
-            else { 
+            else {
                 formDataArr.push({ key: newKey, value: newValue });
             }
         }
@@ -444,7 +444,7 @@ export async function getFormData(formName) {
 }
 
 // TODO: finish this! 
-async function storeImage() { 
+async function storeImage() {
 
 }
 
@@ -454,7 +454,7 @@ async function storeImage() {
  * @returns date as a string in mm/dd/yyyy format. 
  */
 function getTodayDate() {
-    
+
     const date = new Date();
     const today = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
     return today;

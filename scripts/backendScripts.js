@@ -41,13 +41,16 @@ const queryLim = 48;
  * @param {String} currUserEmail the email for the current authenticated user
  * @param {Boolean} userAdded determines if we add the current user to the db as a new user
  */
-export async function runBackend(db, store, currUserEmail, userAdded) {
+export async function runBackend(db, store, email) {
 
-    window.location.href = "/index.html"; 
+    window.location.href = "/index.html";
+    const currUserEmail = sessionStorage.getItem(email);
+    const currUserID = await getUserIDByEmail(db, currUserEmail);
 
     // Add new user to DB
     // only if authenticated user's email not yet associated with user in DB  
-    if (!userAdded) {
+    if (currUserID == null) {
+        console.log("made it to create user part");
         await createUser(db, currUserEmail);
         window.location.href = "/pages/accountPage/account.html"
     }
@@ -117,7 +120,9 @@ async function homePageBackend(db, store, filters) {
  * @param {Storage} store a reference to storage
  * @param {String} userEmail email associated with the current authenticated user
  */
-async function accountPageBackend(db, store, userEmail) { 
+async function accountPageBackend(db, store, userEmail) {
+
+    console.log("made it to account page backend");
 
     // get information about the current user
     const userID = await getUserIDByEmail(db, userEmail);
@@ -130,6 +135,7 @@ async function accountPageBackend(db, store, userEmail) {
     });
     // ask user to set their info upon account creation
     if (isNew) {
+        console.log("made it to user modal part and updating user status");
         await accountModal(db, userPath, userEmail, isNew);
         await updateUserStatus(db, userPath);
     } else {
@@ -190,7 +196,7 @@ async function postPageBackend(db, store) {
  * @param {Array} newPostData data to be added to the databse
  */
 async function sendPostToDB(db, newPostData) {
-    
+
     // get the user's email and userID 
     const emailText = document.getElementById("post-mail").value;
     const userID = await getUserIDByEmail(db, emailText);
@@ -362,7 +368,7 @@ function addPostToAccountPage(post, postGrid) {
     cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;       // access seller name
     // append the card to the "postGrid" container
     postGrid.appendChild(cardTemplate);
-    
+
     // TODO:  
     // add the user's posts here!
     // can we do this with another post grid like on the home page?

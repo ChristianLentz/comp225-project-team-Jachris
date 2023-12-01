@@ -6,7 +6,7 @@
 
 // ============================ Imports, variables, constants ============================
 
-// Import db scripts 
+// import db scripts 
 import {
     queryForPostsByFilter,
     getUserPosts,
@@ -20,6 +20,9 @@ import {
     createUser,
     setDocByRef
 } from "./dbScripts";
+
+// import auth helper 
+import { removeListeners } from "./auth";
 
 // import firestore functions
 import { doc } from "firebase/firestore";
@@ -43,35 +46,48 @@ const queryLim = 48;
  */
 export async function runBackend(db, store, email) {
 
-    window.location.href = "/index.html";
     const currUserEmail = sessionStorage.getItem(email);
     const currUserID = await getUserIDByEmail(db, currUserEmail);
 
     // Add new user to DB
     // only if authenticated user's email not yet associated with user in DB  
     if (currUserID == null) {
-        console.log("made it to create user part");
-        await createUser(db, currUserEmail);
-        window.location.href = "/pages/accountPage/account.html"
-    }
+        await createUser(db, currUserEmail).then( () => { 
+            window.location.href = "/pages/accountPage/account.html";
+        }); 
+    } 
+
+    window.location.href = "/pages/accountPage/account.html";
 
     // run scripts for the Home page
     if (document.title == "Home") {
 
-        // TODO: AFTER MVP PHASE
-        // get filters currently selected 
+        window.setTimeout( async function() { 
 
-        await homePageBackend(db, store, []);
+            // TODO: AFTER MVP PHASE
+            // get filters currently selected 
+
+            removeListeners(); 
+            await homePageBackend(db, store, []);
+        }, 1000); 
     }
 
     // run scripts for the Account page
     if (document.title == "Account") {
-        await accountPageBackend(db, store, currUserEmail);
+
+        window.setTimeout( async function() { 
+            removeListeners(); 
+            await accountPageBackend(db, store, currUserEmail);
+        }, 1000); 
     }
 
     // run scripts for the Post page
     if (document.title == "Post") {
-        await postPageBackend(db, store)
+
+        window.setTimeout( async function() { 
+            removeListeners(); 
+            await postPageBackend(db, store);
+        }, 1000); 
     }
 }
 

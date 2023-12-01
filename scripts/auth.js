@@ -1,8 +1,8 @@
 /**
- * 
- * 
- * 
- * 
+ * Manually run user authentication. Collect user's email from an html 
+ * form and check to verify that they are a member of the Macalester 
+ * organization. Note that this is not a vaild authentication, and is 
+ * a minimum viable product version of authentication. 
  */
 
 // import db scripts 
@@ -15,6 +15,19 @@ import { runBackend } from "./backendScripts";
 var email = "email";
 var isAuthenticated = "isAuth";
 
+// html elements used in auth process
+var navbar;
+var accountLink;
+var postLink;
+
+// ============================ Auth Script ============================
+
+/**
+ * The MVP authentication script. 
+ * 
+ * @param {Firestore} db a reference to firestore
+ * @param {Storage} store a reference to storage
+ */
 export async function runUserAuth(db, store) {
 
     // let window load upon open 
@@ -24,32 +37,31 @@ export async function runUserAuth(db, store) {
         const isNotAuth = !(sessionStorage.getItem(isAuthenticated) === "true");
         if (isNotAuth) {
 
-            // get selectors for nav bar elements 
-            const navbar = document.getElementById("navBar");
-            const accountLink = navbar.querySelector(".account");
-            const postLink = navbar.querySelector(".post");
+            var navbar = document.getElementById("navBar");
+            var accountLink = navbar.querySelector(".account");
+            var postLink = navbar.querySelector(".post"); 
 
-            // if user clicks account page, send them to login
-            if (accountLink) {
-                accountLink.addEventListener("mouseover", function () {
+            // if user tries to access account or post page, send them to login
+            if (accountLink || postLink) {
+                accountLink.addEventListener("mouseover", function (event) {
+                    event.preventDefault(); 
+                    forceLogin();
+                });
+                postLink.addEventListener("mouseover", function (event) {
+                    event.preventDefault();
                     forceLogin();
                 });
             }
 
-            // if user clicks post page, send them to login
-            if (postLink) {
-                postLink.addEventListener("mouseover", function () {
-                    forceLogin();
-                });
-            }
-
-            // authenticate user once they submit the login form
+            // authenticate user when they access the login page
             if (document.title == "Login") {
                 await authenticate(db, store);
             }
+        // user already authenticated during this browser session
         } else {
             await runBackend(db, store, email);
         }
+        
     }, 1000);
 
 }
@@ -64,8 +76,11 @@ function forceLogin() {
 }
 
 /**
-* Authenticate the user once they submit the login form. 
-*/
+ * Authenticate user once they submit the login form. 
+ * 
+ * @param {Firestore} db a references to firestore
+ * @param {Storage} store a reference to storage
+ */
 async function authenticate(db, store) {
     window.setTimeout(async function () {
         // get the login form 
@@ -88,4 +103,13 @@ async function authenticate(db, store) {
             }
         });
     }, 1000);
+}
+
+/**
+ * Remove the event listeners added to the nav bar links for post and account 
+ * pages. These need to be removed once a user is authenticated. 
+ */
+export function removeListeners() { 
+    accountLink.removeEventListener("mouseover", forceLogin);
+    post.removeEventListener("mouseover", forceLogin);
 }

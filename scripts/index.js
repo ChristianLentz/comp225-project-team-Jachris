@@ -1,7 +1,7 @@
 /**
  * The index.js file handles the startup and initialization of the app. This is the 
  * first thing that we run, and is the entry point for the webpack module bundler. This 
- * file also handles user authentication, and calls a script to execute backend functions. 
+ * file calls scripts to handle user authentication, which then runs the backend.  
  */
 
 // ============================ Initialize App ============================

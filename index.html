@@ -1,3 +1,4 @@
+HEAD
 <!-- hompage of our website, and needs to be located in root directory -->
 <!-- <html> element wraps the content of the whole web page, this is the root element -->
   <!DOCTYPE html>
@@ -42,98 +43,91 @@
     </nav>
     <!-- Java script timer to change the image on the homepage -->
     <script>
+
     var myIndex = 0;
     rotateImages();
-  
     function rotateImages() {
       var i;
       var x = document.getElementsByClassName("mySlides");
-      for(i = 0; i < x.length; i++) {
+      for (i = 0; i < x.length; i++) {
         x[i].style.display = "none";
       }
       myIndex++;
-      if(myIndex > x.length) {
+      if (myIndex > x.length) {
         myIndex = 1
       }
       x[myIndex - 1].style.display = "block";
       setTimeout(rotateImages, 5000);
     }
-    </script>
-    <!-- Splitting the bottom half of the home page into search and posts -->
-    <!-- Search bar sections -->
-    <div class="row">
-      <div class="side" style="background-color:#c3c1c1;">
-        <h2>Search</h2>
-        <input type="text" id="myInput" placeholder="Search for items...">
-        <div id="myBtnContainer">
-          <h2>Filter</h2>
-          <button class="btn active" onclick="filterSelection('all')"> Show all</button>
-          <button class="btn" onclick="filterSelection('cars')"> Price: Low-High</button>
-          <button class="btn" onclick="filterSelection('fruits')"> Clothing</button>
-          <button class="btn" onclick="filterSelection('animals')"> Price: High-low</button>
-          <button class="btn" onclick="filterSelection('colors')"> Dorm Items</button>
-          <button class="btn" onclick="filterSelection('colors')"> Misc</button>
-        </div>
-        <!-- inactive code right now -->
-        <script>
+  </script>
+
+  <!-- Splitting the bottom half of the home page into search and posts -->
+  <!-- Search bar sections -->
+  <div class="row">
+    <div class="side" style="background-color:#c3c1c1;">
+      <h2>Search</h2>
+      <input type="text" id="myInput" placeholder="Search for items...">
+      <div id="myBtnContainer">
+        <h2>Filter</h2>
+        <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+        <button class="btn" onclick="filterSelection('cars')"> Price: Low-High</button>
+        <button class="btn" onclick="filterSelection('fruits')"> Clothing</button>
+        <button class="btn" onclick="filterSelection('animals')"> Price: High-low</button>
+        <button class="btn" onclick="filterSelection('colors')"> Dorm Items</button>
+        <button class="btn" onclick="filterSelection('colors')"> Misc</button>
+      </div>
+      <!-- inactive code right now -->
+      <script>
         // Add active class to the current control button (highlight it)
         var btnContainer = document.getElementById("myBtnContainer");
         var btns = btnContainer.getElementsByClassName("btn");
-        for(var i = 0; i < btns.length; i++) {
-          btns[i].addEventListener("click", function() {
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].addEventListener("click", function () {
             var current = document.getElementsByClassName("active");
             current[0].className = current[0].className.replace(" active", "");
             this.className += " active";
           });
         }
-        </script>
-      </div>
-      <!-- Post Section -->
-      <div class="postArea" style="overflow-y:scroll; background-color:#ffffff;">
-        <h2>Posts</h2>
-        <div class="postGrid">
-          <!-- creating one post -->
-          <div class="flipdiv v">
-            <div class="front">
-              <div class="frontImage"> <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 1" /> </div>
-              <div class="frontText"> Here is my image </div>
-              <div class="frontPrice"> $10 </div>
-              <!-- <img class="trashButton" src="/images/trash.png" alt="Trash Icon" onclick="deleteFlipdiv(this)"> -->
-            </div>
-            <div class="back">
-              <div class="backImage"> <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 2" /> </div>
-              <div class="backTitle"> Here is my image </div>
-              <div class="backDescription"> Here is the description of the back of my photo it is a very cool photo that i like very much and it is awesome. </div>
-              <div class="price"> $10 </div>
-              <div class="sellerInfo"> Seller: Jacob </div>
-              <button class="visitBtn"onclick="goToNewPage()">Visit my Profile!</button>
-            </div>
+      </script>
+
+    </div>
+    <!-- Post Section -->
+    <div class="postArea" style="overflow-y:scroll; background-color:#ffffff;">
+      <h2>Posts</h2>
+      <div class="postGrid">
+        <!-- creating one post -->
+        <div class="flipdiv v">
+          <div class="front">
+            <div class="frontImage"> <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 1" /> </div>
+            <div class="frontText"> Here is my image </div>
+            <div class="frontPrice"> $10 </div>
+            <!-- <img class="trashButton" src="/images/trash.png" alt="Trash Icon" onclick="deleteFlipdiv(this)"> -->
+          </div>
+          <div class="back">
+            <div class="backImage"> <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 2" /> </div>
+            <div class="backTitle"> Here is my image </div>
+            <div class="backDescription"> Here is the description of the back of my photo it is a very cool photo that i
+              like very much and it is awesome. </div>
+            <div class="price"> $10 </div>
+            <div class="sellerInfo"> Seller: Jacob </div>
+            <button class="visitBtn" onclick="goToNewPage()">Visit my Profile!</button>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <script>
-      function goToNewPage() {
-        // Change the URL to the desired destination
-        window.location.href = '/pages/accountPage/account.html';
-      }
-    </script>
-    <!-- <script>
-      function deleteFlipdiv(button) {
-        // Get the parent element (the card) of the clicked button
-        var card = button.parentNode;
-      
-        // Remove the card from the DOM
-        card.parentNode.removeChild(card);
-      }
-      
-      </script> -->
-    
-    <!-- Make the footer for the homepage -->
-    <div class="footer">
-      <p>Issues? Click here to<a href="mailto:jhellenb@macalester.edu"> contact an admin for help</a>.</p>
-    </div>
-  </body>
-  
-  </html>
+  <script>
+    function goToNewPage() {
+      // Change the URL to the desired destination
+      window.location.href = '/pages/accountPage/account.html';
+    }
+  </script>
+
+  <!-- Make the footer for the homepage -->
+  <div class="footer">
+    <p>Issues? Click here to<a href="mailto:jhellenb@macalester.edu"> contact an admin for help</a>.</p>
+  </div>
+</body>
+
+</html>

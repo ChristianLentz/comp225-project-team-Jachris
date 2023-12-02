@@ -7,7 +7,7 @@
   <meta http-equiv="X-Content-Type-Options: nosniff" />
   <title> Account </title>
   <script src="/scripts/dist/bundle.js"></script>
-  <link href="/css/style.css" rel="stylesheet">
+  <link href="/style.css" rel="stylesheet">
   <link href="/pages/accountPage/style.css " rel="stylesheet">
   <script src="/pages/flipcards.js"></script>
 </head>
@@ -103,6 +103,7 @@
       </form>
     </div>
   </div>
+
   <!-- Creating the user card  -->
   <div class="card">
     <img id="cardImage" src="/images/userimage.png" alt="profile picture" style="width:20%">
@@ -114,6 +115,7 @@
       <button class="contact">Email Me</button>
     </a>
   </div>
+
   <!-- Creating the post area and one post to be on the page -->
   <div class="userPostarea" style="overflow-y:scroll;">
     <h2>Users Posts</h2>
@@ -129,25 +131,26 @@
         <div class="back">
           <div class="backImage"> <img src="/images/macLogo.png" id="Mac-Logo1" alt="mac logo 2" /> </div>
           <div class="backTitle"> Here is my image </div>
-          <div class="backDescription"> Here is the description of the back of my photo it is a very cool photo that i like very much and it is awesome. </div>
+          <div class="backDescription"> Here is the description of the back of my photo it is a very cool photo that i
+            like very much and it is awesome. </div>
           <div class="price"> $10 </div>
           <div class="sellerInfo"> Seller: Jacob </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<!-- Script Code to delete posts by the user -->
-<script>
-function deleteFlipdiv(button) {
-  // Get the parent element (the card) of the clicked button
-  var card = button.parentNode;
 
-  // Remove the card from the DOM
-  card.parentNode.removeChild(card);
-}
 
-</script>
+  <!-- deleting posts on the front end -->
+  <script>
+    function deleteFlipdiv(button) {
+      // Get the parent element (the card) of the clicked button
+      var card = button.parentNode;
+      // Remove the card from the DOM
+      card.parentNode.removeChild(card);
+    }
+  </script>
+
   </div>
   <div class="footer">
     <p>Issues? Click here to <a href="mailto:jhellenb@macalester.edu">contact an admin for help</a>.</p>

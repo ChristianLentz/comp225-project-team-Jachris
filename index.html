@@ -94,6 +94,14 @@ HEAD
     <!-- Post Section -->
     <div class="postArea" style="overflow-y:scroll; background-color:#ffffff;">
       <h2>Posts</h2>
+      <!-- creating popup when no posts to display -->
+      <div id="noPostPopup" class="popup" hidden>
+        <div class="popup-content">
+          <h1 style="color:orange;"> Uh-oh... </h1>
+          <p>There are no posts to display!</p>
+          <button id="closePopup"> Close</button>
+        </div>
+      </div>
       <div class="postGrid">
         <!-- creating one post -->
         <div class="flipdiv v">

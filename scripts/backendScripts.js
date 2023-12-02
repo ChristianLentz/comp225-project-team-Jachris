@@ -108,21 +108,21 @@ export async function runBackend(db, store, email) {
  */
 async function homePageBackend(db, store, filters) {
 
-    // get the data for the posts 
+    // get data for the posts to display on the home page
     // this will be an arrary of arrays, where each post array has key-value pairs
-    const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
-    if (numPosts > 0) {
-        // get posts and add to the home page
-        let postsToAdd = await getPosts(db, filters);
+    let postsToAdd = await getPosts(db, filters);
+    if (postsToAdd == null) { 
+        // this handles two cases: 
+        // 1: no posts exist in db
+        // 2: user's filter query returns nothing
+        displayNoPostPopup(); 
+    }
+    else { 
+        // add each posts to the postGrid div
         const postGrid = document.querySelector('.postGrid');
         for (const post of postsToAdd) {
             addPostToHomePage(post, postGrid);
         }
-    } else {
-
-        // TODO: AFTER MVP PHASE
-        // show on the front end that the selected filters do not return anything
-
     }
 }
 
@@ -152,7 +152,6 @@ async function accountPageBackend(db, store, userEmail, userID) {
     });
     // ask user to set their info upon account creation
     if (isNew) {
-        console.log("made it to user modal part and updating user status");
         await accountModal(db, userPath, userEmail, isNew);
         await updateUserStatus(db, userPath);
     } else {
@@ -249,7 +248,7 @@ async function sendPostToDB(db, newPostData) {
 async function getPosts(db, filters) {
 
     const posts = await queryForPostsByFilter(db, filters, queryLim);
-    if (posts == null) {
+    if (posts == null) { 
         return posts;
     } else {
         return convertPosts(posts);
@@ -272,6 +271,22 @@ function convertPosts(posts) {
         postArr.push(post);
     }
     return postArr;
+}
+
+/**
+ * In the situation that there are no posts to display on the home page, inform 
+ * the user with an html window/popup. 
+ */
+function displayNoPostPopup() { 
+
+    // diplay the popup
+    const popup = document.getElementById("noPostPopup");
+    popup.style.display = "block"; 
+    // get the close button and add event listener 
+    const closeBtn = document.getElementById("closePopup"); 
+    closeBtn.addEventListener( "click", () => { 
+        popup.style.display = "none"; 
+    });
 }
 
 /**

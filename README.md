@@ -39,7 +39,6 @@ Nothing!
 ### TODOs for MVP
 
 - Beutify/comment code, uses shift+alt+f when you are done writing new code!
-- User auth, imlement simple MVP version using html forms
 - Storing images in Firestore, setup firestore/storage
 - update the project proposal
 - deploy the website and set security rules for DB and storage

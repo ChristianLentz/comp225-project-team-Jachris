@@ -27,11 +27,15 @@ import { removeListeners } from "./auth";
 // import firestore functions
 import { doc } from "firebase/firestore";
 
-// number of items per post (WILL CHANGE AS MORE FEATURES ADDED)
+// number of items per post
 const numPostItems = 8;
 
 // limit for querying for posts
 const queryLim = 48;
+
+// current user's info
+var currUserEmail; 
+var currUserID; 
 
 // ============================ Scripts ============================
 
@@ -41,26 +45,23 @@ const queryLim = 48;
  * 
  * @param {Firestore} db a reference to firestore 
  * @param {Storage} store a reference to storage
- * @param {String} currUserEmail the email for the current authenticated user
- * @param {Boolean} userAdded determines if we add the current user to the db as a new user
+ * @param {String} email session storage key for the current user's email
  */
 export async function runBackend(db, store, email) {
 
-    const currUserEmail = sessionStorage.getItem(email);
-    const currUserID = await getUserIDByEmail(db, currUserEmail);
+    currUserEmail = sessionStorage.getItem(email);
+    currUserID = await getUserIDByEmail(db, currUserEmail);
 
     // Add new user to DB
     // only if authenticated user's email not yet associated with user in DB  
     if (currUserID == null) {
-        await createUser(db, currUserEmail).then( () => { 
-            window.location.href = "/pages/accountPage/account.html";
+        await createUser(db, currUserEmail).then( async function () { 
+            currUserID = await getUserIDByEmail(db, currUserEmail);
         }); 
     } 
 
-    window.location.href = "/pages/accountPage/account.html";
-
     // run scripts for the Home page
-    if (document.title == "Home") {
+    if (document.title === "Home") {
 
         window.setTimeout( async function() { 
 
@@ -73,21 +74,24 @@ export async function runBackend(db, store, email) {
     }
 
     // run scripts for the Account page
-    if (document.title == "Account") {
-
+    if (document.title === "Account") {
         window.setTimeout( async function() { 
             removeListeners(); 
-            await accountPageBackend(db, store, currUserEmail);
+            await accountPageBackend(db, store, currUserEmail, currUserID);
         }, 1000); 
     }
 
     // run scripts for the Post page
-    if (document.title == "Post") {
-
+    if (document.title === "Post") {
         window.setTimeout( async function() { 
             removeListeners(); 
             await postPageBackend(db, store);
         }, 1000); 
+    }
+
+    // redirect authenticated users to their account if access login form 
+    if (document.title === "Login") { 
+        window.location.href = "/pages/accountPage/account.html"; 
     }
 }
 
@@ -136,12 +140,9 @@ async function homePageBackend(db, store, filters) {
  * @param {Storage} store a reference to storage
  * @param {String} userEmail email associated with the current authenticated user
  */
-async function accountPageBackend(db, store, userEmail) {
-
-    console.log("made it to account page backend");
+async function accountPageBackend(db, store, userEmail, userID) {
 
     // get information about the current user
-    const userID = await getUserIDByEmail(db, userEmail);
     const userPath = "users/user" + userID.toString();
     const isNew = await getValueOfFieldByPath(db, userPath, "isNew", false);
     // edit account when 'editBtn' is clicked 
@@ -284,13 +285,13 @@ function addPostToHomePage(post, postGrid) {
     // create a new card element
     const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
     // front of card
-    cardTemplate.querySelector('.frontText').textContent = post[2].value;        // Access 'post_title'
-    cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value; // Access 'post_price'
+    cardTemplate.querySelector('.frontText').textContent = post[2].value;                  // Access 'post_title'
+    cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value;           // Access 'post_price'
     // back of card
     cardTemplate.querySelector('.backTitle').textContent = post[2].value;
     cardTemplate.querySelector('.price').textContent = '$' + post[3].value;
-    cardTemplate.querySelector('.backDescription').textContent = post[4].value;  // access post descrip
-    cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;       // access seller name
+    cardTemplate.querySelector('.backDescription').textContent = post[4].value;            // access post descrip
+    cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;    // access seller name
     // append the card to the "postGrid" container
     postGrid.appendChild(cardTemplate);
 }
@@ -372,21 +373,17 @@ function setFrontend(name, title, img, email) {
  * @param {HTMLElement} postGrid
  */
 function addPostToAccountPage(post, postGrid) {
+
     // create a new card element
     const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
     // front of card
-    cardTemplate.querySelector('.frontText').textContent = post[2].value;        // Access 'post_title'
-    cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value; // Access 'post_price'
+    cardTemplate.querySelector('.frontText').textContent = post[2].value;                 // Access 'post_title'
+    cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value;          // Access 'post_price'
     // back of card
     cardTemplate.querySelector('.backTitle').textContent = post[2].value;
     cardTemplate.querySelector('.price').textContent = '$' + post[3].value;
-    cardTemplate.querySelector('.backDescription').textContent = post[4].value;  // access post descrip
-    cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;       // access seller name
+    cardTemplate.querySelector('.backDescription').textContent = post[4].value;           // access post descrip
+    cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;   // access seller name
     // append the card to the "postGrid" container
     postGrid.appendChild(cardTemplate);
-
-    // TODO:  
-    // add the user's posts here!
-    // can we do this with another post grid like on the home page?
-    // this would make the html pretty quick and would save on amount of JS code.
 }

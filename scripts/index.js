@@ -36,7 +36,7 @@ const myStore = getStorage();
 import { runUserAuth } from "./auth.js"
 await runUserAuth(myDB, myStore);
 
-// ============================ Google OAuth ============================
+// ============================ Google Auth ============================
 
 // // import firebase auth functions
 // import { getAuth,

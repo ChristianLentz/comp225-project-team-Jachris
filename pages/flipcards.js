@@ -1,3 +1,7 @@
+/**
+ * This file has scripts for displaying posts on both the home page 
+ * and user account page. 
+ */
 
 document.addEventListener("DOMContentLoaded", function () {
   const postGrid = document.querySelector(".postGrid");

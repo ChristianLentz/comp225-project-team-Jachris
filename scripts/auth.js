@@ -6,16 +6,16 @@
  */
 
 // import db scripts 
-import { getFormData, getUserIDByEmail } from "./dbScripts";
+import { getFormData } from "./dbScripts";
 
 // import backend scripts 
 import { runBackend } from "./backendScripts";
 
-// session storage variables
+// authentication data ... stored using session storage
 var email = "email";
 var isAuthenticated = "isAuth";
 
-// html elements used in auth process
+// html elements used in auth process ... stored using session storage
 var navbar;
 var accountLink;
 var postLink;
@@ -35,30 +35,18 @@ export async function runUserAuth(db, store) {
 
         // check session storage to see if user is authenticated
         const isNotAuth = !(sessionStorage.getItem(isAuthenticated) === "true");
-        if (isNotAuth) {
+        if (isNotAuth) { 
 
-            var navbar = document.getElementById("navBar");
-            var accountLink = navbar.querySelector(".account");
-            var postLink = navbar.querySelector(".post"); 
-
-            // if user tries to access account or post page, send them to login
-            if (accountLink || postLink) {
-                accountLink.addEventListener("mouseover", function (event) {
-                    event.preventDefault(); 
-                    forceLogin();
-                });
-                postLink.addEventListener("mouseover", function (event) {
-                    event.preventDefault();
-                    forceLogin();
-                });
-            }
+            // restrict access to unauthenticated users
+            getLinkSelectors();
+            addEventListeners();
 
             // authenticate user when they access the login page
             if (document.title == "Login") {
                 await authenticate(db, store);
             }
         // user already authenticated during this browser session
-        } else {
+        } else { 
             await runBackend(db, store, email);
         }
         
@@ -67,6 +55,33 @@ export async function runUserAuth(db, store) {
 }
 
 // ============================ Helper Functions ============================
+
+/**
+ * Get selectors for post and account links on the nav bar. We use these 
+ * to add event listeners that restrict access to these pages when a user 
+ * is not authenticated. 
+ */
+function getLinkSelectors() { 
+    navbar = document.getElementById("navBar");
+    accountLink = navbar.querySelector(".account");
+    postLink = navbar.querySelector(".post");
+}
+
+/**
+ * Add events listeners to post and account links. 
+ */
+function addEventListeners() { 
+    if (accountLink || postLink) {
+        accountLink.addEventListener("mouseover", function (event) {
+            event.preventDefault(); 
+            forceLogin();
+        });
+        postLink.addEventListener("mouseover", function (event) {
+            event.preventDefault();
+            forceLogin();
+        });
+    }
+}
 
 /**
 * Prevent user from viewing the website before authentication. 
@@ -94,6 +109,8 @@ async function authenticate(db, store) {
             if (emailFetched.endsWith("@macalester.edu")) {
                 sessionStorage.setItem(email, emailFetched);
                 sessionStorage.setItem(isAuthenticated, "true");
+                console.log(`user '${emailFetched}' has been authenticated`); 
+                window.location.href = "/pages/accountPage/account.html";
                 await runBackend(db, store, email);
             }
             else {
@@ -110,6 +127,7 @@ async function authenticate(db, store) {
  * pages. These need to be removed once a user is authenticated. 
  */
 export function removeListeners() { 
+    getLinkSelectors();
     accountLink.removeEventListener("mouseover", forceLogin);
-    post.removeEventListener("mouseover", forceLogin);
+    postLink.removeEventListener("mouseover", forceLogin);
 }

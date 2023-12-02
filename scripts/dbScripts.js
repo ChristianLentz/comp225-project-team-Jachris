@@ -19,7 +19,9 @@
  *      - userID: an integer > 0
  *      - user_title: string
  *      - user_name: a string with the user's first and last name
- *      - profile_pic (TODO:)
+ *      - profile_pic: string, name of defualt profile image selected
+ *      - isNew: boolean to determine if user has recently created their account
+ *      - storage_ref: string, reference to user's bucket in firebase storage
  * 
  * Each post will have the following items within its document:
  * 
@@ -59,6 +61,8 @@ import {
     limit,
     QuerySnapshot
 } from "firebase/firestore";
+
+import { ref } from "firebase/storage";
 
 // ============================ Scripts ============================
 
@@ -123,9 +127,6 @@ export async function getUserPosts(db, id) {
         where("5", "==", queryMap),
     );
     const postSnapshot = await getDocs(postQuery);
-    postSnapshot.forEach((doc) => {
-        // console.log(doc.id, " => ", doc.data());
-    });
     return await unwrapPostQuery(postSnapshot);
 }
 
@@ -133,18 +134,22 @@ export async function getUserPosts(db, id) {
  * Add a newly created user and their data to the users collection.
  * 
  * @param {Firestore} db a reference to firestore.
+ * @param {Storage} store a reference to storeage.
  * @param {String} email the email associated with the user we are creating.  
  */
-export async function createUser(db, email) {
+export async function createUser(db, store, email) {
 
     // generate a new userID
     const numUsers = await getValueOfFieldByPath(db, 'metrics/totals', "total_users", 0);
     const newUserID = numUsers + 1;
+    // generate image storage bucket for user 
+    const bucketName = 'user' + newUserID.toString();
     // create user data object 
     const userData = {
         user_email: email,
         userID: newUserID,
         isNew: true,
+        storage_ref: bucketName,
     }
     // generate refernce to user doc, write to doc
     const userRef = doc(db, 'users/user' + newUserID.toString());

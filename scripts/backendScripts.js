@@ -55,7 +55,7 @@ export async function runBackend(db, store, email) {
     // Add new user to DB
     // only if authenticated user's email not yet associated with user in DB  
     if (currUserID == null) {
-        await createUser(db, currUserEmail).then( async function () { 
+        await createUser(db, store, currUserEmail).then( async function () { 
             currUserID = await getUserIDByEmail(db, currUserEmail);
         }); 
     } 

@@ -29,72 +29,73 @@
     </ul>
   </nav>
 
-
-  <button id="guidelineButton"  onclick="toggleMove(); toggleModal();">Post Guidelines</button>
+  <!-- create display for post guidelines -->
+  <button id="guidelineButton" onclick="toggleMove(); toggleModal();">Post Guidelines</button>
   <div id="guideModal">
     <div id="modal-content">
       <h1>Guidelines for Posting</h1>
-    <section id="nameGuide">
-      <h2>Name and Email</h2>
-      <p>Please enter your name (first or first and last) and your email so you can let others associate
-          your post with you. 
-      </p>
-    </section>
-    <section id="titleGuide">
-      <h2>Title</h2>
-      <p>Add a good and informative title to inform or draw others intentions</p>
-    </section>  
-    <section id="priceGuide">
+      <section id="nameGuide">
+        <h2>Name and Email</h2>
+        <p>Please enter your name (first or first and last) and your email so you can let others associate
+          your post with you.
+        </p>
+      </section>
+      <section id="titleGuide">
+        <h2>Title</h2>
+        <p>Add a good and informative title to inform or draw others intentions</p>
+      </section>
+      <section id="priceGuide">
         <h2>Price</h2>
         <p>For this field you only have to put in a number, no need to add a dollar sign. </p>
-    </section>
-    <section id="descripGuide">
-      <h2>Description</h2>
-      <p>Tell us a little bit about your item you are trying to get rid of, don't be too wordy
-        as there is a 500 character limit. 
-      </p>
-    </section>  
-    <section id="imageGuide">
+      </section>
+      <section id="descripGuide">
+        <h2>Description</h2>
+        <p>Tell us a little bit about your item you are trying to get rid of, don't be too wordy
+          as there is a 500 character limit.
+        </p>
+      </section>
+      <section id="imageGuide">
         <h2>Image</h2>
         <p>Please upload one clear image that shows what you are looking to sell or trade. </p>
-    </section>
-    <section id="extraGuide">
-      <h2>One last Note</h2>
-      <p>Remember to be respectful to buyers and do your best to communicate with them in a timely 
-      manner. Good luck getting your item gone!  
-      </p>
-  </section>
-      </div>
+      </section>
+      <section id="extraGuide">
+        <h2>One last Note</h2>
+        <p>Remember to be respectful to buyers and do your best to communicate with them in a timely
+          manner. Good luck getting your item gone!
+        </p>
+      </section>
     </div>
+  </div>
 
+  <!-- properly display guidelines and post form together -->
   <script>
-     function toggleModal() {
-            var modal = document.getElementById('guideModal');
-            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
-        }
+    function toggleModal() {
+      var modal = document.getElementById('guideModal');
+      modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
 
     var isMoved = false;
 
     function toggleMove() {
 
-        var element = document.getElementById('post-form');
-        console.log(element);
+      var element = document.getElementById('post-form');
+      console.log(element);
 
-        if (!isMoved) {
-            // Move the element to the right
-            element.style.transform = 'translate(300px, 0)';
-        } else {
-            // Move the element back to its original position
-            element.style.transform = 'translate(0, 0)';
-        }
+      if (!isMoved) {
+        // Move the element to the right
+        element.style.transform = 'translate(300px, 0)';
+      } else {
+        // Move the element back to its original position
+        element.style.transform = 'translate(0, 0)';
+      }
 
-        // Toggle the state
-        isMoved = !isMoved;
+      // Toggle the state
+      isMoved = !isMoved;
     }
-</script>
+  </script>
 
-  <!-- create a form which allows user to make a post -->
-  <form name="post-form" id ="post-form" action="/index.html" method="POST">
+  <!-- create the post form -->
+  <form name="post-form" id="post-form" action="/index.html" method="POST">
     <ul>
       <li>
         <label for="post-name">Name:</label>
@@ -116,8 +117,6 @@
         <label for="post-msg">Description:</label>
         <textarea id="post-msg" maxlength="580" name="post_msg" required></textarea>
       </li>
-      <!-- add image element to form, not in css or a list -->
-      <!-- add a name attribute for the image to collect it for the db-->
       <li>
         <label for="post-file-input">Image:</label>
         <input type="file" id="post-file-input" name="post_img" accept="image/*" required>
@@ -128,6 +127,16 @@
     </ul>
   </form>
 
+  <!-- create pop to notify user that invalid email was provided -->
+  <div id="invalidEmailPopup" class="popup" hidden>
+    <div class="popup-content">
+      <h1 style="color:orange;"> Uh-oh... </h1>
+      <p>That email is not associated with any user!</p>
+      <button id="closePopup"> Close</button>
+    </div>
+  </div>
+
+  <!-- footer of page -->
   <div class="formOutput"></div>
   <div class="footer">
     <p>Issues? Click here to <a href="mailto:jhellenb@macalester.edu">contact an admin for help</a>.</p>

@@ -281,7 +281,7 @@ async function deleteDocByRef(docRef) {
 async function unwrapPostQuery(postSnapshot) {
 
     let posts = [];
-    if (postSnapshot.query.converter == null) {
+    if (postSnapshot.empty) {
         // no posts found for the given query 
         return null;
     } else {

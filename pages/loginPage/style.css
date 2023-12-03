@@ -2,70 +2,60 @@
 
 form {
     /* Center the form on the page */
-  
     margin: 20px auto;
-    width: 450px;
+    width: 340px;
     /* Form outline */
     padding: 1em;
     border: 1px solid #ccc;
     border-radius: 1em;
-  }
+}
   
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
   
-  form li+li {
-    margin-top: .5em;
-  }
+form li+li {
+  margin-top: .5em;
+}
   
-  label {
-    /* Uniform size & alignment */
-    display: inline-block;
-    width: 90px;
-    text-align: left;
-  }
+label {
+  /* Uniform size & alignment */
+  display: inline-block;
+  width: 90px;
+  text-align: center;
+}
   
-  input,
-  textarea {
-    /* To make sure that all text fields have the same font settings
-         By default, textareas have a monospace font */
-    font: 1em sans-serif;
+input,
+textarea {
+  /* To make sure that all text fields have the same font settings
+  By default, textareas have a monospace font */
+  font: 1em sans-serif;
   
-    /* Uniform text field size */
-    width: 200px;
-    box-sizing: border-box;
+  /* Uniform text field size */
+  width: 200px;
+  box-sizing: border-box;
+  /* Match form field borders */
+  border: 1px solid black;
+}
   
-    /* Match form field borders */
-    border: 1px solid black;
-  }
+textarea {
+  /* Align multiline text fields with their labels */
+  vertical-align: top;
+  /* Provide space to type some text */
+  height: 20em;
+}
   
-  /* input:focus, */
-  /* textarea:focus { */
-    /* Additional highlight for focused elements */;
-  /* } */
+.button {
+  /* Align buttons with the text fields */
+  padding-left: 127.5px;
+  text-align: center;
+}
   
-  textarea {
-    /* Align multiline text fields with their labels */
-    vertical-align: top;
-  
-    /* Provide space to type some text */
-    height: 20em;
-  }
-  
-  .button {
-    /* Align buttons with the text fields */
-    padding-left: 200px;
-    text-align: center;
-    /* same size as the label elements */
-  }
-  
-  button{
-    /* This extra margin represent roughly the same space as the space
-         between the labels and their text fields */
-    margin-left: 0.4em;
-    background-color: rgb(255, 136, 0);
-    font-size: large;
-  }
+button{
+  /* This extra margin represent roughly the same space as the space
+  between the labels and their text fields */
+  /* margin-left: 0.4em; */
+  font-size: large;
+}

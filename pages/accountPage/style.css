@@ -1,5 +1,6 @@
 /* This css file is for the account page */
 
+/* ===================== user info card ===================== */
 .card {
 	/* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
 	max-width: 100%;
@@ -7,11 +8,13 @@
 	text-align: center;
 	font-size: larger;
 }
+
 .title {
 	color: grey;
 	font-size: 18px;
 }
-/* create and adjust the submit button */
+
+/* ===================== contact button ===================== */
 
 .contact {
 	border: none;
@@ -25,24 +28,22 @@
 	width: 10%;
 	font-size: 18px;
 	border-radius: 20px;
+	margin-top: 10px; 
+	margin-bottom: 10px;
 }
-/* a {
-	text-decoration: none;
-	font-size: 22px;
-	color: black;
-} */
+
+/* ===================== post area / cards ===================== */
+
 div.userPostarea {
 	flex: 100%;
 	/* Set the width of the main content */
-	border: 1px solid black; 
+	border: 1px solid black;
 	/* border: 10px transparent; */
-	padding: 10px; 
+	padding: 10px;
 	border-radius: 10px;
-	
-
-
 	/* Some padding */
 	height: 800px;
+	line-height: 1.5;
 }
 
 /* This makes it so the contact button switches color, does same to nav bar tho */
@@ -50,6 +51,7 @@ div.userPostarea {
 .contact:hover {
 	opacity: 0.7;
 }
+
 /* Add some padding inside the card container */
 
 .container1 {
@@ -58,17 +60,20 @@ div.userPostarea {
 	text-align: center;
 	border-radius: 5px;
 }
+
 /* Add rounded corners to the top left and the top right corner of the image */
 
 img {
 	border-radius: 5px;
 }
-/* css for edit profile page */
+
+/* /* ===================== edit profile ===================== */ 
 
 #editBtn {
 	padding: 10px 20px;
 	font-size: 16px;
 }
+
 /* blurs the background slightly behind the white box */
 
 .modal {
@@ -82,6 +87,7 @@ img {
 	overflow: auto;
 	background-color: rgba(0, 0, 0, 0.4);
 }
+
 /* makes the white box for the fields to be on */
 
 .modal-content {
@@ -92,6 +98,7 @@ img {
 	width: 80%;
 	height: 550px;
 }
+
 /* positions save button */
 
 .save-button {
@@ -101,26 +108,30 @@ img {
 	padding: 10px 20px;
 	font-size: 16px;
 }
+
 .name-label {
 	position: absolute;
 	top: 30%;
 	left: 12%
-	/* top: 20px; */
+		/* top: 20px; */
 }
+
 .name-input {
 	position: absolute;
 	top: 30%;
 	left: 15.5%;
 	/* padding-top: 20px; */
 	/* width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  margin-bottom: 10px; */
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px; */
 }
+
 .descrip-label {
 	position: absolute;
 	top: 36%;
 }
+
 .descrip-input {
 	position: absolute;
 	top: 40%;
@@ -129,7 +140,8 @@ img {
 	height: 38%;
 	box-sizing: border-box;
 }
-/* Style for the image grid */
+
+/* ===================== image grid ===================== */
 
 .photo-grid {
 	position: absolute;
@@ -140,6 +152,7 @@ img {
 	margin-right: 100px;
 	/* margin-left: 200px; This will push the grid to the right */
 }
+
 /* Style for each image item */
 
 .image-item {
@@ -147,6 +160,7 @@ img {
 	cursor: pointer;
 	overflow: hidden;
 }
+
 /* Style for the selected image */
 
 .image-item.selected::after {
@@ -159,6 +173,7 @@ img {
 	/* Blue color for the checkmark */
 	font-size: 20px;
 }
+
 /* Style for the images to have a fixed width */
 
 .image-item img {
@@ -166,32 +181,38 @@ img {
 	height: auto;
 	display: block;
 }
+
 .close {
 	color: #aaa;
 	float: right;
 	font-size: 28px;
 	font-weight: bold;
 }
-.close:hover, .close:focus {
+
+.close:hover,
+.close:focus {
 	color: black;
 	text-decoration: none;
 	cursor: pointer;
 }
-/* Display iamges in dropdown */
 
-/* Add this to your existing CSS or create a new CSS file */
+/* Display iamges in dropdown */
 
 .custom-dropdown {
 	position: relative;
 	/* display: inline-block; */
 	display: list-item;
 }
+
 .selected-photo {
 	cursor: pointer;
 }
-img, .dropdown-options img {
+
+img,
+.dropdown-options img {
 	width: 120px;
 }
+
 .dropdown-options {
 	display: none;
 	position: absolute;
@@ -203,18 +224,22 @@ img, .dropdown-options img {
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 	z-index: 1;
 }
+
 .option {
 	padding: 5px;
 	cursor: pointer;
 }
+
 .option:hover {
 	background-color: #ddd;
 }
+
 select.icon-menu option {
 	background-repeat: no-repeat;
 	background-position: bottom left;
 	padding-left: 30px;
 }
+
 /* .flipdiv {
 	display: none;
 } */
@@ -222,41 +247,50 @@ select.icon-menu option {
 .postGrid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-   /* Adjust column width as needed */
+	/* Adjust column width as needed */
 	gap: 20px;
-   /* Adjust the gap between grid items */
+	/* Adjust the gap between grid items */
 	max-height: 800px;
-   /* Set the maximum height for vertical scrolling */
-  }
-  .flipdiv {
+	/* Set the maximum height for vertical scrolling */
+}
+
+.flipdiv {
 	position: relative;
 	width: 180px;
 	height: 160px;
 	perspective: 500px;
 	margin-bottom: 160px;
-  }
-  .flipdiv .trashButton {
+}
+
+.flipdiv .trashButton {
 	position: fixed;
 	bottom: -150px;
 	left: 10px;
 	width: 40px;
 	height: 30px;
 	border-radius: 5px;
-  }
-  .enlarged-card {
+}
+
+.enlarged-card {
 	grid-column-start: span 3;
-   /* Adjust as needed to move the card to the left */
+	/* Adjust as needed to move the card to the left */
 	z-index: 1;
-  }
-  /* flipping the card to the back */
-  .flipdiv.v.showBack .front, .flipdiv.v.flip .front {
+}
+
+/* flipping the card to the back */
+
+.flipdiv.v.showBack .front,
+.flipdiv.v.flip .front {
 	transform: rotateX(180deg);
 	z-index: 1;
-  }
-  .flipdiv.v.showBack .back, .flipdiv.v.flip .back {
+}
+
+.flipdiv.v.showBack .back,
+.flipdiv.v.flip .back {
 	transform: rotateX(0deg);
 	z-index: 2;
-  }
-  .flipdiv.v .back {
+}
+
+.flipdiv.v .back {
 	transform: rotateX(-180deg);
-  }
+}

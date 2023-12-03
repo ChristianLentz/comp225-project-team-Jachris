@@ -91,7 +91,7 @@ export async function runBackend(db, store, email) {
 
     // redirect authenticated users to their account if access login form 
     if (document.title === "Login") { 
-        window.location.href = "/pages/accountPage/account.html"; 
+        // window.location.href = "/pages/accountPage/account.html"; 
     }
 }
 
@@ -115,7 +115,8 @@ async function homePageBackend(db, store, filters) {
         // this handles two cases: 
         // 1: no posts exist in db
         // 2: user's filter query returns nothing
-        displayNoPostPopup(); 
+        const popup = document.getElementById("noPostPopup");
+        displayPopup(popup); 
     }
     else { 
         // add each posts to the postGrid div
@@ -198,7 +199,6 @@ async function postPageBackend(db, store) {
             event.preventDefault();
             const newPostData = await getFormData("post-form");
             await sendPostToDB(db, newPostData);
-            window.location.href = "/pages/accountPage/account.html"
         });
     }, 1000);
 }
@@ -221,14 +221,13 @@ async function sendPostToDB(db, newPostData) {
         newPostData.push({ key: "post_userID", value: userID });
         // send data to the db 
         await createPost(db, newPostData);
+        window.location.href = "/pages/accountPage/account.html";
+
     }
-    // throw error if email is not valid
+    // inform the user that email is not valid
     else {
-
-        // TODO: 
-        // also need to throw this error on the front end
-
-        throw new Error("There is no user associated with email provided for post.");
+        const popup = document.getElementById("invalidEmailPopup");
+        displayPopup(popup);
     }
 }
 
@@ -274,13 +273,14 @@ function convertPosts(posts) {
 }
 
 /**
- * In the situation that there are no posts to display on the home page, inform 
- * the user with an html window/popup. 
+ * Display a popup on the page. This is used for the noPostPopup on the 
+ * home page and for the invalidEmailPopup on the post page. 
+ * 
+ * @param {HTMLElement} popup
  */
-function displayNoPostPopup() { 
+function displayPopup(popup) { 
 
     // diplay the popup
-    const popup = document.getElementById("noPostPopup");
     popup.style.display = "block"; 
     // get the close button and add event listener 
     const closeBtn = document.getElementById("closePopup"); 

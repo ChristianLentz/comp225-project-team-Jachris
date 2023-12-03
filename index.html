@@ -1,49 +1,45 @@
-HEAD
-<!-- hompage of our website, and needs to be located in root directory -->
-<!-- <html> element wraps the content of the whole web page, this is the root element -->
-  <!DOCTYPE html>
-  <html lang="en">
-  <!-- <head> is a container to hold the content the page needs but the user will not see -->
-  
-  <head>
-    <meta charset="UTF-8">
-    <!-- set the character set for the webpage -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Home </title>
-    <script src="/scripts/dist/bundle.js"></script>
-    <!-- define the script -->
-    <link href="/css/style.css" rel="stylesheet">
-    <script src="/pages/flipcards.js"></script>
-  </head>
-  <!-- this is a container to hold all of the content which we actually want the user to see -->
-  
-  <body>
-    <!-- This creates the picture slide show on the home page -->
-    <section class="header"> <img class="mySlides" src="/images/machome1.png" style="width:100%" alt="img1"> <img class="mySlides" src="/images/machome2.png" style="width:100%" alt="img2"> <img class="mySlides" src="/images/machome3.png" style="width:100%" alt="img3">
-      <div class="homeTitle">Mac Community Trade Center </div>
-      <div class="descrip"> &nbsp &nbsp &nbsp &nbsp A way to Increase Sustainability &nbsp &nbsp &nbsp&nbsp </div>
-    </section>
-    <!-- Creating the nav bar to be on the page -->
-    <nav id="navBar">
-      <ul id="nav-items">
-        <!-- seperating the logo -->
-        <div id="Mac-Logo">
-          <li>
-            <a href="/index.html"> <img src="/images/macLogo.png" id="Mac-Logo0" alt="mac logo 0" /> </a>
-          </li>
-        </div>
-        <!-- seperating the tabs -->
-        <div id="navright">
-          <li class="about"><a href="/pages/aboutPage/about.html"> About us</a></li>
-          <li class="login"><a href="/pages/loginPage/login.html"> Login</a></li>
-          <li class="account"><a href="/pages/accountPage/account.html"> Account</a></li>
-          <li class="post"><a href="/pages/postPage/post.html"> Post</a></li>
-        </div>
-      </ul>
-    </nav>
-    <!-- Java script timer to change the image on the homepage -->
-    <script>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Home </title>
+  <script src="/scripts/dist/bundle.js"></script>
+  <link href="/style.css" rel="stylesheet">
+  <script src="/pages/flipcards.js"></script>
+</head>
+
+<body>
+  <!-- picture slide show on the home page -->
+  <section class="header"> <img class="mySlides" src="/images/machome1.png" style="width:100%" alt="img1"> <img
+      class="mySlides" src="/images/machome2.png" style="width:100%" alt="img2"> <img class="mySlides"
+      src="/images/machome3.png" style="width:100%" alt="img3">
+    <div class="homeTitle"> Mac Community Trade Center </div>
+    <div class="descrip"> &nbsp &nbsp &nbsp &nbsp A way to Increase Sustainability &nbsp &nbsp &nbsp&nbsp </div>
+  </section>
+
+  <!-- nav bar to be on the page -->
+  <nav id="navBar">
+    <ul id="nav-items">
+      <!-- seperating the logo -->
+      <div id="Mac-Logo">
+        <li>
+          <a href="/index.html"> <img src="/images/macLogo.png" id="Mac-Logo0" alt="mac logo 0" /> </a>
+        </li>
+      </div>
+      <!-- seperating the tabs -->
+      <div id="navright">
+        <li class="about"><a href="/pages/aboutPage/about.html"> About us</a></li>
+        <li class="login"><a href="/pages/loginPage/login.html"> Login</a></li>
+        <li class="account"><a href="/pages/accountPage/account.html"> Account</a></li>
+        <li class="post"><a href="/pages/postPage/post.html"> Post</a></li>
+      </div>
+    </ul>
+  </nav>
+
+  <!-- java script timer to change the image on the homepage -->
+  <script>
     var myIndex = 0;
     rotateImages();
     function rotateImages() {
@@ -61,8 +57,8 @@ HEAD
     }
   </script>
 
-  <!-- Splitting the bottom half of the home page into search and posts -->
-  <!-- Search bar sections -->
+  <!-- splitting the bottom half of the home page into search and posts -->
+  <!-- search bar sections -->
   <div class="row">
     <div class="side" style="background-color:#c3c1c1;">
       <h2>Search</h2>
@@ -78,7 +74,7 @@ HEAD
       </div>
       <!-- inactive code right now -->
       <script>
-        // Add active class to the current control button (highlight it)
+        // add active class to the current control button (highlight it)
         var btnContainer = document.getElementById("myBtnContainer");
         var btns = btnContainer.getElementsByClassName("btn");
         for (var i = 0; i < btns.length; i++) {
@@ -91,7 +87,7 @@ HEAD
       </script>
 
     </div>
-    <!-- Post Section -->
+    <!-- post Section -->
     <div class="postArea" style="overflow-y:scroll; background-color:#ffffff;">
       <h2>Posts</h2>
       <!-- creating popup when no posts to display -->

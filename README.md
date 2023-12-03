@@ -32,25 +32,18 @@ We use the Webpack CLI to compile and bundle our Java Script code into an output
 
 This is the final (and simplest) step of the process. Open your terminal of choice and navigate to the root directory of this project. In the terminal run **serve** or **npm serve**. Using **serve** without specifying a directory to serve will sereve the root directory of the project. This is what we want, since *index.html* (the html file for the homepage of our website) is located in our root directory. Follow the link provided in the terminal, you are now looking at a local instance of the webiste!
 
-### Current Issues/Bugs
+### TODOs for end of term: 
 
-Nothing!
+These are in order of importance: 
 
-### TODOs for MVP
-
-- Beutify/comment code, uses shift+alt+f when you are done writing new code!
-- Storing images in Firestore, setup firestore/storage
-- update the project proposal
-- deploy the website and set security rules for DB and storage
 - user testing 
-
-### Features after MVP 
-
-- Add tags to user posts
+- storing images in Firestore and Storage
+- deploy the website and set security rules for DB and Storage
+- Add tags to user posts to allow filtering on home page
 - Add links to user profiles on posts on the home page
-- Filter for posts on the home page according to tags
-- Allow users to search for other users
-- Allow users to delete their posts (this will require us to update the ID assignment for posts) 
+- Allow users to delete their posts 
+  - this will require us to update the ID assignment for posts
+- update the project proposal to reflect actual work done
 
 ### Helpful Sources
 

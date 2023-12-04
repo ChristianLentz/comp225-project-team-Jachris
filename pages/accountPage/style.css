@@ -7,6 +7,7 @@
 	margin: auto;
 	text-align: center;
 	font-size: larger;
+	display: none
 }
 
 .title {
@@ -44,6 +45,7 @@ div.userPostarea {
 	/* Some padding */
 	height: 800px;
 	line-height: 1.5;
+	display: none; 
 }
 
 /* This makes it so the contact button switches color, does same to nav bar tho */
@@ -72,6 +74,7 @@ img {
 #editBtn {
 	padding: 10px 20px;
 	font-size: 16px;
+	display: none;
 }
 
 /* blurs the background slightly behind the white box */
@@ -113,18 +116,12 @@ img {
 	position: absolute;
 	top: 30%;
 	left: 12%
-		/* top: 20px; */
 }
 
 .name-input {
 	position: absolute;
 	top: 30%;
 	left: 15.5%;
-	/* padding-top: 20px; */
-	/* width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    margin-bottom: 10px; */
 }
 
 .descrip-label {
@@ -240,12 +237,8 @@ select.icon-menu option {
 	padding-left: 30px;
 }
 
-/* .flipdiv {
-	display: none;
-} */
-
 .postGrid {
-	display: grid;
+	display: none;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 	/* Adjust column width as needed */
 	gap: 20px;
@@ -294,4 +287,21 @@ select.icon-menu option {
 
 .flipdiv.v .back {
 	transform: rotateX(-180deg);
+}
+
+/* ===================== footer ===================== */
+
+.footer { 
+	display: none
+}
+
+/* ===================== loading ===================== */
+
+#loading { 
+	display: block; 
+	font-size: 40px; 
+	margin: auto;
+	text-align: center; 
+	padding-top: 100px; 
+
 }

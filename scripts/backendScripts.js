@@ -62,7 +62,7 @@ export async function runBackend(db, store, email) {
 
     // run scripts for the Home page
     if (document.title === "Home") {
-
+        document.getElementsByClassName("login")[0].style.display = "none";
         window.setTimeout( async function() { 
 
             // TODO: AFTER MVP PHASE
@@ -70,7 +70,7 @@ export async function runBackend(db, store, email) {
 
             removeListeners(); 
             await homePageBackend(db, store, []);
-        }, 1000); 
+        }, 1500); 
     }
 
     // run scripts for the Account page
@@ -78,7 +78,13 @@ export async function runBackend(db, store, email) {
         window.setTimeout( async function() { 
             removeListeners(); 
             await accountPageBackend(db, store, currUserEmail, currUserID);
-        }, 1000); 
+            // display page once it loads  
+            document.getElementById("loading").style.display = "none";
+            document.getElementsByClassName("card")[0].style.display = "block"; 
+            document.getElementsByClassName("userPostarea")[0].style.display = "block";
+            document.getElementById("editBtn").style.display = "block";
+            document.getElementsByClassName("footer")[0].style.display = "block"; 
+        }, 1500); 
     }
 
     // run scripts for the Post page
@@ -86,12 +92,7 @@ export async function runBackend(db, store, email) {
         window.setTimeout( async function() { 
             removeListeners(); 
             await postPageBackend(db, store);
-        }, 1000); 
-    }
-
-    // redirect authenticated users to their account if access login form 
-    if (document.title === "Login") { 
-        // window.location.href = "/pages/accountPage/account.html"; 
+        }, 1500); 
     }
 }
 
@@ -166,8 +167,8 @@ async function accountPageBackend(db, store, userEmail, userID) {
         );
         // display posts
         const userPostObjs = await getUserPosts(db, userID);
-        const userPosts = convertPosts(userPostObjs);
-        if (userPosts != null) {
+        if (userPostObjs != null) {
+            const userPosts = convertPosts(userPostObjs);
             const userPostArea = document.querySelector('.postGrid');
             for (const post of userPosts) {
                 addPostToAccountPage(post, userPostArea);
@@ -197,8 +198,16 @@ async function postPageBackend(db, store) {
         const postForm = document.getElementsByName("post-form").item(0);
         postForm.addEventListener("submit", async function (event) {
             event.preventDefault();
-            const newPostData = await getFormData("post-form");
-            await sendPostToDB(db, newPostData);
+            const emailText = document.getElementById("post-mail").value;
+            const userID = await getUserIDByEmail(db, emailText);
+            if (userID == null) { 
+                const popup = document.getElementById("invalidEmailPopup"); 
+                displayPopup(popup);
+            } 
+            else { 
+                const newPostData = await getFormData("post-form");
+                await sendPostToDB(db, newPostData, userID);
+            }
         });
     }, 1000);
 }
@@ -210,25 +219,15 @@ async function postPageBackend(db, store) {
  * 
  * @param {Firestore} db a reference to firestore
  * @param {Array} newPostData data to be added to the databse
+ * @param {Number} userID the ID associated with the user who is posting 
  */
-async function sendPostToDB(db, newPostData) {
+async function sendPostToDB(db, newPostData, userID) {
 
-    // get the user's email and userID 
-    const emailText = document.getElementById("post-mail").value;
-    const userID = await getUserIDByEmail(db, emailText);
-    if (userID != null) {
-        // add the user ID to the form data 
-        newPostData.push({ key: "post_userID", value: userID });
-        // send data to the db 
-        await createPost(db, newPostData);
-        window.location.href = "/pages/accountPage/account.html";
-
-    }
-    // inform the user that email is not valid
-    else {
-        const popup = document.getElementById("invalidEmailPopup");
-        displayPopup(popup);
-    }
+    // add the user ID to the form data 
+    newPostData.push({ key: "post_userID", value: userID });
+    // send data to the db 
+    await createPost(db, newPostData);
+    window.location.href = "/index.html"; 
 }
 
 /**

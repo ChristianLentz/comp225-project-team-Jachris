@@ -32,14 +32,11 @@ We use the Webpack CLI to compile and bundle our Java Script code into an output
 
 This is the final (and simplest) step of the process. Open your terminal of choice and navigate to the root directory of this project. In the terminal run **serve** or **npm serve**. Using **serve** without specifying a directory to serve will sereve the root directory of the project. This is what we want, since *index.html* (the html file for the homepage of our website) is located in our root directory. Follow the link provided in the terminal, you are now looking at a local instance of the webiste!
 
-### TODOs for end of term: 
+### TODOs for end of term:  
 
-These are in order of importance: 
-
-Christian - images, filters backend, loading pages, direct to correct user account when clicking on post on home page, delete post backend 
+Christian - images, filters backend, loading pages, direct to correct user account when clicking on post on home page, integrate delete post backend 
 Jacob - remove outline posts, filters front end 
 Jake - google auth 
-
 All - Deploy site, set rules for DB/Storage, update project proposal
 
 ### Helpful Sources

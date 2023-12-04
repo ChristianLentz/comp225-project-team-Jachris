@@ -59,3 +59,29 @@ button{
   /* margin-left: 0.4em; */
   font-size: large;
 }
+
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+section {
+  max-width: 800px;
+  margin: 2em auto;
+  padding: 1em;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+p {
+  margin-left: 10px;
+  line-height: 1.6;
+}
+.intro {
+  margin-top: 20px;
+}

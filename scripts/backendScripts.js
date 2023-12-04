@@ -299,6 +299,7 @@ function addPostToHomePage(post, postGrid) {
 
     // create a new card element
     const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
+    cardTemplate.style.display = 'block';
     // front of card
     cardTemplate.querySelector('.frontText').textContent = post[2].value;                  // Access 'post_title'
     cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value;           // Access 'post_price'
@@ -391,6 +392,7 @@ function addPostToAccountPage(post, postGrid) {
 
     // create a new card element
     const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
+    cardTemplate.style.display = 'block';
     // front of card
     cardTemplate.querySelector('.frontText').textContent = post[2].value;                 // Access 'post_title'
     cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value;          // Access 'post_price'

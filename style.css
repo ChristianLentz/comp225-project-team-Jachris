@@ -169,6 +169,7 @@ div.postArea {
 /* Front and back of a card */
 /* create inital size of front box */
 .flipdiv {
+  display: none;
   position: relative;
   width: 180px;
   height: 160px;

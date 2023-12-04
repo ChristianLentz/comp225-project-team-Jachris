@@ -24,3 +24,9 @@ h2 {
 p {
     line-height: 1.6;
 }
+
+.bullet {
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: medium;
+}

@@ -67,23 +67,13 @@ textarea {
 
 #guidelineButton {
    /* margin: 10px; */
-   margin-top: 10px; 
+   margin-top: 110px; 
    margin-bottom: 10px; 
    margin-left: 35px;  
    position: absolute;
    left: 630px;
    padding: 10px 20px;
    font-size: 16px;
-}
-
-.footer {
-   margin-top: 60px;
-   padding: 20px;
-   /* Some padding */
-   text-align: center;
-   /* Center text*/
-   background: #ddd;
-   /* Grey background */
 }
 
 /* Styles for the modal container */
@@ -147,4 +137,21 @@ textarea {
 
 h1 {
    color: orange;
+}
+
+/* ========================= footer ========================= */
+
+.footer {
+   margin-top: 60px;
+   padding: 20px;
+   /* Some padding */
+   text-align: center;
+   /* Center text*/
+   background: #ddd;
+   /* Grey background */
+}
+
+/* Make sure the nav bar is not hidden when this page loads */
+#navBar {
+   display: inline-block
 }

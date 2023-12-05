@@ -273,7 +273,6 @@ div.postArea {
 }
 /* aligning the information on the back */
 .flipdiv .backTitle {
-  
   position: absolute;
   left: 10px;
   top: 530px;
@@ -358,4 +357,15 @@ div.postArea {
 }
 h1 {
   color: orange;
+}
+
+/* =============== modal/text in post area when user not logged in =============== */ 
+
+#noPostText {
+  font-size: x-large;
+  max-width: 520px;
+  margin: 2em auto;
+  padding: 1em;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

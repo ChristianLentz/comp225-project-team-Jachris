@@ -8,6 +8,7 @@ form {
   padding: 1em;
   border: 1px solid #ccc;
   border-radius: 1em;
+  display: block
 }
 
 ul {
@@ -60,6 +61,8 @@ button {
   font-size: large;
 }
 
+/* ========================= text box above form ========================= */
+
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
@@ -75,6 +78,7 @@ section {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: block;
 }
 
 p {
@@ -87,6 +91,7 @@ p {
 }
 
 /* ========================= invalid email popup ========================= */
+
 .popup {
   position: fixed;
   z-index: 1;
@@ -121,4 +126,11 @@ p {
 
 h1 {
   color: orange;
+}
+
+/* ========================= nav bar ========================= */
+
+/* make sure that the bav bar is present when we load the page */
+#navBar { 
+	display: inline-block; 
 }

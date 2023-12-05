@@ -48,7 +48,9 @@ export async function runUserAuth(db, store) {
 
             // authenticate user when they access the login page
             if (document.title == "Login/SignUp") {
-                await authenticate(db, store);
+                window.setTimeout( async function() {  
+                    await authenticate(db, store);
+                }, 1000);
             }
         // user already authenticated during this browser session
         } else { 
@@ -138,8 +140,7 @@ export function removeListeners() {
 }
 
 /**
- * Wait for the page to load to display the nav bar, post area and filters. 
- * 
+ * Wait for the home page to load to display the nav bar, post area and filters. 
  * If the call originates from the backend, do not display the login page link. 
  * 
  * @param {Boolean} backend determienes if the call originated from the backend 
@@ -147,6 +148,7 @@ export function removeListeners() {
 export function displayHomePageElems(backend) { 
     if (backend) {
         document.getElementsByClassName("login")[0].style.display = "none";
+        document.getElementById("noPostModal").style.display = "none";
     }
     document.getElementById("loading").style.display = "none";
     document.getElementById("navBar").style.display = "inline-block";

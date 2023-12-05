@@ -68,6 +68,9 @@ export async function runBackend(db, store, email) {
             // TODO: AFTER MVP PHASE
             // get filters currently selected 
 
+            // need to add loading . . . 
+            // need to display "no posts available" if user not logged in 
+
             removeListeners(); 
             await homePageBackend(db, store, []);
         }, 1500); 
@@ -82,6 +85,7 @@ export async function runBackend(db, store, email) {
             document.getElementById("loading").style.display = "none";
             document.getElementsByClassName("card")[0].style.display = "block"; 
             document.getElementsByClassName("userPostarea")[0].style.display = "block";
+            document.getElementsByClassName("postGrid")[0].style.display = "grid";
             document.getElementById("editBtn").style.display = "block";
             document.getElementsByClassName("footer")[0].style.display = "block"; 
         }, 1500); 
@@ -201,6 +205,7 @@ async function postPageBackend(db, store) {
             const emailText = document.getElementById("post-mail").value;
             const userID = await getUserIDByEmail(db, emailText);
             if (userID == null) { 
+                console.log("made it here");
                 const popup = document.getElementById("invalidEmailPopup"); 
                 displayPopup(popup);
             } 

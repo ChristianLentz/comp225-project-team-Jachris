@@ -30,12 +30,17 @@ var postLink;
  */
 export async function runUserAuth(db, store) {
 
-    // let window load upon open 
+    // let window load upon open
     window.setTimeout(async function () {
 
         // check session storage to see if user is authenticated
         const isNotAuth = !(sessionStorage.getItem(isAuthenticated) === "true");
         if (isNotAuth) { 
+
+            // display elements of the page on load 
+            if (document.title === "Home") { 
+                displayHomePageElems(false);
+            }
 
             // restrict access to unauthenticated users
             getLinkSelectors();
@@ -119,7 +124,7 @@ async function authenticate(db, store) {
 
             }
         });
-    }, 1000);
+    }, 1500);
 }
 
 /**
@@ -130,4 +135,20 @@ export function removeListeners() {
     getLinkSelectors();
     accountLink.removeEventListener("mouseover", forceLogin);
     postLink.removeEventListener("mouseover", forceLogin);
+}
+
+/**
+ * Wait for the page to load to display the nav bar, post area and filters. 
+ * 
+ * If the call originates from the backend, do not display the login page link. 
+ * 
+ * @param {Boolean} backend determienes if the call originated from the backend 
+ */
+export function displayHomePageElems(backend) { 
+    if (backend) {
+        document.getElementsByClassName("login")[0].style.display = "none";
+    }
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("navBar").style.display = "inline-block";
+    document.getElementsByClassName("row")[0].style.display = "flex";
 }

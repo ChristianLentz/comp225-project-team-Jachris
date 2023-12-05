@@ -22,7 +22,7 @@ import {
 } from "./dbScripts";
 
 // import auth helper 
-import { removeListeners } from "./auth";
+import { removeListeners, displayHomePageElems } from "./auth";
 
 // import firestore functions
 import { doc } from "firebase/firestore";
@@ -62,7 +62,6 @@ export async function runBackend(db, store, email) {
 
     // run scripts for the Home page
     if (document.title === "Home") {
-        document.getElementsByClassName("login")[0].style.display = "none";
         window.setTimeout( async function() { 
 
             // TODO: AFTER MVP PHASE
@@ -72,23 +71,19 @@ export async function runBackend(db, store, email) {
             // need to display "no posts available" if user not logged in 
 
             removeListeners(); 
-            await homePageBackend(db, store, []);
-        }, 1500); 
+            await homePageBackend(db, store, []).then( () => { 
+                displayHomePageElems(true);
+            });
+        }, 1000); 
     }
 
     // run scripts for the Account page
     if (document.title === "Account") {
         window.setTimeout( async function() { 
             removeListeners(); 
-            await accountPageBackend(db, store, currUserEmail, currUserID);
-            // display page once it loads  
-            document.getElementById("loading").style.display = "none";
-            document.getElementsByClassName("card")[0].style.display = "block"; 
-            document.getElementsByClassName("userPostarea")[0].style.display = "block";
-            document.getElementsByClassName("postGrid")[0].style.display = "grid";
-            document.getElementById("editBtn").style.display = "block";
-            document.getElementsByClassName("footer")[0].style.display = "block"; 
-        }, 1500); 
+            await accountPageBackend(db, store, currUserEmail, currUserID); 
+            displayAccountPageElems(); 
+        }, 1000); 
     }
 
     // run scripts for the Post page
@@ -96,7 +91,7 @@ export async function runBackend(db, store, email) {
         window.setTimeout( async function() { 
             removeListeners(); 
             await postPageBackend(db, store);
-        }, 1500); 
+        }, 1000); 
     }
 }
 
@@ -124,7 +119,7 @@ async function homePageBackend(db, store, filters) {
         displayPopup(popup); 
     }
     else { 
-        // add each posts to the postGrid div
+        // add each post to the postGrid div
         const postGrid = document.querySelector('.postGrid');
         for (const post of postsToAdd) {
             addPostToHomePage(post, postGrid);
@@ -158,12 +153,12 @@ async function accountPageBackend(db, store, userEmail, userID) {
     });
     // ask user to set their info upon account creation
     if (isNew) {
-        await accountModal(db, userPath, userEmail, isNew);
+        await accountModal(db, userPath, userEmail, isNew); 
         await updateUserStatus(db, userPath);
     } else {
         // display account info 
         const userData = await getUserData(db, userID);
-        setFrontend(
+        setAccountFrontend(
             userData['user_name'],
             userData['user_title'],
             userData['profile_pic'],
@@ -317,6 +312,20 @@ function addPostToHomePage(post, postGrid) {
 }
 
 /**
+ * Display the elemetns of the account page once we have loaded 
+ * the appropraite data from the backend. 
+ */
+function displayAccountPageElems() {   
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("navBar").style.display = "inline-block";
+    document.getElementsByClassName("card")[0].style.display = "block"; 
+    document.getElementsByClassName("userPostarea")[0].style.display = "block";
+    document.getElementsByClassName("postGrid")[0].style.display = "grid";
+    document.getElementById("editBtn").style.display = "block";
+    document.getElementsByClassName("footer")[0].style.display = "block";
+}
+
+/**
  * Open the edit account modal when a new user is logged in, or when the 
  * current user requests to edit. When the user is done, close the model, 
  * update the front end, and send the data to the database. 
@@ -359,7 +368,7 @@ async function updateAccountInfo(db, path, email) {
     const userName = document.getElementById('username').value;
     const userTitle = document.getElementById('descrip').value;
     const selectedImg = document.querySelector('input[name="profilePhoto"]:checked').value;
-    setFrontend(userName, userTitle, selectedImg, email);
+    setAccountFrontend(userName, userTitle, selectedImg, email);
     // send data to the database
     const data = {
         user_name: userName,
@@ -378,7 +387,7 @@ async function updateAccountInfo(db, path, email) {
  * @param {String} img a path to user's profile picture 
  * @param {String} email email of the user
  */
-function setFrontend(name, title, img, email) {
+function setAccountFrontend(name, title, img, email) {
 
     document.getElementById('cardName').innerText = name;
     document.getElementById('title').innerText = title;

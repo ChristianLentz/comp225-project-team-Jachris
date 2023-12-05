@@ -44,6 +44,7 @@ body {
   width: 100%;
   height: 100px;
   background-color: rgb(232, 136, 52);
+  display: none; 
 }
 /* place text to the right of nav bar */
 #nav-items {
@@ -86,12 +87,21 @@ ul li a:hover {
 * {
   box-sizing: border-box;
 }
+
 /* Column container */
 .row {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
 }
-
+/* loading icon */
+#loading { 
+  display: block; 
+	font-size: 40px; 
+	margin: auto;
+	text-align: center; 
+	padding-top: 100px; 
+  padding-bottom: 100px;
+}
 /* Create two unequal columns that sit next to each other */
 /* Sidebar/left column */
 .side {

@@ -9,7 +9,7 @@
 import { getFormData } from "./dbScripts";
 
 // import backend scripts 
-import { runBackend } from "./backendScripts";
+import { runBackend, displayPopup } from "./backendScripts";
 
 // authentication data ... stored using session storage
 var email = "email";
@@ -47,7 +47,7 @@ export async function runUserAuth(db, store) {
             addEventListeners();
 
             // authenticate user when they access the login page
-            if (document.title == "Login") {
+            if (document.title == "Login/SignUp") {
                 await authenticate(db, store);
             }
         // user already authenticated during this browser session
@@ -118,10 +118,10 @@ async function authenticate(db, store) {
                 window.location.href = "/pages/accountPage/account.html";
                 await runBackend(db, store, email);
             }
+            // if invalid email, alert the user 
             else {
-
-                // TODO: throw an error on the front end, email is not valid!
-
+                const popup = document.getElementById("invalidLoginPopup");
+                displayPopup(popup);
             }
         });
     }, 1500);

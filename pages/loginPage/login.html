@@ -6,13 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- HTTP header, for security. See https://www.keycdn.com/support/what-is-mime-sniffing -->
   <meta http-equiv="X-Content-Type-Options: nosniff" />
-  <title> Login </title>
+  <title> Login/SignUp </title>
   <script src="/scripts/dist/bundle.js"></script>
   <link href="/style.css" rel="stylesheet">
   <link href="/pages/loginPage/style.css" rel="stylesheet">
 </head>
 
 <body>
+  
   <!-- Creating our nav bar -->
   <nav id="navBar">
     <ul>
@@ -24,16 +25,17 @@
     </ul>
   </nav>
 
-<section id="introduction">
-  <h2>Hi there! Looks like you're not logged in.</h2>
-  <p> Before entering the site we ask that you enter your Macalester email and continue to the account
-      page. 
-  </p>
-  <p> </p>
-  <p class="intro"> If you're new to our site we are looking to host a marketplace for Macalester students. Browse around for items 
-    you may need or post something that you are trying to get rid of!
-  </p>
-</section>
+  <section id="introduction">
+    <h2>Hi there! Looks like you're not logged in.</h2>
+    <p> Before entering the site we ask that you enter your Macalester email and continue to the account
+      page.
+    </p>
+    <p> </p>
+    <p class="intro"> If you're new to our site we are looking to host a marketplace for Macalester students. Browse
+      around for items
+      you may need or post something that you are trying to get rid of!
+    </p>
+  </section>
 
   <!-- Create our form for logging in  -->
   <form name="login-form" method="POST">
@@ -47,6 +49,15 @@
       </li>
     </ul>
   </form>
+
+  <!-- create pop to notify user that invalid email was provided -->
+  <div id="invalidLoginPopup" class="popup">
+    <div class="popup-content">
+      <h1 style="color:orange;"> Uh-oh... </h1>
+      <p>Please use your Macalester email!</p>
+      <button id="closePopup"> Close</button>
+    </div>
+  </div>
 </body>
 
 </html>

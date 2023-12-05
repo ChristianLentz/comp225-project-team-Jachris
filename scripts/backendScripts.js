@@ -277,7 +277,7 @@ function convertPosts(posts) {
  * 
  * @param {HTMLElement} popup
  */
-function displayPopup(popup) { 
+export function displayPopup(popup) { 
 
     // diplay the popup
     popup.style.display = "block"; 

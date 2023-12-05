@@ -1,6 +1,7 @@
 /* This css file is for the post.html */
 
 /* ========================= html post form  ========================= */
+
 form {
    /* Center the form on the page */
    margin: 20px auto;
@@ -63,6 +64,7 @@ textarea {
 }
 
 /* ========================= post guidelines ========================= */
+
 #guidelineButton {
    /* margin: 10px; */
    margin-top: 10px; 
@@ -110,6 +112,7 @@ textarea {
 }
 
 /* ========================= invalid email popup ========================= */
+
 .popup {
    position: fixed;
    z-index: 1;

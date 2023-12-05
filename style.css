@@ -1,6 +1,6 @@
 /* This css file is for index.html */
 
-* {
+*{
   margin: 0px;
   padding: 0px;
 }
@@ -38,6 +38,8 @@ body {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
+
+/* =============== nav bar =============== */ 
 
 /* nav bar styling */
 #navBar {
@@ -88,7 +90,8 @@ ul li a:hover {
   box-sizing: border-box;
 }
 
-/* Column container */
+/* =============== filter / post area =============== */ 
+
 .row {
   display: none;
   flex-wrap: wrap;
@@ -175,7 +178,6 @@ div.postArea {
   background-color: #666;
   color: white;
 }
-
 /* Front and back of a card */
 /* create inital size of front box */
 .flipdiv {
@@ -321,7 +323,8 @@ div.postArea {
   font-size: 20px;
 }
 
-/* styling for the noPostPopup */
+/* =============== popup when no posts to display =============== */ 
+
 .popup {
   position: fixed;
   z-index: 1;

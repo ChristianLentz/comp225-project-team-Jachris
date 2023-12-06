@@ -46,8 +46,8 @@ const queryLim = 48;
  */
 export async function runBackend(db, store) {
 
-    const currUserEmail = sessionStorage.getItem("email");
-    const currUserID = await getUserIDByEmail(db, currUserEmail);
+    var currUserEmail = sessionStorage.getItem("email");
+    var currUserID = await getUserIDByEmail(db, currUserEmail);
 
     // Add new user to DB
     // only if authenticated user's email not yet associated with user in DB  

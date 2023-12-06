@@ -34,10 +34,10 @@ This is the final (and simplest) step of the process. Open your terminal of choi
 
 ### TODOs for end of term:  
 
-Christian - images, filters backend, direct to correct user account when clicking on post on home page 
+Christian - filters backend
 Jacob - filters front end 
 Jake - google auth 
-All - Deploy site, set rules for DB/Storage, update project proposal
+All - Images, deploy site, set rules for DB/Storage, update project proposal
 
 ### Helpful Sources
 

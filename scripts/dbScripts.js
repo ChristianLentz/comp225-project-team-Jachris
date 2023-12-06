@@ -59,7 +59,7 @@ import {
     QuerySnapshot
 } from "firebase/firestore";
 
-import { ref } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 
 // ============================ Scripts ============================
 
@@ -390,9 +390,11 @@ export async function updateUserStatus(db, pathToDoc) {
  * @returns An array/dictionary of data extracted from an HTML form placed in 
  * (key, value) pairs. 
  */
-export async function getFormData(formName) {
+export async function getFormData(formName, store, userID) {
 
     const formDataArr = [];
+
+    
     // get form as HTMLFormElement using HTML name attribute 
     const newForm = document.forms.namedItem(formName);
     // if form not null, create data dictionary 
@@ -401,7 +403,21 @@ export async function getFormData(formName) {
         for (const [newKey, newValue] of formData) {
             // get image associated with the post
             if (newKey == "post_img") {
-
+                // if (newKey === "post_img" && newValue instanceof File) {
+                //     console.log("Image detected:", newValue.name);
+                //     console.log(newValue);
+                // }
+                // console.log('square', newValue[0]);
+                // console.log("image here", newValue);
+                // console.log("image here", newValue.name);
+                formDataArr.push({ key: newKey, value: newValue.name });
+                const newImage = ref(store, userID.toString()+'/'+(newValue.name));
+                uploadBytes(newImage, newValue).then((snapshot) => {
+                    console.log('file upload success');
+                }).catch((error) => {
+                    console.error('error upload file', error);
+                })
+                console.log('newImage', newImage);
                 // TODO:
                 // define a function which adds the post to firebase storage
                 // add the storage ref to formDataArr
@@ -418,6 +434,7 @@ export async function getFormData(formName) {
 
 // TODO: finish this! 
 async function storeImage() {
+
 
 }
 

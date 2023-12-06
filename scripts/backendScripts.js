@@ -29,7 +29,7 @@ import { removeListeners, displayHomePageElems } from "./auth";
 import { doc } from "firebase/firestore";
 
 // number of items per post
-const numPostItems = 9;
+const numPostItems = 10;
 
 // limit for querying for posts
 const queryLim = 48;
@@ -93,7 +93,7 @@ export async function runBackend(db, store) {
     if (document.title === "Post") {
         window.setTimeout( async function() { 
             removeListeners(); 
-            await postPageBackend(db, store);
+            await postPageBackend(db, store, currUserID);
         }, 1000); 
     }
 }
@@ -412,7 +412,7 @@ function addPostToAccountPage(db, post, postGrid) {
  * @param {Firestore} db a referece to firestore
  * @param {Storage} store a reference to storage
  */
-async function postPageBackend(db, store) {
+async function postPageBackend(db, store, userID) {
 
     // pause and let window load 
     window.setTimeout(async function () {
@@ -427,7 +427,7 @@ async function postPageBackend(db, store) {
                 displayPopup(popup);
             } 
             else { 
-                const newPostData = await getFormData("post-form");
+                const newPostData = await getFormData("post-form",store,userID);
                 await sendPostToDB(db, newPostData, userID);
             }
         });
@@ -447,7 +447,7 @@ async function sendPostToDB(db, newPostData, userID) {
     newPostData.push({ key: "post_userID", value: userID });
     // send data to the db 
     await createPost(db, newPostData);
-    window.location.href = "/index.html"; 
+   // window.location.href = "/index.html"; 
 }
 
 // ============================ Other Helper Functions ============================

@@ -16,6 +16,7 @@ import {
     convertDataFromObjToArray,
     getUserIDByEmail,
     createPost,
+    deletePost, 
     getFormData,
     createUser,
     setDocByRef
@@ -28,7 +29,7 @@ import { removeListeners, displayHomePageElems } from "./auth";
 import { doc } from "firebase/firestore";
 
 // number of items per post
-const numPostItems = 8;
+const numPostItems = 9;
 
 // limit for querying for posts
 const queryLim = 48;
@@ -73,10 +74,8 @@ export async function runBackend(db, store) {
     // run scripts for the Account page
     if (document.title === "Account") { 
         const otherEmail = sessionStorage.getItem("otherEmail");
-        console.log("otherEmail: ", otherEmail);
         if (otherEmail == null) { 
             // dispalay the current user
-            console.log("curr user email: ", currUserEmail);
             await accountPageWrapper(db, store, currUserEmail, currUserID, false);
         } 
         else { 
@@ -236,16 +235,18 @@ async function accountPageBackend(db, store, userEmail, userID, otherUser) {
     const userPath = "users/user" + userID.toString();
     const isNew = await getValueOfFieldByPath(db, userPath, "isNew", false);
     // edit account when 'editBtn' is clicked 
-    document.getElementById('editBtn').addEventListener('click', async function () {
-        await accountModal(db, userPath, userEmail, isNew);
-        await updateUserStatus(db, userPath);
-    });
+    if (!otherUser) { 
+        document.getElementById('editBtn').addEventListener('click', async function () {
+            await accountModal(db, userPath, userEmail, isNew);
+            await updateUserStatus(db, userPath);
+        });
+    }
     // ask user to set their info upon account creation
     if (isNew) {
         await accountModal(db, userPath, userEmail, isNew); 
         await updateUserStatus(db, userPath);
     } else {
-        // display account info 
+        // display account info
         const userData = await getUserData(db, userID);
         setAccountFrontend(userData['user_name'],
                             userData['user_title'],
@@ -253,12 +254,13 @@ async function accountPageBackend(db, store, userEmail, userID, otherUser) {
                             userEmail);
         // display posts
         const userPostObjs = await getUserPosts(db, userID);
+        console.log(userPostObjs); 
         if (userPostObjs != null) {
             const userPosts = convertPosts(userPostObjs);
-            // ADD DELETION EVENT LISTENERS HERE!
             const userPostArea = document.querySelector('.postGrid');
             for (const post of userPosts) {
-                addPostToAccountPage(post, userPostArea);
+                console.log(post);
+                addPostToAccountPage(db, post, userPostArea);
             }
         }
     }
@@ -325,20 +327,6 @@ async function accountModal(db, path, email, isNew) {
     });
 }
 
-// /**
-//  * Adds an event listener to each post displayed on the account page
-//  * which will delete the post from the database when the user clicks 
-//  * the delete icon on the front end. 
-//  */
-// async function deletePosts() { 
-
-//     const trashIcons = document.getElementsByClassName("trashButton"); 
-//     // add event listener
-//     for (var i = 0; i < trashIcons.length; i++) { 
-
-//     }
-// }
-
 /**
  * When user is done updating profile, update the front end and send 
  * data to the databse. 
@@ -382,10 +370,11 @@ function setAccountFrontend(name, title, img, email) {
 /**
  * Add a post to the user's account page.
  * 
- * @param {Array} post 
- * @param {HTMLElement} postGrid
+ * @param {Firestore} db a reference to firestore 
+ * @param {Array} post an array with the post data to add
+ * @param {HTMLElement} postGrid div to add the post to 
  */
-function addPostToAccountPage(post, postGrid) {
+function addPostToAccountPage(db, post, postGrid) {
 
     // create a new card element
     const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
@@ -398,7 +387,13 @@ function addPostToAccountPage(post, postGrid) {
     cardTemplate.querySelector('.price').textContent = '$' + post[3].value;
     cardTemplate.querySelector('.backDescription').textContent = post[4].value;           // access post descrip
     cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;   // access seller name
-    // append the card to the "postGrid" container
+
+    // add event listener to delete the post upon user's request 
+    cardTemplate.querySelector('.trashButton').addEventListener( "click", async function() { 
+        await deletePost(db, post[6].value);
+    });
+
+    // add the post to the page 
     postGrid.appendChild(cardTemplate);
 }
 

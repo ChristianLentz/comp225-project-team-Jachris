@@ -104,6 +104,12 @@ ul li a:hover {
 	text-align: center; 
 	padding-top: 100px; 
   padding-bottom: 100px;
+  align-items: center;
+}
+
+.gif {
+  height: 400px;
+  /* width: 400px; */
 }
 /* Create two unequal columns that sit next to each other */
 /* Sidebar/left column */

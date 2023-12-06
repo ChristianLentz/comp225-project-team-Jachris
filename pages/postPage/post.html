@@ -54,6 +54,12 @@
           as there is a 500 character limit.
         </p>
       </section>
+      <section id="tagGuide">
+        <h2>Tags</h2>
+        <p>Chose a tag that correlates to what you're trying to get rid of. This will help 
+          users be able to filter posts by certain categories they may be searching for. 
+        </p>
+      </section>
       <section id="imageGuide">
         <h2>Image</h2>
         <p>Please upload one clear image that shows what you are looking to sell or trade. </p>
@@ -117,6 +123,16 @@
         <label for="post-msg">Description:</label>
         <textarea id="post-msg" maxlength="580" name="post_msg" required></textarea>
       </li>
+        <label for="categoryDropdown">Add a Tag:</label>
+          <select id="categoryDropdown" name="category" required>
+            <option value="">Select an option</option>
+            <option value="Dorm Items">Dorm</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Sport">Sport</option>
+            <option value="Winter">Winter</option>
+            <option value="School">School</option>
+            <option value="Misc">Misc</option>
+          </select>
       <li>
         <label for="post-file-input">Image:</label>
         <input type="file" id="post-file-input" name="post_img" accept="image/*" required>

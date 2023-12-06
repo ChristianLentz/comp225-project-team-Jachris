@@ -63,13 +63,18 @@ textarea {
    margin-left: 60px;
 }
 
+#categoryDropdown {
+   padding: 8px;
+   font-size: 16px;
+ }
+
 /* ========================= post guidelines ========================= */
 
 #guidelineButton {
    /* margin: 10px; */
    margin-top: 110px; 
    margin-bottom: 10px; 
-   margin-left: 35px;  
+   margin-left: 15px;  
    position: absolute;
    left: 630px;
    padding: 10px 20px;
@@ -80,7 +85,7 @@ textarea {
 #guideModal {
    display: none;
    position: fixed;
-   top: 200px;
+   top: 240px;
    left: 50px;
    width: 50%;
    height: 50%;

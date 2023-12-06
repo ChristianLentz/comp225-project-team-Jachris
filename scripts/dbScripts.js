@@ -160,30 +160,6 @@ export async function createUser(db, store, email) {
 }
 
 /**
- * Delete the user data associated with the provided userID.
- * 
- * TODO: AFTER MVP PHASE 
- * test this!
- * 
- * @param {Firestore} db a reference to firestore.
- * @param {Number} userID the ID associated with the user to delete. 
- */
-export async function deleteUser(db, userID) {
-
-    // get number of users
-    const numUsers = await getValueOfFieldByPath(db, 'metrics/totals', "total_users", 0);
-    if (numUsers > 0) {
-        // get reference to document
-        const userDocRef = doc(db, 'users/user' + userID.toString());
-        // delete the user 
-        await deleteDocByRef(userDocRef);
-        // decrement user total 
-        const totalsRef = doc(db, 'metrics/totals');
-        await setDocByRef(totalsRef, { total_users: numUsers - 1 });
-    }
-}
-
-/**
  * Add a newly created post and its data to the posts collection
  * 
  * @param {Firestore} db a reference to firestore.
@@ -191,14 +167,10 @@ export async function deleteUser(db, userID) {
  */
 export async function createPost(db, data) {
 
-    // generate an ID for the post
-    // TODO: AFTER MVP PHASE, FIX THIS 
-    // should not be based on totals
-    // will not guarantee IDs are unique if we allow deletion!!
-    const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
-    const newPostID = numPosts + 1;
+    // generate an ID for the post 
+    const num = await getValueOfFieldByPath(db, 'metrics/totals', "all_time_posts", 0);
+    const newPostID = num + 1;
     data.push({ key: "postID", value: newPostID });
-
     // generate date posted 
     const datePosted = getTodayDate();
     data.push({ key: "date_posted", value: datePosted });
@@ -229,7 +201,7 @@ export async function deletePost(db, postID) {
         const postDocRef = doc(db, 'posts/post' + postID.toString());
         // delete the post 
         await deleteDocByRef(postDocRef);
-        // decrement post total 
+        // decrement post total
         const totalsRef = doc(db, 'metrics/totals');
         await setDocByRef(totalsRef, { total_posts: numPosts - 1 });
     }

@@ -306,6 +306,11 @@ select.icon-menu option {
 	align-items: center;
 }
 
+/* ensure nav bar is visible while page loading */ 
+#navBar { 
+	display: inline-block; 
+}
+
 .runnerGif {
 	width: 600px;
 	height: 400px;

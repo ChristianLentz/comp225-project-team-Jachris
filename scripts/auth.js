@@ -11,11 +11,11 @@ import { getFormData } from "./dbScripts";
 // import backend scripts 
 import { runBackend, displayPopup } from "./backendScripts";
 
-// authentication data ... stored using session storage
+// email and auth data ... stored using session storage
 var email = "email";
 var isAuthenticated = "isAuth";
 
-// html elements used in auth process ... stored using session storage
+// html elements used in auth process
 var navbar;
 var accountLink;
 var postLink;
@@ -118,7 +118,7 @@ async function authenticate(db, store) {
                 sessionStorage.setItem(isAuthenticated, "true");
                 console.log(`user '${emailFetched}' has been authenticated`); 
                 window.location.href = "/pages/accountPage/account.html";
-                await runBackend(db, store, email);
+                await runBackend(db, store);
             }
             // if invalid email, alert the user 
             else {

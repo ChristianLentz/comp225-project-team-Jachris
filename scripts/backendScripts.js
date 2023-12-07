@@ -174,7 +174,6 @@ function addPostToHomePage(post, postGrid) {
         event.preventDefault();
         const emailElem = post[1].value;
         sessionStorage.setItem("otherEmail", emailElem);
-        console.log(`Now viewing user '${emailElem}'`);
         window.location.href = "/pages/accountPage/account.html";
     });
     // add the image to the front and back of the post 
@@ -242,12 +241,10 @@ async function accountPageBackend(db, userEmail, userID, otherUser) {
             userEmail);
         // display posts
         const userPostObjs = await getUserPosts(db, userID);
-        console.log(userPostObjs);
         if (userPostObjs != null) {
             const userPosts = convertPosts(userPostObjs);
             const userPostArea = document.querySelector('.postGrid');
             for (const post of userPosts) {
-                console.log(post);
                 addPostToAccountPage(db, post, userPostArea);
             }
         }
@@ -368,7 +365,7 @@ function addPostToAccountPage(db, post, postGrid) {
     addImageToPost(post, cardTemplate);
     // add event listener to delete the post upon user's request 
     cardTemplate.querySelector('.trashButton').addEventListener("click", async function () {
-        await deletePost(db, post[6].value);
+        await deletePost(db, post[7].value);
     });
     // add the post to the page 
     postGrid.appendChild(cardTemplate);

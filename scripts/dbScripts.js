@@ -430,7 +430,7 @@ export async function getFormData(formName, store, userID) {
  * 
  * @returns URL of image path inside of firbase storage
  */
-export async function displayImage(imagePath) {
+export async function getImageURL(imagePath) {
     const storage = getStorage();
     const imageRef = ref(storage, imagePath);
     console.log(imageRef);

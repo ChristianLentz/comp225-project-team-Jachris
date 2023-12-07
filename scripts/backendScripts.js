@@ -20,7 +20,7 @@ import {
     getFormData,
     createUser,
     setDocByRef,
-    displayImage
+    getImageURL
 } from "./dbScripts";
 
 // import auth helper 
@@ -180,11 +180,12 @@ function addPostToHomePage(post, postGrid) {
 
     // ==============Add Image===============================
     const imgElement = cardTemplate.querySelector('.frontImage img');
+    const backImgElement = cardTemplate.querySelector('.backImage img');
     const imagePath = post[7].value + '/' + post[6].value;
 
     // Ensure the image element exists before setting the src attribute
     if (imgElement) {
-    displayImage(imagePath)
+    getImageURL(imagePath)
         .then((downloadUrl) => {
         // Use the onload event to ensure that the image is fully loaded before appending
         imgElement.onload = function () {
@@ -201,6 +202,7 @@ function addPostToHomePage(post, postGrid) {
         };
         // Set the image source to the download URL
         imgElement.src = downloadUrl;
+        backImgElement.src = downloadUrl;
         })
         .catch(error => {
         console.error('Error displaying image:', error);

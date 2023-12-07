@@ -180,21 +180,14 @@ function addPostToHomePage(post, postGrid) {
 
     // ==============Add Image===============================
     const imgElement = cardTemplate.querySelector('.frontImage img');
-    console.log('new img element', imgElement);
-
     const imagePath = post[7].value + '/' + post[6].value;
-    console.log('path', imagePath);
 
     // Ensure the image element exists before setting the src attribute
     if (imgElement) {
-    displayImage(imagePath, imgElement)
+    displayImage(imagePath)
         .then((downloadUrl) => {
-        console.log('imgElement.src before setting', imgElement.src);  // Log the source URL before setting
-
         // Use the onload event to ensure that the image is fully loaded before appending
         imgElement.onload = function () {
-            console.log('imgElement.src after setting', imgElement.src);  // Log the source URL after setting
-
             // add an event listener to the visitBtn that sends to the user's profile
             cardTemplate.querySelector('.visitBtn').addEventListener("click", async function (event) {
             event.preventDefault();
@@ -203,11 +196,9 @@ function addPostToHomePage(post, postGrid) {
             console.log(`Now viewing user '${emailElem}'`);
             window.location.href = "/pages/accountPage/account.html";
             });
-
             // append the card to the "postGrid" container
             postGrid.appendChild(cardTemplate);
         };
-
         // Set the image source to the download URL
         imgElement.src = downloadUrl;
         })

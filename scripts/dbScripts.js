@@ -423,8 +423,14 @@ export async function getFormData(formName, store, userID) {
     return formDataArr;
 }
 
-// TODO: finish this! 
-export async function displayImage(imagePath, imgElement) {
+/**
+ * Get the URL of the image from firbease storage 
+ * 
+ * @param {String} imagePath string of userID/image name 
+ * 
+ * @returns URL of image path inside of firbase storage
+ */
+export async function displayImage(imagePath) {
     const storage = getStorage();
     const imageRef = ref(storage, imagePath);
     console.log(imageRef);
@@ -432,10 +438,8 @@ export async function displayImage(imagePath, imgElement) {
     try {
       // Get the download URL of the image
       const url = await getDownloadURL(imageRef);
-      console.log('Your URL:', url);
   
-      // Set the image source to the download URL
-    //   imgElement.src = url;
+      // return the download URL
     return url;
     } catch (error) {
       console.error('Error getting download URL:', error);

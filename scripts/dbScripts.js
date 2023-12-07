@@ -59,7 +59,7 @@ import {
     QuerySnapshot
 } from "firebase/firestore";
 
-import { ref, uploadBytes } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // ============================ Scripts ============================
 
@@ -393,8 +393,6 @@ export async function updateUserStatus(db, pathToDoc) {
 export async function getFormData(formName, store, userID) {
 
     const formDataArr = [];
-
-    
     // get form as HTMLFormElement using HTML name attribute 
     const newForm = document.forms.namedItem(formName);
     // if form not null, create data dictionary 
@@ -403,13 +401,6 @@ export async function getFormData(formName, store, userID) {
         for (const [newKey, newValue] of formData) {
             // get image associated with the post
             if (newKey == "post_img") {
-                // if (newKey === "post_img" && newValue instanceof File) {
-                //     console.log("Image detected:", newValue.name);
-                //     console.log(newValue);
-                // }
-                // console.log('square', newValue[0]);
-                // console.log("image here", newValue);
-                // console.log("image here", newValue.name);
                 formDataArr.push({ key: newKey, value: newValue.name });
                 const newImage = ref(store, userID.toString()+'/'+(newValue.name));
                 uploadBytes(newImage, newValue).then((snapshot) => {
@@ -433,10 +424,24 @@ export async function getFormData(formName, store, userID) {
 }
 
 // TODO: finish this! 
-async function storeImage() {
-
-
-}
+export async function displayImage(imagePath, imgElement) {
+    const storage = getStorage();
+    const imageRef = ref(storage, imagePath);
+    console.log(imageRef);
+  
+    try {
+      // Get the download URL of the image
+      const url = await getDownloadURL(imageRef);
+      console.log('Your URL:', url);
+  
+      // Set the image source to the download URL
+    //   imgElement.src = url;
+    return url;
+    } catch (error) {
+      console.error('Error getting download URL:', error);
+      throw error; // Propagate the error to the calling code if needed
+    }
+  }
 
 /**
  * Get the current date. 

@@ -121,7 +121,7 @@ export async function getUserPosts(db, id) {
     const queryMap = { key: "post_userID", value: id }
     const postQuery = query(
         collection(db, "posts"),
-        where("6", "==", queryMap),
+        where("7", "==", queryMap),
     );
     const postSnapshot = await getDocs(postQuery);
     return await unwrapPostQuery(postSnapshot);
@@ -377,6 +377,7 @@ export async function updateUserStatus(db, pathToDoc) {
 
 /**
  * Get data from an HTMLFormElement and construct a dictionary to hold the data.
+ * Handles both the new post and login forms.
  * 
  * Helpful links for using form-data node module: 
  * - https://developer.mozilla.org/en-US/docs/Web/API/FormData
@@ -393,26 +394,22 @@ export async function updateUserStatus(db, pathToDoc) {
 export async function getFormData(formName, store, userID) {
 
     const formDataArr = [];
-    // get form as HTMLFormElement using HTML name attribute 
     const newForm = document.forms.namedItem(formName);
     // if form not null, create data dictionary 
     if (newForm) {
         let formData = new FormData(newForm);
         for (const [newKey, newValue] of formData) {
-            // get image associated with the post
             if (newKey == "post_img") {
+                // add the name of the image to the db collection for the post
                 formDataArr.push({ key: newKey, value: newValue.name });
-                const newImage = ref(store, userID.toString()+'/'+(newValue.name));
-                uploadBytes(newImage, newValue).then((snapshot) => {
-                    console.log('file upload success');
+                // upload the image to firebase storage 
+                const newImageRef = ref(store, 'user' + userID.toString() + '/' + (newValue.name));
+                uploadBytes(newImageRef, newValue).then( () => {
+                    console.log(`'${newValue.name}' file upload success'`);
                 }).catch((error) => {
-                    console.error('error upload file', error);
+                    console.error(`error when upload file '${newValue.name}':`, error);
                 })
-                console.log('newImage', newImage);
-                // TODO:
-                // define a function which adds the post to firebase storage
-                // add the storage ref to formDataArr
-
+                console.log('newImage', newImageRef);
             }
             // handle other HTML elements
             else {
@@ -433,19 +430,16 @@ export async function getFormData(formName, store, userID) {
 export async function getImageURL(imagePath) {
     const storage = getStorage();
     const imageRef = ref(storage, imagePath);
-    console.log(imageRef);
-  
     try {
-      // Get the download URL of the image
-      const url = await getDownloadURL(imageRef);
-  
-      // return the download URL
-    return url;
+        // Get the download URL of the image
+        const url = await getDownloadURL(imageRef);
+        // return the download URL
+        return url;
     } catch (error) {
-      console.error('Error getting download URL:', error);
-      throw error; // Propagate the error to the calling code if needed
+        console.error(`Error getting download URL for image ${imagePath}: `, error);
+        throw error; 
     }
-  }
+}
 
 /**
  * Get the current date. 

@@ -16,7 +16,7 @@ import {
     convertDataFromObjToArray,
     getUserIDByEmail,
     createPost,
-    deletePost, 
+    deletePost,
     getFormData,
     createUser,
     setDocByRef,
@@ -53,49 +53,49 @@ export async function runBackend(db, store) {
     // Add new user to DB
     // only if authenticated user's email not yet associated with user in DB  
     if (currUserID == null) {
-        await createUser(db, store, currUserEmail).then( async function () { 
+        await createUser(db, store, currUserEmail).then(async function () {
             currUserID = await getUserIDByEmail(db, currUserEmail);
-        }); 
-    } 
+        });
+    }
 
     // run scripts for the Home page
     if (document.title === "Home") {
-        window.setTimeout( async function() { 
+        window.setTimeout(async function () {
 
             // TODO: AFTER MVP PHASE
             // get filters currently selected 
 
-            removeListeners(); 
-            await homePageBackend(db, store, []).then( () => { 
+            removeListeners();
+            await homePageBackend(db, store, []).then(() => {
                 displayHomePageElems(true);
             });
-        }, 1000); 
+        }, 1000);
     }
 
     // run scripts for the Account page
-    if (document.title === "Account") { 
+    if (document.title === "Account") {
         const otherEmail = sessionStorage.getItem("otherEmail");
-        if (otherEmail == null) { 
+        if (otherEmail == null) {
             // dispalay the current user
-            await accountPageWrapper(db, store, currUserEmail, currUserID, false);
-        } 
-        else { 
+            await accountPageWrapper(db, currUserEmail, currUserID, false);
+        }
+        else {
             // display the other user
             const otherID = await getUserIDByEmail(db, otherEmail);
-            await accountPageWrapper(db, store, otherEmail, otherID, true)
-                .then( () => { 
-                    sessionStorage.removeItem("otherEmail"); 
+            await accountPageWrapper(db, otherEmail, otherID, true)
+                .then(() => {
+                    sessionStorage.removeItem("otherEmail");
                 }
-            );
+                );
         }
     }
 
     // run scripts for the Post page
     if (document.title === "Post") {
-        window.setTimeout( async function() { 
-            removeListeners(); 
-            await postPageBackend(db, store, currUserID);
-        }, 1000); 
+        window.setTimeout(async function () {
+            removeListeners();
+            await postPageBackend(db, store);
+        }, 1000);
     }
 }
 
@@ -117,14 +117,14 @@ async function homePageBackend(db, store, filters) {
     // get data for the posts to display on the home page
     // this will be an arrary of arrays, where each post array has key-value pairs
     let postsToAdd = await getPosts(db, filters);
-    if (postsToAdd == null) { 
+    if (postsToAdd == null) {
         // this handles two cases: 
         // 1: no posts exist in db
         // 2: user's filter query returns nothing
         const popup = document.getElementById("noPostPopup");
-        displayPopup(popup); 
+        displayPopup(popup);
     }
-    else { 
+    else {
         // add each post to the postGrid div
         const postGrid = document.querySelector('.postGrid');
         for (const post of postsToAdd) {
@@ -149,7 +149,7 @@ async function homePageBackend(db, store, filters) {
 async function getPosts(db, filters) {
 
     const posts = await queryForPostsByFilter(db, filters, queryLim);
-    if (posts == null) { 
+    if (posts == null) {
         return posts;
     } else {
         return convertPosts(posts);
@@ -164,75 +164,42 @@ async function getPosts(db, filters) {
  * @param {Array} post the post to add. 
  * @param {HTMLElement} postGrid HTML element to add the data to.
  */
-function addPostToHomePage(post, postGrid) { 
+function addPostToHomePage(post, postGrid) {
 
     // create a new card element
     const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
-    cardTemplate.style.display = 'block';
-    // front of card
-    cardTemplate.querySelector('.frontText').textContent = post[2].value;                  // Access 'post_title'
-    cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value;           // Access 'post_price'
-    // back of card
-    cardTemplate.querySelector('.backTitle').textContent = post[2].value;
-    cardTemplate.querySelector('.price').textContent = '$' + post[3].value;
-    cardTemplate.querySelector('.backDescription').textContent = post[4].value;            // access post descrip
-    cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;    // access seller name 
-
-    // ==============Add Image===============================
-    const imgElement = cardTemplate.querySelector('.frontImage img');
-    const backImgElement = cardTemplate.querySelector('.backImage img');
-    const imagePath = post[7].value + '/' + post[6].value;
-
-    // Ensure the image element exists before setting the src attribute
-    if (imgElement) {
-    getImageURL(imagePath)
-        .then((downloadUrl) => {
-        // Use the onload event to ensure that the image is fully loaded before appending
-        imgElement.onload = function () {
-            // add an event listener to the visitBtn that sends to the user's profile
-            cardTemplate.querySelector('.visitBtn').addEventListener("click", async function (event) {
-            event.preventDefault();
-            const emailElem = post[1].value;
-            sessionStorage.setItem("otherEmail", emailElem);
-            console.log(`Now viewing user '${emailElem}'`);
-            window.location.href = "/pages/accountPage/account.html";
-            });
-            // append the card to the "postGrid" container
-            postGrid.appendChild(cardTemplate);
-        };
-        // Set the image source to the download URL
-        imgElement.src = downloadUrl;
-        backImgElement.src = downloadUrl;
-        })
-        .catch(error => {
-        console.error('Error displaying image:', error);
-        });
-    } else {
-    console.error('Image element not found.');
-    }
-    // append the card to the "postGrid" container
+    addPostFrontBackHelper(post, cardTemplate);
+    // add an event listener to the visitBtn that sends to the user's profile
+    cardTemplate.querySelector('.visitBtn').addEventListener("click", async function (event) {
+        event.preventDefault();
+        const emailElem = post[1].value;
+        sessionStorage.setItem("otherEmail", emailElem);
+        console.log(`Now viewing user '${emailElem}'`);
+        window.location.href = "/pages/accountPage/account.html";
+    });
+    // add the image to the front and back of the post 
+    addImageToPost(post, cardTemplate);
+    // append the card to the "postGrid" container when it's ready!
     postGrid.appendChild(cardTemplate);
 }
 
 // ============================ Account page and helpers ============================
 
-
 /**
- * A wrappeer function which appropriately runs the account page backend 
+ * A wrapper function which appropriately runs the account page backend 
  * given a user's account to display. 
  * 
  * @param {Firestore} db a reference to firestore
- * @param {Storage} store a reference to storage 
- * @param {*} email email of user's account
- * @param {*} ID ID of user's account 
+ * @param {String} email email of user's account
+ * @param {String} ID ID of user's account 
  * @param {Boolean} otherUser boolean to determine if current authenticated user
  */
-async function accountPageWrapper(db, store, email, ID, otherUser) { 
+async function accountPageWrapper(db, email, ID, otherUser) {
 
-    window.setTimeout( async function() { 
-        removeListeners(); 
-        await accountPageBackend(db, store, email, ID, otherUser).then( () => { 
-            displayAccountPageElems(otherUser); 
+    window.setTimeout(async function () {
+        removeListeners();
+        await accountPageBackend(db, store, email, ID, otherUser).then(() => {
+            displayAccountPageElems(otherUser);
         });
     }, 1000);
 }
@@ -242,24 +209,21 @@ async function accountPageWrapper(db, store, email, ID, otherUser) {
  * 
  * - Fetching the current user's data to display on the page
  * - Fetching the current user's posts to display on the page
- * - Deleting or adding data to the db according to user's edits
- * 
- * Eventually we will allow the user to delete their posts using a button on the 
- * account page.  
+ * - Deleting posts upon user requst 
+ * - allowing other users to view a given user's profile
  * 
  * @param {Firestore} db a reference to firestore
- * @param {Storage} store a reference to storage
  * @param {String} userEmail email associated with the user's account 
  * @param {Number} userID the user's ID
  * @param {Boolean} otherUser determines if the user is the current authenticated user
  */
-async function accountPageBackend(db, store, userEmail, userID, otherUser) {
+async function accountPageBackend(db, userEmail, userID, otherUser) {
 
     // get information about the user whose page we are building
     const userPath = "users/user" + userID.toString();
     const isNew = await getValueOfFieldByPath(db, userPath, "isNew", false);
     // edit account when 'editBtn' is clicked 
-    if (!otherUser) { 
+    if (!otherUser) {
         document.getElementById('editBtn').addEventListener('click', async function () {
             await accountModal(db, userPath, userEmail, isNew);
             await updateUserStatus(db, userPath);
@@ -267,18 +231,18 @@ async function accountPageBackend(db, store, userEmail, userID, otherUser) {
     }
     // ask user to set their info upon account creation
     if (isNew) {
-        await accountModal(db, userPath, userEmail, isNew); 
+        await accountModal(db, userPath, userEmail, isNew);
         await updateUserStatus(db, userPath);
     } else {
         // display account info
         const userData = await getUserData(db, userID);
         setAccountFrontend(userData['user_name'],
-                            userData['user_title'],
-                            userData['profile_pic'],
-                            userEmail);
+            userData['user_title'],
+            userData['profile_pic'],
+            userEmail);
         // display posts
         const userPostObjs = await getUserPosts(db, userID);
-        console.log(userPostObjs); 
+        console.log(userPostObjs);
         if (userPostObjs != null) {
             const userPosts = convertPosts(userPostObjs);
             const userPostArea = document.querySelector('.postGrid');
@@ -298,23 +262,20 @@ async function accountPageBackend(db, store, userEmail, userID, otherUser) {
  * 
  * @param {Boolean} otherUser determines which account page to display
  */
-function displayAccountPageElems(otherUser) {  
+function displayAccountPageElems(otherUser) {
 
     // don't allow edit access when viewing another user's account 
-    if (otherUser) { 
-        console.log("made it to the other user elems");
-        const trashBtns = document.getElementsByClassName("trashButton"); 
-        console.log(trashBtns);
-        for (var i = 0; i < trashBtns.length; i++) { 
+    if (otherUser) {
+        const trashBtns = document.getElementsByClassName("trashButton");
+        for (var i = 0; i < trashBtns.length; i++) {
             trashBtns.item(i).style.display = "none";
         }
-    } else { 
+    } else {
         document.getElementById("editBtn").style.display = "block";
     }
-
     // elements to show in both cases of otherUser
     document.getElementById("loading").style.display = "none";
-    document.getElementsByClassName("card")[0].style.display = "block"; 
+    document.getElementsByClassName("card")[0].style.display = "block";
     document.getElementsByClassName("userPostarea")[0].style.display = "block";
     document.getElementsByClassName("postGrid")[0].style.display = "grid";
     document.getElementsByClassName("footer")[0].style.display = "block";
@@ -402,21 +363,13 @@ function addPostToAccountPage(db, post, postGrid) {
 
     // create a new card element
     const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
-    cardTemplate.style.display = 'block';
-    // front of card
-    cardTemplate.querySelector('.frontText').textContent = post[2].value;                 // Access 'post_title'
-    cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value;          // Access 'post_price'
-    // back of card
-    cardTemplate.querySelector('.backTitle').textContent = post[2].value;
-    cardTemplate.querySelector('.price').textContent = '$' + post[3].value;
-    cardTemplate.querySelector('.backDescription').textContent = post[4].value;           // access post descrip
-    cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;   // access seller name
-
+    addPostFrontBackHelper(post, cardTemplate);
+    // add the image to the front and back of the post 
+    addImageToPost(post, cardTemplate);
     // add event listener to delete the post upon user's request 
-    cardTemplate.querySelector('.trashButton').addEventListener( "click", async function() { 
+    cardTemplate.querySelector('.trashButton').addEventListener("click", async function () {
         await deletePost(db, post[6].value);
     });
-
     // add the post to the page 
     postGrid.appendChild(cardTemplate);
 }
@@ -436,7 +389,7 @@ function addPostToAccountPage(db, post, postGrid) {
  * @param {Firestore} db a referece to firestore
  * @param {Storage} store a reference to storage
  */
-async function postPageBackend(db, store, userID) {
+async function postPageBackend(db, store) {
 
     // pause and let window load 
     window.setTimeout(async function () {
@@ -446,12 +399,12 @@ async function postPageBackend(db, store, userID) {
             event.preventDefault();
             const emailText = document.getElementById("post-mail").value;
             const userID = await getUserIDByEmail(db, emailText);
-            if (userID == null) { 
-                const popup = document.getElementById("invalidEmailPopup"); 
+            if (userID == null) {
+                const popup = document.getElementById("invalidEmailPopup");
                 displayPopup(popup);
-            } 
-            else { 
-                const newPostData = await getFormData("post-form",store,userID);
+            }
+            else {
+                const newPostData = await getFormData("post-form", store, userID);
                 await sendPostToDB(db, newPostData, userID);
             }
         });
@@ -471,7 +424,7 @@ async function sendPostToDB(db, newPostData, userID) {
     newPostData.push({ key: "post_userID", value: userID });
     // send data to the db 
     await createPost(db, newPostData);
-   window.location.href = "/index.html"; 
+    window.location.href = "/index.html";
 }
 
 // ============================ Other Helper Functions ============================
@@ -507,13 +460,60 @@ function convertPosts(posts) {
  * 
  * @param {HTMLElement} popup
  */
-export function displayPopup(popup) { 
+export function displayPopup(popup) {
 
     // diplay the popup
-    popup.style.display = "block"; 
+    popup.style.display = "block";
     // get the close button and add event listener 
-    const closeBtn = document.getElementById("closePopup"); 
-    closeBtn.addEventListener( "click", () => { 
-        popup.style.display = "none"; 
+    const closeBtn = document.getElementById("closePopup");
+    closeBtn.addEventListener("click", () => {
+        popup.style.display = "none";
     });
+}
+
+/**
+ * Helps with creating the HTML element which displays a post on the frontend. 
+ * Adds the HTML text elements to the front and back of the cardTemplate given 
+ * the array of post data. 
+ * 
+ * @param {Array} post the data associated with the post.
+ * @param {Node} cardTemplate node to add the post data to.
+ */
+function addPostFrontBackHelper(post, cardTemplate) {
+
+    cardTemplate.style.display = 'block';
+    // front of card
+    cardTemplate.querySelector('.frontText').textContent = post[2].value;                  // Access 'post_title'
+    cardTemplate.querySelector('.frontPrice').textContent = '$' + post[3].value;           // Access 'post_price'
+    // back of card
+    cardTemplate.querySelector('.backTitle').textContent = post[2].value;
+    cardTemplate.querySelector('.price').textContent = '$' + post[3].value;
+    cardTemplate.querySelector('.backDescription').textContent = post[4].value;            // access post descrip
+    cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;    // access seller name 
+}
+
+/**
+ * and an image to the front and back of the card using the front and back HTML image 
+ * elements of that card. Used on both the home page and the account page. 
+ * 
+ * @param {Array} post the data associated with the post 
+ * @param {Node} the Node to add the image to 
+ */
+function addImageToPost(post, cardTemplate) { 
+
+    const imgElement = cardTemplate.querySelector('.frontImage img');
+    const backImgElement = cardTemplate.querySelector('.backImage img');
+    const imagePath = 'user' + post[7].value + '/' + post[6].value;
+    if (imgElement) {
+        getImageURL(imagePath)
+            .then((downloadUrl) => {
+                imgElement.src = downloadUrl;
+                backImgElement.src = downloadUrl;
+            })
+            .catch(error => {
+                console.error(`Error displaying image ${imagePath}: `, error);
+            });
+    } else {
+        console.error('Card template has no image element.');
+    }
 }

@@ -179,81 +179,44 @@ function addPostToHomePage(post, postGrid) {
     cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;    // access seller name 
 
     // ==============Add Image===============================
+    const imgElement = cardTemplate.querySelector('.frontImage img');
+    console.log('new img element', imgElement);
 
-    // cardTemplate.querySelector('.frontImage').textContent = post[6].value;
-//     const imgElement = cardTemplate.querySelector('.frontImage');
-//     console.log('element', imgElement);
-//     const imagePath = post[7].value+'/'+post[6].value;
-//     console.log('path', imagePath);
-//     displayImage(imagePath, imgElement)
-//   .then((downloadUrl) => {
-//     console.log('url', downloadUrl);
-//     if (imgElement) {
-//         imgElement.src = downloadUrl;
-//       } else {
-//         console.error('Image element not found.');
-//       }
-//     // add an event listener to the visitBtn that sends to the user's profile
-//     cardTemplate.querySelector('.visitBtn').addEventListener("click", async function (event) {
-//       event.preventDefault();
-//       const emailElem = post[1].value;
-//       sessionStorage.setItem("otherEmail", emailElem);
-//       console.log(`Now viewing user '${emailElem}'`);
-//       window.location.href = "/pages/accountPage/account.html";
-//     });
+    const imagePath = post[7].value + '/' + post[6].value;
+    console.log('path', imagePath);
 
-//     // append the card to the "postGrid" container
-//     postGrid.appendChild(cardTemplate);
-//   });
-const imgElement = cardTemplate.querySelector('.frontImage img');
-console.log('new img element', imgElement);
+    // Ensure the image element exists before setting the src attribute
+    if (imgElement) {
+    displayImage(imagePath, imgElement)
+        .then((downloadUrl) => {
+        console.log('imgElement.src before setting', imgElement.src);  // Log the source URL before setting
 
-const imagePath = post[7].value + '/' + post[6].value;
-console.log('path', imagePath);
+        // Use the onload event to ensure that the image is fully loaded before appending
+        imgElement.onload = function () {
+            console.log('imgElement.src after setting', imgElement.src);  // Log the source URL after setting
 
-// Ensure the image element exists before setting the src attribute
-if (imgElement) {
-  displayImage(imagePath, imgElement)
-    .then((downloadUrl) => {
-      console.log('imgElement.src before setting', imgElement.src);  // Log the source URL before setting
+            // add an event listener to the visitBtn that sends to the user's profile
+            cardTemplate.querySelector('.visitBtn').addEventListener("click", async function (event) {
+            event.preventDefault();
+            const emailElem = post[1].value;
+            sessionStorage.setItem("otherEmail", emailElem);
+            console.log(`Now viewing user '${emailElem}'`);
+            window.location.href = "/pages/accountPage/account.html";
+            });
 
-      // Use the onload event to ensure that the image is fully loaded before appending
-      imgElement.onload = function () {
-        console.log('imgElement.src after setting', imgElement.src);  // Log the source URL after setting
+            // append the card to the "postGrid" container
+            postGrid.appendChild(cardTemplate);
+        };
 
-        // add an event listener to the visitBtn that sends to the user's profile
-        cardTemplate.querySelector('.visitBtn').addEventListener("click", async function (event) {
-          event.preventDefault();
-          const emailElem = post[1].value;
-          sessionStorage.setItem("otherEmail", emailElem);
-          console.log(`Now viewing user '${emailElem}'`);
-          window.location.href = "/pages/accountPage/account.html";
+        // Set the image source to the download URL
+        imgElement.src = downloadUrl;
+        })
+        .catch(error => {
+        console.error('Error displaying image:', error);
         });
-
-        // append the card to the "postGrid" container
-        postGrid.appendChild(cardTemplate);
-      };
-
-      // Set the image source to the download URL
-      imgElement.src = downloadUrl;
-    })
-    .catch(error => {
-      console.error('Error displaying image:', error);
-    });
-} else {
-  console.error('Image element not found.');
-}
-
-
-    // // add an event listener to the visitBtn that sends to user's profile
-    // cardTemplate.querySelector('.visitBtn').addEventListener( "click",  async function(event) {
-    //     event.preventDefault();
-    //     const emailElem = post[1].value; 
-    //     sessionStorage.setItem("otherEmail", emailElem);
-    //     console.log(`Now viewing user '${emailElem}`); 
-    //     window.location.href = "/pages/accountPage/account.html";
-    // });
-
+    } else {
+    console.error('Image element not found.');
+    }
     // append the card to the "postGrid" container
     postGrid.appendChild(cardTemplate);
 }

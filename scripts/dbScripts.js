@@ -63,7 +63,8 @@ import {
     getStorage, 
     ref, 
     uploadBytes, 
-    getDownloadURL 
+    getDownloadURL, 
+    deleteObject, 
 } from "firebase/storage";
 
 // ============================ Scripts ============================
@@ -184,20 +185,26 @@ export async function createPost(db, data) {
 }
 
 /**
- * Delete the post data associated with the provided postID.
+ * Delete the post data associated with the provided postID. This 
+ * entails deleting the post's collection from the database and 
+ * deleting the associated image in firebase storage. 
  * 
  * @param {Firestore} db a reference to firestore.
+ * @param {Storage} store a reference to storage. 
  * @param {Number} postID the ID associated with the post to delete.
+ * @param {String} imagePath a path to an image in firebase storage.
  */
-export async function deletePost(db, postID) {
+export async function deletePost(db, store, postID, imagePath) {
 
     // get number of posts
     const numPosts = await getValueOfFieldByPath(db, 'metrics/totals', "total_posts", 0);
     if (numPosts > 0) {
-        // get reference to the document to delete 
+        // delete document from db
         const postDocRef = doc(db, 'posts/post' + postID.toString());
-        // delete the post 
         await deleteDocByRef(postDocRef);
+        // delete image from storage
+        const imageRef = ref(store, imagePath);
+        deleteObject(imageRef);
         // decrement post total
         const totalsRef = doc(db, 'metrics/totals');
         await setDocByRef(totalsRef, { total_posts: numPosts - 1 });

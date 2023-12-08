@@ -72,16 +72,15 @@ export async function runBackend(db, store) {
         const otherEmail = sessionStorage.getItem("otherEmail");
         if (otherEmail == null) {
             // dispalay the current user
-            await accountPageWrapper(db, currUserEmail, currUserID, false);
+            await accountPageWrapper(db, store, currUserEmail, currUserID, false);
         }
         else {
             // display the other user
             const otherID = await getUserIDByEmail(db, otherEmail);
-            await accountPageWrapper(db, otherEmail, otherID, true)
+            await accountPageWrapper(db, store, otherEmail, otherID, true)
                 .then(() => {
                     sessionStorage.removeItem("otherEmail");
-                }
-                );
+                });
         }
     }
 
@@ -181,15 +180,16 @@ function addPostToHomePage(post, postGrid) {
  * given a user's account to display. 
  * 
  * @param {Firestore} db a reference to firestore
+ * @param {Storage} store a reference to storage
  * @param {String} email email of user's account
  * @param {String} ID ID of user's account 
  * @param {Boolean} otherUser boolean to determine if current authenticated user
  */
-async function accountPageWrapper(db, email, ID, otherUser) {
+async function accountPageWrapper(db, store, email, ID, otherUser) {
 
     window.setTimeout(async function () {
         removeListeners();
-        await accountPageBackend(db, email, ID, otherUser).then(() => {
+        await accountPageBackend(db, store, email, ID, otherUser).then(() => {
             displayAccountPageElems(otherUser);
         });
     }, 1000);
@@ -204,11 +204,12 @@ async function accountPageWrapper(db, email, ID, otherUser) {
  * - allowing other users to view a given user's profile
  * 
  * @param {Firestore} db a reference to firestore
+ * @param {Store} store a reference to storage
  * @param {String} userEmail email associated with the user's account 
  * @param {Number} userID the user's ID
  * @param {Boolean} otherUser determines if the user is the current authenticated user
  */
-async function accountPageBackend(db, userEmail, userID, otherUser) {
+async function accountPageBackend(db, store, userEmail, userID, otherUser) {
 
     // get information about the user whose page we are building
     const userPath = "users/user" + userID.toString();
@@ -237,7 +238,7 @@ async function accountPageBackend(db, userEmail, userID, otherUser) {
             const userPosts = convertPosts(userPostObjs);
             const userPostArea = document.querySelector('.postGrid');
             for (const post of userPosts) {
-                addPostToAccountPage(db, post, userPostArea);
+                addPostToAccountPage(db, store, post, userPostArea);
             }
         }
     }
@@ -345,10 +346,11 @@ function setAccountFrontend(name, title, img, email) {
  * Add a post to the user's account page.
  * 
  * @param {Firestore} db a reference to firestore 
+ * @param {Storage} store a reference to storage
  * @param {Array} post an array with the post data to add
  * @param {HTMLElement} postGrid div to add the post to 
  */
-function addPostToAccountPage(db, post, postGrid) {
+function addPostToAccountPage(db, store, post, postGrid) {
 
     // create a new card element
     const cardTemplate = document.querySelector('.flipdiv').cloneNode(true);
@@ -357,7 +359,9 @@ function addPostToAccountPage(db, post, postGrid) {
     addImageToPost(post, cardTemplate);
     // add event listener to delete the post upon user's request 
     cardTemplate.querySelector('.trashButton').addEventListener("click", async function () {
-        await deletePost(db, post[7].value);
+        // image path is of the form: userID/datetime/fileName
+        const imagePath = 'user' + post[8].value + '/' + post[7].value + '/' + post[6].value
+        await deletePost(db, store, post[9].value, imagePath);
     });
     // add the post to the page 
     postGrid.appendChild(cardTemplate);

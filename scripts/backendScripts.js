@@ -61,7 +61,7 @@ export async function runBackend(db, store) {
     if (document.title === "Home") {
         window.setTimeout(async function () {
             removeListeners();
-            await homePageBackend(db, null).then(() => {
+            await homePageBackend(db, null, true).then(() => {
                 displayHomePageElems(true);
             });
         }, 1000);
@@ -88,7 +88,7 @@ export async function runBackend(db, store) {
     if (document.title === "Post") {
         window.setTimeout(async function () {
             removeListeners();
-            await postPageBackend(db, store);
+            await postPageBackend(db, store, currUserID);
         }, 1000);
     }
 }
@@ -99,13 +99,14 @@ export async function runBackend(db, store) {
  * Run the backend scripts associated with the Home page. This includes: 
  * 
  * - Fetching posts to populate the home page 
- * 
- * Eventually we may query posts based on filters. 
+ * - Allowing users to filter for post categories 
+ * - Allowing users to view the profile of a user who posted
  * 
  * @param {Firestore} db a reference to firestore
- * @param {String} filter the filter currently selected for filtering posts 
+ * @param {String} filter the filter currently selected for filtering posts
+ * @param {Boolean} activate determines if we need to activate the filters 
  */
-async function homePageBackend(db, filter) {
+async function homePageBackend(db, filter, activate) {
 
     // get data for the posts to display on the home page
     // this will be an arrary of arrays, where each post array has key-value pairs
@@ -123,6 +124,10 @@ async function homePageBackend(db, filter) {
         for (const post of postsToAdd) {
             addPostToHomePage(post, postGrid);
         }
+        // activate the filters
+        if (activate) { 
+            await activateFilters(db, postGrid);
+        } 
     }
 }
 
@@ -171,6 +176,50 @@ function addPostToHomePage(post, postGrid) {
     addImageToPost(post, cardTemplate);
     // append the card to the "postGrid" container when it's ready!
     postGrid.appendChild(cardTemplate);
+}
+
+/**
+ * Activate the filter buttons on the home page and allow them to update the 
+ * dispayed posts accordingly.  
+ * 
+ * @param {Firestore} db a reference to firestore
+ * @param {Element} postGrid the post grid to update when filters are selected
+ */
+async function activateFilters(db, postGrid) { 
+    // get the filter buttons 
+    var btnContainer = document.getElementById("myBtnContainer");
+    var btns = btnContainer.getElementsByClassName("btn");
+    // add event listeners to the buttons 
+    for (var i = 0; i < btns.length; i++) {
+        const category = btns[i].innerText.trim(); 
+        btns[i].addEventListener("click", async function () {
+            // update the active button 
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+            window.setTimeout( async function() { 
+            // remove and update the posts on the page
+            removePosts(postGrid); 
+                if (category === "Show all") { 
+                    await homePageBackend(db, null, false); 
+                }  
+                else { 
+                    await homePageBackend(db, category, false); 
+                }
+            });
+        });
+    }
+}
+
+/**
+ * Remove all posts from the home page when a filter is selected 
+ * 
+ * @param {Element} postGrid 
+ */
+function removePosts(postGrid) { 
+    while(postGrid.childNodes.length > 5) { 
+        postGrid.removeChild(postGrid.lastChild); 
+    }
 }
 
 // ============================ Account page and helpers ============================
@@ -375,14 +424,13 @@ function addPostToAccountPage(db, store, post, postGrid) {
  * - Adding a new post to the database 
  * - Recording total posts
  * - Assigning the new post an ID corresponding to the user who posted it 
- * 
- * Eventually we will allow multiple photoes per posts and tags for the posts 
- * which correspond to the filters on the home page. 
+ * - Displaying the post guidelines on button click
  * 
  * @param {Firestore} db a referece to firestore
  * @param {Storage} store a reference to storage
+ * @param {Number} currUserID the ID of the current user
  */
-async function postPageBackend(db, store) {
+async function postPageBackend(db, store, currUserID) {
 
     // pause and let window load 
     window.setTimeout(async function () {
@@ -392,7 +440,8 @@ async function postPageBackend(db, store) {
             event.preventDefault();
             const emailText = document.getElementById("post-mail").value;
             const userID = await getUserIDByEmail(db, emailText);
-            if (userID == null) {
+            // only allow the post if it is the current user's email 
+            if ((userID == null) || (userID != currUserID)) {
                 const popup = document.getElementById("invalidEmailPopup");
                 displayPopup(popup);
             }

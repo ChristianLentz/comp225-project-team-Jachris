@@ -81,6 +81,11 @@ import {
  */
 export async function queryForPostsByFilter(db, filter, lim) {
 
+    if (filter != null) { 
+        console.log("made it here!"); 
+        console.log("current filter is: ", filter); 
+    }
+
     let postQuery = null;
     // if no filters selected, query posts with no constraint other than limit = lim
     if (filter == null) {
@@ -89,11 +94,14 @@ export async function queryForPostsByFilter(db, filter, lim) {
             limit(lim),
         );
     }
-    // else, query by filters with limit = lim 
+    // else, query by provided filter with limit = lim 
     else {
-
-        // TODO: AFTER MVP PHASE
-
+        const queryMap = { key: "category", value: filter }
+        postQuery = query(
+            collection(db, "posts"),
+            where("5", "==", queryMap),
+            limit(lim),
+        );
     }
     // get the posts from the query and return the data 
     const postSnapshot = await getDocs(postQuery);

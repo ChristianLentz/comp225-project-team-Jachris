@@ -59,7 +59,6 @@
 
   <!-- display text when the page is loading -->
   <div id="loading">
-    <!-- <h2> Loading . . . </h2> -->
     <img class="gif" src="/images/cat.gif" alt="Animated GIF">
   </div>
 
@@ -67,31 +66,16 @@
   <!-- search bar sections -->
   <div class="row">
     <div class="side" style="background-color:#c3c1c1;">
-      <!-- <h2>Search</h2> -->
-      <!-- <input type="text" id="myInput" placeholder="Search for items..."> -->
       <div id="myBtnContainer">
         <h2>Filter</h2>
-        <button class="btn active" onclick="filterSelection('all')"> Show all</button>
-        <button class="btn" onclick="filterSelection('cars')"> Dorm</button>
-        <button class="btn" onclick="filterSelection('fruits')"> Clothing</button>
-        <button class="btn" onclick="filterSelection('animals')"> Sport</button>
-        <button class="btn" onclick="filterSelection('colors')"> Winter</button>
-        <button class="btn" onclick="filterSelection('colors')"> School</button>
-        <button class="btn" onclick="filterSelection('colors')"> Misc</button>
+        <button class="btn active"> Show all</button>
+        <button class="btn"> Dorm</button>
+        <button class="btn"> Clothing</button>
+        <button class="btn"> Sport</button>
+        <button class="btn"> Winter</button>
+        <button class="btn"> School</button>
+        <button class="btn"> Misc</button>
       </div>
-      <!-- inactive code right now -->
-      <script>
-        // add active class to the current control button (highlight it)
-        var btnContainer = document.getElementById("myBtnContainer");
-        var btns = btnContainer.getElementsByClassName("btn");
-        for (var i = 0; i < btns.length; i++) {
-          btns[i].addEventListener("click", function () {
-            var current = document.getElementsByClassName("active");
-            current[0].className = current[0].className.replace(" active", "");
-            this.className += " active";
-          });
-        }
-      </script>
 
       <!-- creating popup when no posts to display -->
       <div id="noPostPopup" class="popup">

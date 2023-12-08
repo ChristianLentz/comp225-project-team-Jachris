@@ -112,7 +112,7 @@ export async function runBackend(db, store) {
  * @param {Storage} store a reference to storage
  * @param {Array} filters the filters currently selected for filtering posts 
  */
-async function homePageBackend(db, store, filters) {
+async function homePageBackend(db, filters) {
 
     // get data for the posts to display on the home page
     // this will be an arrary of arrays, where each post array has key-value pairs
@@ -197,7 +197,7 @@ async function accountPageWrapper(db, email, ID, otherUser) {
 
     window.setTimeout(async function () {
         removeListeners();
-        await accountPageBackend(db, store, email, ID, otherUser).then(() => {
+        await accountPageBackend(db, email, ID, otherUser).then(() => {
             displayAccountPageElems(otherUser);
         });
     }, 1000);
@@ -486,7 +486,7 @@ function addPostFrontBackHelper(post, cardTemplate) {
     cardTemplate.querySelector('.backTitle').textContent = post[2].value;
     cardTemplate.querySelector('.price').textContent = '$' + post[3].value;
     cardTemplate.querySelector('.backDescription').textContent = post[4].value;            // access post descrip
-    cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;    // access seller name 
+    cardTemplate.querySelector('.sellerInfo').textContent = 'Seller: ' + post[0].value;    // access seller's name 
 }
 
 /**
@@ -500,7 +500,8 @@ function addImageToPost(post, cardTemplate) {
 
     const imgElement = cardTemplate.querySelector('.frontImage img');
     const backImgElement = cardTemplate.querySelector('.backImage img');
-    const imagePath = 'user' + post[7].value + '/' + post[6].value;
+    // path is of the form userID/datetime/fileName
+    const imagePath = 'user' + post[8].value + '/' + post[7].value + '/' + post[6].value;
     if (imgElement) {
         getImageURL(imagePath)
             .then((downloadUrl) => {

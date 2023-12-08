@@ -32,12 +32,24 @@ We use the Webpack CLI to compile and bundle our Java Script code into an output
 
 This is the final (and simplest) step of the process. Open your terminal of choice and navigate to the root directory of this project. In the terminal run **serve** or **npm serve**. Using **serve** without specifying a directory to serve will sereve the root directory of the project. This is what we want, since *index.html* (the html file for the homepage of our website) is located in our root directory. Follow the link provided in the terminal, you are now looking at a local instance of the webiste!
 
+### Workflows
+
+#### Initializing Firebase Locally 
+
+#### Automatic PR Deploys with Github
+
+mention that the Pr deploy workflow means that any deve on the project does not have to make deployments on their own, this is automatically done when their PR is merged! 
+
 ### TODOs for end of term:  
 
-Christian - filters backend
-Jacob - filters front end 
 Jake - google auth 
-All - Images, deploy site, set rules for DB/Storage, update project proposal
+All - set rules for DB/Storage, update project proposal
+
+### Currnet Bugs
+
+- Autofilling emails on the login form sometimes does not a
+
+### Next Steps
 
 ### Helpful Sources
 

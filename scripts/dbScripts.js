@@ -59,7 +59,12 @@ import {
     QuerySnapshot
 } from "firebase/firestore";
 
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { 
+    getStorage, 
+    ref, 
+    uploadBytes, 
+    getDownloadURL 
+} from "firebase/storage";
 
 // ============================ Scripts ============================
 
@@ -68,16 +73,16 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
  * home page. 
  * 
  * @param {Firestore} db a reference to cloud firestore.
- * @param {Array} filters the filters selected by the user.
+ * @param {String} filter the filters selected by the user.
  * @param {Number} lim a number to limit results returned by the query. 
  * 
  * @returns an array of posts as the objects retrieved from firestore, or null.
  */
-export async function queryForPostsByFilter(db, filters, lim) {
+export async function queryForPostsByFilter(db, filter, lim) {
 
     let postQuery = null;
     // if no filters selected, query posts with no constraint other than limit = lim
-    if (filters.length == 0) {
+    if (filter == null) {
         postQuery = query(
             collection(db, "posts"),
             limit(lim),
@@ -131,10 +136,9 @@ export async function getUserPosts(db, id) {
  * Add a newly created user and their data to the users collection.
  * 
  * @param {Firestore} db a reference to firestore.
- * @param {Storage} store a reference to storeage.
  * @param {String} email the email associated with the user we are creating.  
  */
-export async function createUser(db, store, email) {
+export async function createUser(db, email) {
 
     // generate a new userID
     const numUsers = await getValueOfFieldByPath(db, 'metrics/totals', "total_users", 0);

@@ -35,7 +35,6 @@ const numPostItems = 10;
 // limit for querying for posts
 const queryLim = 48;
 
-
 // ============================ Scripts ============================
 
 /**
@@ -61,12 +60,8 @@ export async function runBackend(db, store) {
     // run scripts for the Home page
     if (document.title === "Home") {
         window.setTimeout(async function () {
-
-            // TODO: AFTER MVP PHASE
-            // get filters currently selected 
-
             removeListeners();
-            await homePageBackend(db, store, []).then(() => {
+            await homePageBackend(db, null).then(() => {
                 displayHomePageElems(true);
             });
         }, 1000);
@@ -109,14 +104,13 @@ export async function runBackend(db, store) {
  * Eventually we may query posts based on filters. 
  * 
  * @param {Firestore} db a reference to firestore
- * @param {Storage} store a reference to storage
- * @param {Array} filters the filters currently selected for filtering posts 
+ * @param {String} filter the filter currently selected for filtering posts 
  */
-async function homePageBackend(db, filters) {
+async function homePageBackend(db, filter) {
 
     // get data for the posts to display on the home page
     // this will be an arrary of arrays, where each post array has key-value pairs
-    let postsToAdd = await getPosts(db, filters);
+    let postsToAdd = await getPosts(db, filter);
     if (postsToAdd == null) {
         // this handles two cases: 
         // 1: no posts exist in db
@@ -142,13 +136,13 @@ async function homePageBackend(db, filters) {
  * Used in homePageBackend. 
  * 
  * @param {Firestore} db a reference to firestore
- * @param {Array} filters items to query by, an array of strings
+ * @param {String} filter item to query by, a string
  * 
  * @returns the posts data that we queried for, or null 
  */
-async function getPosts(db, filters) {
+async function getPosts(db, filter) {
 
-    const posts = await queryForPostsByFilter(db, filters, queryLim);
+    const posts = await queryForPostsByFilter(db, filter, queryLim);
     if (posts == null) {
         return posts;
     } else {
@@ -159,8 +153,6 @@ async function getPosts(db, filters) {
 /**
  * Add a single post to the home page.
  * 
- * @param {Firestore} db a reference to firestore
- * @param {Storage} store a reference to storage
  * @param {Array} post the post to add. 
  * @param {HTMLElement} postGrid HTML element to add the data to.
  */

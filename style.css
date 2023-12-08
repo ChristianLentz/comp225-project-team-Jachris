@@ -64,6 +64,9 @@ body {
   margin-top: 3.5px
   /* padding-left: -20px; */
 }
+img {
+  border-radius: 5px;
+}
 #navright {
   float: right;
 }

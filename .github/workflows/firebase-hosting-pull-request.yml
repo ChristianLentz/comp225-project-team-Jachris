@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: npm i path-browserfiy
+      - run: npm i os-browserify
       - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

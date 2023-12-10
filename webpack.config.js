@@ -22,7 +22,7 @@ const path = require('path');
 
 module.exports = {
     // pick a mode for webpack to run (CHANGE TO PRODUCTION WHEN DONE!)
-    mode: 'development', 
+    mode: 'production', 
     // makes code more readable (and thus easier to debug) in the dev console 
     devtool: 'eval-source-map',
     // entry point for webpack, this is where we start the build process 

@@ -81,11 +81,6 @@ import {
  */
 export async function queryForPostsByFilter(db, filter, lim) {
 
-    if (filter != null) { 
-        console.log("made it here!"); 
-        console.log("current filter is: ", filter); 
-    }
-
     let postQuery = null;
     // if no filters selected, query posts with no constraint other than limit = lim
     if (filter == null) {
@@ -429,7 +424,6 @@ export async function getFormData(formName, store, userID) {
                 }).catch((error) => {
                     console.error(`error when upload file '${newValue.name}':`, error);
                 })
-                console.log('newImage', newImageRef);
             }
             // handle other HTML elements
             else {

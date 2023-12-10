@@ -3,7 +3,7 @@
 ## Comp 225 Fall 2023
 
 ### What is this project?
-Mac Buy-Back resembles a virtual Mac Free-Swap. This website is an online and easily accessible space for any member of the Macalester community to buy, sell, trade or donate used items. The ultimate goal is to connect members of the Macalester community with each other and with the Mac Free-Swap, creating a sense of community while reducing the potential for waste on campus. In addition, students will be able to find the necesities that they need to live at little to no cost. 
+Mac Buy-Back resembles a virtual Mac Free-Swap. This website is an online and easily accessible space for any member of the Macalester community to buy, sell, trade or donate used items. The ultimate goal is to connect members of the Macalester community with each other and with the Mac Free-Swap, creating a sense of community while reducing the potential for waste on campus. In addition, students will be able to find the necesities that they need to live at little to no cost. See our [project proposal](projectProposal.pdf) to understand this project in more detail.
 
 ### Getting Started 
 The best way to familiarize yourself with our site is to checkout the production instnace [here](https://mac-community-trade-center.web.app/). 

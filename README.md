@@ -1,11 +1,13 @@
-# Mac Buy-Back
+# Mac Community Trade Center
 ## Authors: Christian Lentz, Jacob Hellenbrand, Jake Murakami 
 ## Comp 225 Fall 2023
 
-### What is this project? ###
-Mac Buy-Back resembles a virtual Mac Free-Swap. This website is an online and easily accessible space for any member of the Macalester community to buy, sell, trade or donate used items. The ultimate goal is to connect members of the Macalester community with each other and with the Mac Free-Swap, creating a sense of community while reducing the potential for waste on campus. In addition, students will be able to find the necesities that they need to live at little to no cost. 
+### What is this project?
+Mac Buy-Back resembles a virtual Mac Free-Swap. This website is an online and easily accessible space for any member of the Macalester community to buy, sell, trade or donate used items. The ultimate goal is to connect members of the Macalester community with each other and with the Mac Free-Swap, creating a sense of community while reducing the potential for waste on campus. In addition, students will be able to find the necesities that they need to live at little to no cost. See our [project proposal](projectProposal.pdf) to understand this project in more detail.
 
 ### Getting Started 
+The best way to familiarize yourself with our site is to checkout the production instnace [here](https://mac-community-trade-center.web.app/). 
+
 If you want to get started with running this application locally, follow these step:
 
 - Download nodeJS and npm. This is a crucial step. You can do this [here](https://nodejs.org/en/download).
@@ -32,12 +34,19 @@ We use the Webpack CLI to compile and bundle our Java Script code into an output
 
 This is the final (and simplest) step of the process. Open your terminal of choice and navigate to the root directory of this project. In the terminal run **serve** or **npm serve**. Using **serve** without specifying a directory to serve will sereve the root directory of the project. This is what we want, since *index.html* (the html file for the homepage of our website) is located in our root directory. Follow the link provided in the terminal, you are now looking at a local instance of the webiste!
 
-### TODOs for end of term:  
+### Development Workflow
 
-Christian - filters backend
-Jacob - filters front end 
-Jake - google auth 
-All - Images, deploy site, set rules for DB/Storage, update project proposal
+This firebase app is configured for automatic deploys upon PR merge. When working on this project as a developer, create a branch from *main*. Once your changes are tested and ready to go, publish as a pull request to be reviewed. Finally, once the PR has been merged into main, the build script automatically runs and puts changes from the PR into production. Although it is possible to deploy directly from the terminal, this is only for those who have admin access to the Firebase project. This workflow allows others to contribute changes to production without requiring admin access. 
+
+### Next Steps and TODOs 
+
+- Google Authentication
+- Set rules for firestore and storage
+- Update project proposal
+
+### Currnet Bugs
+
+- Autofilling emails on the login form ocassionally does not allow the user to login. However, a simple work around is to write your email manually. 
 
 ### Helpful Sources
 

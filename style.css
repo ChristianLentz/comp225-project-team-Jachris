@@ -128,8 +128,8 @@ ul li a:hover {
   overflow-y: auto;
 }
 /* Main column */
-div.postArea {
-  flex: 70%;
+.postArea {
+  flex: 80%;
   /* Set the width of the main content */
   background-color: white;
   /* White background color */
@@ -139,6 +139,16 @@ div.postArea {
   overflow-x: hidden;
   line-height: 1.5;
 }
+.note {
+  background-color: white;
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+p{
+  margin: 5px;
+}
+
 .footer {
   padding: 20px;
   /* Some padding */

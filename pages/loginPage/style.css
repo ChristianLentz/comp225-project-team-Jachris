@@ -135,3 +135,15 @@ h1 {
 #navBar { 
 	display: inline-block; 
 }
+
+#loginHelp{
+  margin-left: 650px;
+}
+
+#helpModal {
+  display: none;
+  justify-content: center;
+  /* margin-left: 10px; */
+  align-items: center;
+}
+

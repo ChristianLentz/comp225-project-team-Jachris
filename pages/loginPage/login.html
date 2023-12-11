@@ -52,6 +52,27 @@
     </ul>
   </form>
 
+  <button id="loginHelp" onclick="toggleModal();">Issues logging in?</button>
+  <div id="helpModal">
+    <div id="modal-content">
+      <section id="nameGuide">
+        <h2>Can't Login?</h2>
+        <p>
+          If you're having issues logging in it may be from you autofilling the form input. 
+          Our servers have a hard time reading the input when it is autofilled, try typing your email
+          and this should fix the issue. We apologize for the bug, and if the issue persist reach out to an admin
+          at the bottom of the page. 
+        </p>
+      </section>
+
+  <script>
+    function toggleModal() {
+      var modal = document.getElementById('helpModal');
+      modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
+  </script>
+
+
   <!-- create pop to notify user that invalid email was provided -->
   <div id="invalidLoginPopup" class="popup">
     <div class="popup-content">
@@ -60,6 +81,8 @@
       <button id="closePopup"> Close</button>
     </div>
   </div>
+  
+
 </body>
 
 </html>

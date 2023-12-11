@@ -30,7 +30,9 @@
   </nav>
 
   <!-- create display for post guidelines -->
-  <button id="guidelineButton" onclick="toggleMove(); toggleModal();">Post Guidelines</button>
+  <div class="container">
+   <button id="guidelineButton" onclick="toggleMove(); toggleModal();">Post Guidelines</button>
+  </div>
   <div id="guideModal">
     <div id="modal-content">
       <h1>Guidelines for Posting</h1>
@@ -128,7 +130,7 @@
         <input type="text" id="post-title" maxlength="62" name="post_title" required />
       </li>
       <li>
-        <label for="post-price">Price:</label>
+        <label for="post-price">Price: $</label>
         <input type="number" id="post-price" max="3000" name="post_price" required />
       </li>
       <li>

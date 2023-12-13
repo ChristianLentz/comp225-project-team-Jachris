@@ -438,19 +438,33 @@ async function postPageBackend(db, store, currUserID) {
         const postForm = document.getElementsByName("post-form").item(0);
         postForm.addEventListener("submit", async function (event) {
             event.preventDefault();
-            const emailText = document.getElementById("post-mail").value;
-            const userID = await getUserIDByEmail(db, emailText);
-            // only allow the post if it is the current user's email 
-            if ((userID == null) || (userID != currUserID)) {
-                const popup = document.getElementById("invalidEmailPopup");
-                displayPopup(popup);
-            }
-            else {
-                const newPostData = await getFormData("post-form", store, userID);
-                await sendPostToDB(db, newPostData, userID);
-            }
+            await postFormSubmitAction(postForm, db, store, currUserID); 
         });
     }, 1000);
+}
+
+/**
+ * Send a post to the database when the post form is submitted. Make 
+ * sure to remove the event listener after the first click.
+ * 
+ * @param {HTMLElement} postForm the post form HTML element
+ * @param {Firestore} db a reference to firestore
+ * @param {Storage} store a reference to storage
+ * @param {String} currUserID the ID of the user who posted
+ */
+async function postFormSubmitAction(postForm, db, store, currUserID) {
+    const emailText = document.getElementById("post-mail").value;
+    const userID = await getUserIDByEmail(db, emailText);
+    // only allow the post if it is the current user's email 
+        if ((userID == null) || (userID != currUserID)) {
+            const popup = document.getElementById("invalidEmailPopup");
+            displayPopup(popup);
+        }
+        else {
+            const newPostData = await getFormData("post-form", store, userID);
+            await sendPostToDB(db, newPostData, userID);
+        }
+    postForm.removeEventListener("submit", postFormSubmitAction)
 }
 
 /**

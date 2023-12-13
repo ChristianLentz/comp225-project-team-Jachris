@@ -47,12 +47,14 @@ This firebase app is configured for automatic deploys upon PR merge. When workin
 ### Currnet Bugs
 
 - Autofilling emails on the login form ocassionally does not allow the user to login. However, a simple work around is to write your email manually. 
-- Double clicking the post button will cause your post to be uploaded twice to the site. 
+- Spamming the post button will cause the post to upload twice 
 - Some window sizing issues as we change between different types of computers
 
 ### Helpful Sources
 
 - Defualt profile images retreived from [here](https://www.freepik.com/search?format=search&query=cartoon%20animal%20profile).
+- Macalester logo image retrieved from [here] (https://zsyst.com/our-customers/macalester-college-logo/)
+- Homepage images both retrieved from [here] (https://www.macalester.edu/)
 - The [Firebase documentation](https://firebase.google.com/docs?hl=en&authuser=0&_gl=1*1pfdh62*_ga*ODU2OTQzNTM0LjE3MDAwNzY3NTg.*_ga_CW55HF8NVT*MTcwMTI3NTEwOC4yMS4xLjE3MDEyNzY1MzUuNjAuMC4w) describes how to get started with and use Google Firebase. In particular, we use Firestore, Storage and Hosting for this project. Also note that for this project, we are using the Web Modular API, as this is setup for module bundling and *tree shaking*. 
 - Support for the programming languages and other tools used in this project: 
   - [JavaScript, W3Schools](https://www.w3schools.com/js/DEFAULT.asp)

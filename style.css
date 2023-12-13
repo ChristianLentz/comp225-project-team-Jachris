@@ -375,7 +375,7 @@ p{
   display: block;
 }
 h1 {
-  color: orange;
+  color: rgb(236, 109, 30);
 }
 
 /* =============== modal/text in post area when user not logged in =============== */ 

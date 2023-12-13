@@ -47,6 +47,8 @@ This firebase app is configured for automatic deploys upon PR merge. When workin
 ### Currnet Bugs
 
 - Autofilling emails on the login form ocassionally does not allow the user to login. However, a simple work around is to write your email manually. 
+- Double clicking the post button will cause your post to be uploaded twice to the site. 
+- Some window sizing issues as we change between different types of computers
 
 ### Helpful Sources
 

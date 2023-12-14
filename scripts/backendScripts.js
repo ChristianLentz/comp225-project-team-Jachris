@@ -70,7 +70,7 @@ export async function runBackend(db, store) {
     // run scripts for the Account page
     if (document.title === "Account") {
         const otherEmail = sessionStorage.getItem("otherEmail");
-        if (otherEmail == null) {
+        if (otherEmail == null || otherEmail == currUserEmail) {
             // dispalay the current user
             await accountPageWrapper(db, store, currUserEmail, currUserID, false);
         }
@@ -468,7 +468,7 @@ async function postPageBackend(db, store, currUserID) {
 async function postFormSubmitAction(postForm, db, store, currUserID) {
     const emailText = document.getElementById("post-mail").value;
     const userID = await getUserIDByEmail(db, emailText);
-    // only allow the post if it is the current user's email 
+        // only allow the post if it is the current user's email 
         if ((userID == null) || (userID != currUserID)) {
             const popup = document.getElementById("invalidEmailPopup");
             displayPopup(popup);

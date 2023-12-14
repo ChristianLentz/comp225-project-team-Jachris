@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", function () {
     postGrid.addEventListener("click", function (e) {
       const clickedCard = e.target.closest(".flipdiv.v");
 
-      if (clickedCard) {
+      const isTrashButtonClick = e.target.classList.contains("trashButton");
+
+      if (clickedCard && !isTrashButtonClick) {
         if (enlargedCard === clickedCard) {
           // If the clicked card is already enlarged, revert it to the original size
           clickedCard.style.width = "180px";

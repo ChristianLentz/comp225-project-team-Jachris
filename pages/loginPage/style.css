@@ -1,5 +1,6 @@
-/* This css file is for lign.html*/
+/* This css file is for login.html*/
 
+/* ============login form========== */
 form {
   /* Center the form on the page */
   margin: 20px auto;
@@ -136,6 +137,7 @@ h1 {
 	display: inline-block; 
 }
 
+/* =============== Login help button ===================== */
 #helpModal {
   display: none;
   justify-content: center;

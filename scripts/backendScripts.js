@@ -1,6 +1,6 @@
 /**
  * This file contains scripts which handle all of the backend functionality of 
- * the app. The main pupose of this file is to connect the database to the 
+ * the app. The main purpose of this file is to connect the database to the 
  * front end.  
  */
 

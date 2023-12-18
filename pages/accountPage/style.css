@@ -72,6 +72,9 @@ img {
 /* /* ===================== edit profile ===================== */ 
 
 #editBtn {
+	position: absolute;
+	right: 0;
+	z-index: 1;
 	padding: 10px 20px;
 	font-size: 16px;
 	display: none;
@@ -333,4 +336,52 @@ select.icon-menu option {
 	padding: 20px;
 	border-radius: 8px;
 	text-align: center;
+  }
+
+  /* =============== Delete post popup ================= */
+
+  .popup {
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+	display: none;
+  }
+  .popup-content {
+	background-color: white;
+	margin: 10% auto;
+	line-height: 1.5;
+	margin-bottom: 10px;
+	text-align: center;
+	padding: 20px;
+	border: 1px solid #888888;
+	width: 30%;
+	font-weight: bolder;
+  }
+  .popup-content button {
+	display: block;
+	padding: 5px 5px;
+	margin-top: 10px;
+	margin-left: 172.5px;
+  }
+  .show {
+	display: block;
+  }
+  
+  h1 {
+	color: orange;
+  }
+
+  .popupButtons {
+    display: flex;
+	justify-content: center;
+}
+  .popupButtons button {
+	white-space: nowrap;
+	display: inline-block;
+	margin: 10px;
   }

@@ -406,13 +406,26 @@ function addPostToAccountPage(db, store, post, postGrid) {
     addPostFrontBackHelper(post, cardTemplate);
     // add the image to the front and back of the post 
     addImageToPost(post, cardTemplate);
-    // add event listener to delete the post upon user's request 
-    cardTemplate.querySelector('.trashButton').addEventListener("click", async function () {
-        // image path is of the form: userID/datetime/fileName
-        const imagePath = 'user' + post[8].value + '/' + post[7].value + '/' + post[6].value
-        await deletePost(db, store, post[9].value, imagePath);
-    });
-    // add the post to the page 
+    // Reference to individual card trash buttons
+    const trashButton = cardTemplate.querySelector('.trashButton');
+    //if trash button clicked, open pop up
+    cardTemplate.querySelector('.trashButton').addEventListener("click", async function(){
+        const popup = document.getElementById("deletePopup");
+        displayPopup(popup);
+        // delete post on front and back end based off of confirm delete button
+        document.getElementById("confirmDelete").addEventListener("click", async function (){
+            // remove card on front end
+            var card = trashButton.parentNode;
+            if(card.parentNode){
+                card.parentNode.removeChild(card);
+            }
+            // close pop up and remove card on backend
+            console.log("found button, running delete", document.getElementById("confirmDelete"));
+            popup.style.display = "none";
+            const imagePath = 'user' + post[8].value + '/' + post[7].value + '/' + post[6].value
+            await deletePost(db, store, post[9].value, imagePath);
+        });
+    });   
     postGrid.appendChild(cardTemplate);
 }
 

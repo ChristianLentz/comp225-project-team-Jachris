@@ -38,17 +38,15 @@ This is the final (and simplest) step of the process. Open your terminal of choi
 
 This firebase app is configured for automatic deploys upon PR merge. When working on this project as a developer, create a branch from *main*. Once your changes are tested and ready to go, publish as a pull request to be reviewed. Finally, once the PR has been merged into main, the build script automatically runs and puts changes from the PR into production. Although it is possible to deploy directly from the terminal, this is only for those who have admin access to the Firebase project. This workflow allows others to contribute changes to production without requiring admin access. 
 
-### Next Steps and TODOs 
+### Next Steps
 
 - Google Authentication
 - Set rules for firestore and storage
-- Update project proposal
 
 ### Currnet Bugs
 
 - Autofilling emails on the login form ocassionally does not allow the user to login. However, a simple work around is to write your email manually. 
-- Spamming the post button will cause the post to upload twice 
-- Some window sizing issues as we change between different types of computers
+- Some window sizing issues as we change between different types/sizes of computers
 
 ### Helpful Sources
 
